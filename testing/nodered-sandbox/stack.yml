@@ -1,0 +1,31 @@
+version: 3
+
+services:
+  nodered:
+    image: nodered/node-red:2.2.3
+    volumes:
+      - flows:/flows
+    configs:
+      - source: settings
+        target: /data/settings.js
+    networks:
+      - caddy-ingress
+    labels:
+      caddy: :80
+      caddy.redir: /demo/nodered-sandbox /demo/nodered-sandbox/
+      caddy.handle: /demo/nodered-sandbox/*
+      caddy.handle.reverse_proxy: "{{upstreams 1880}}"
+    environment:
+      - HTTP_ADMIN_ROOT=/demo/nodered-sandbox
+
+networks:
+  caddy-ingress:
+    external: true
+
+volumes:
+  flows:
+
+# TODO: instead embed files in a custom Docker image, so that we can use a volume for /data rather than /data/settings.js
+configs:
+  settings:
+    file: ./nodered-sandbox-settings.js

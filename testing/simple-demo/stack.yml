@@ -1,0 +1,24 @@
+version: 3
+services:
+  hello:
+    image: nginxdemos/hello
+    networks:
+      - caddy-ingress
+    labels:
+      caddy: :80
+      caddy.redir: /demo/hello-1 /demo/hello-1/
+      caddy.handle_path: /demo/hello-1/*
+      caddy.handle_path.reverse_proxy: "{{upstreams 80}}"
+  whoami:
+    image: containous/whoami
+    networks:
+      - caddy-ingress
+    labels:
+      caddy: :80
+      caddy.redir: /demo/whoami-1 /demo/whoami-1/
+      caddy.handle_path: /demo/whoami-1/*
+      caddy.handle_path.reverse_proxy: "{{upstreams 80}}"
+
+networks:
+  caddy-ingress:
+    external: true

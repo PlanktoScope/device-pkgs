@@ -1,0 +1,14 @@
+schema: 0.1
+
+package:
+  version: 0.1.0
+  description: Filesystem browser and manager for the PlanktoScope's root filesystem
+  maintainers:
+  - name: Ethan Li
+    email: lietk12@gmail.com
+  license: Apache-2.0
+  sources:
+  - https://github.com/filebrowser/filebrowser
+
+deployment:
+  name: filebrowser-root

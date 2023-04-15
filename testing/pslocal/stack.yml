@@ -1,0 +1,26 @@
+version: 3
+
+services:
+  server:
+    image: ghcr.io/sargassum-world/pslocal:0.3.8
+    volumes:
+      - server_data:/data
+    ports:
+      - 3000:3000
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    networks:
+      - caddy-ingress
+      - bridge
+    environment:
+      DATABASE_URI: file:/data/db.sqlite3
+      LOCALHOST_DEFAULT: host.docker.internal
+
+networks:
+  caddy-ingress:
+    external: true
+  bridge:
+    external: true
+
+volumes:
+  server_data:
