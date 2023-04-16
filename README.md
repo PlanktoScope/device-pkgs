@@ -12,7 +12,7 @@ TBD
 
 ## Licensing
 
-Pallet packages have their own software licenses, as specified by SPDX short form identifiers (e.g. "Apache-2.0") in the packages' corresponding `package.yml` metadata files. Except where otherwise indicated, any other other source code provided here is covered by the following information:
+Pallet packages have their own software licenses, as specified by SPDX short form identifiers (e.g. "Apache-2.0") in the packages' corresponding `package.yml` metadata files and/or LICENSE files provided in the package directories. Any other source code provided here is covered by the following information, except where otherwise indicated:
 
 Copyright Ethan Li and PlanktoScope project contributors
 
