@@ -40,6 +40,10 @@ features:
     requires:
       networks: [bridge]
     provides:
+      listeners:
+      - description: Web server for the pslocal PlanktoScope dashboard
+        port: 3000
+        protocol: tcp
       services:
       - description: The pslocal PlanktoScope dashboard
         port: 3000

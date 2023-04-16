@@ -33,6 +33,7 @@ A Pallet package should describe its external interface with the Docker host as 
 - Docker networks
 - Docker volumes
 - Bind mounts
+- Port listeners on ports mapped to the host
 - Network services mapped to the host
 
 A package will be deployed successfully if (and only if) all of the following conditions are satisfied:
@@ -43,6 +44,8 @@ A package will be deployed successfully if (and only if) all of the following co
 Information about the resources required and provided by the deployment of a Pallet package can be used by a Pallet package manager to prevent/detect conflicts between package deployments and to aid in resolving dependencies between packages.
 
 Because some Docker hosts may already have ambiently-available resources (for example, an SSH server on port 22 installed using `apt-get`), a Pallet package may also include a list of resources already available on the host; such resources should be provided by the Docker host regardless of whether the package is installed. Installing or uninstalling such a package will not affect the actual existence of such resources; it will only change a Pallet package manager's assumptions about what resources are available on the host.
+
+TODO: talk about descriptions and tags
 
 ### Package deployments
 Pallet packages specify how they will be deployed on the Docker Swarm Mode environment.
@@ -55,10 +58,6 @@ Pallet *features* provide a mechanism to express optional dependencies and optio
 A package defines a set of named features in its `package.pallet.yml` metadata file, and each feature can be either enabled or disabled. Each Pallet feature specifies any resources it requires from the Docker host, as well as any resources it exposes on the Docker host.
 
 Additionally, a package may specify a default list of Pallet features to enable upon deployment, which is used if (and only if) a list of enabled features is not provided by a Pallet package manager.
-
-### Package resources
-
-TODO: finish this section
 
 ### Package versions
 A *package version* identifies an immutable snapshot of a package, which may be either a release or a pre-release. Each version starts with the letter `v`, followed by a semantic version. Package versions are reported to users when applying an upgrade or downgrade of a Pallet repository in order to help users understand the changes they will make.
