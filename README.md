@@ -2,9 +2,14 @@
 Software package repositories for the PlanktoScope software distro
 
 ## Introduction
-Pallet is a software packaging system for enabling safe, simple, and easy software installations and upgrades on PlanktoScopes. Technical information about Pallet is available in [`reference.md`](reference.md).
 
-This Git repo is a collection of four Pallet repositories of software packages for Planktoscopes - `core`, `community`, `restricted`, `testing` - which serve different purposes and have different types of packages. Each repository has a `README.md` file which describes its purpose. Packages in the `core`, `community`, and `restricted` repositories are configured to be deployed as integrated components of the overall PlanktoScope software distro.
+A pallet is a simple platform, usually wooden, which enables moving stacks of packages safely and easily:
+
+![Photograph of a worker operating a forklift to move a stack of cardboard boxes on a wooden pallet](https://cdn2.picryl.com/photo/2020/04/27/a-worker-moves-a-pallet-of-personal-protective-equipment-da8b5e-1600.jpg)
+
+This repository provides a collection of software packages in *Pallet*, a software packaging system for enabling safe, simple, and easy software installations and upgrades on PlanktoScopes. Technical information about Pallet is available in [`reference.md`](reference.md).
+
+This Github repository is a collection of four Pallet repositories of software packages for Planktoscopes - `core`, `community`, `restricted`, `testing` - which serve different purposes and have different types of software packages. Each Pallet repository has a `README.md` file which describes its purpose. Packages in the `core`, `community`, and `restricted` repositories are configured to be deployed as integrated components of the overall PlanktoScope software distro.
 
 ## Usage
 
@@ -12,7 +17,7 @@ TBD
 
 ## Licensing
 
-Pallet packages have their own software licenses, as specified by SPDX short form identifiers (e.g. "Apache-2.0") in the packages' corresponding `package.yml` metadata files and/or LICENSE files provided in the package directories. Any other source code provided here is covered by the following information, except where otherwise indicated:
+Pallet packages have their own software licenses, as specified by SPDX short form identifiers (e.g. "Apache-2.0") in the packages' corresponding `pallet-package.yml` metadata files and/or LICENSE files provided in the package directories. Any other source code provided here is covered by the following information, except where otherwise indicated:
 
 Copyright Ethan Li and PlanktoScope project contributors
 
