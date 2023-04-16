@@ -26,3 +26,7 @@ By design, all Pallet repositories in a Github repository will have the same rep
 ### Package versions
 
 A *package version* identifies an immutable snapshot of a package, which may be either a release or a pre-release. Each version starts with the letter `v`, followed by a semantic version. Currently, the only use for package versions is for them to be reported in order to help users understand the changes made by applying an upgrade or downgrade of the Pallet repository version installed on a PlanktoScope.
+
+## Package metadata
+
+TODO: add a specification for the `package.yml` file.
