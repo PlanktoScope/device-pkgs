@@ -1,6 +1,6 @@
 package:
   version: 0.1.0
-  description: Object segmenter for PlanktoScope data
+  description: Object segmenter ambiently provided by the PlanktoScope
   maintainers:
   - name: Ethan Li
     email: lietk12@gmail.com
@@ -21,6 +21,17 @@ host:
       paths:
       - /
       - /stream.mjpg
+    services:
+    - description: MQTT handling of segmenter commands and broadcasting of segmenter statuses
+      tags: [planktoscope-api-v2]
+      port: 1883
+      protocol: mqtt
+      paths:
+      - /segmenter/segment
+      - /status/segmenter
+      - /status/segmenter/name
+      - /status/segmenter/object_id
+      - /status/segmenter/metric
 
 deployment:
   name: planktoscope-processing-segmenter-object-mjpeg-proxy-config

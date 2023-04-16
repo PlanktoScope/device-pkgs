@@ -1,6 +1,6 @@
 package:
   version: 0.1.0
-  description: Pi camera for the PlanktoScope
+  description: Pi camera ambiently provided by the PlanktoScope
   maintainers:
   - name: Ethan Li
     email: lietk12@gmail.com

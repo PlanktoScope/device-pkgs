@@ -1,0 +1,24 @@
+package:
+  version: 0.1.0
+  description: Python backend ambiently provided by the PlanktoScope
+  maintainers:
+  - name: Ethan Li
+    email: lietk12@gmail.com
+  license: GPL-3.0
+  sources:
+  - https://github.com/PlanktoScope/PlanktoScope
+
+host:
+  provides:
+    services:
+    - description: MQTT handling of HAL & controller commands and broadcasting of HAL & controller statuses
+      tags: [planktoscope-api-v2]
+      port: 1883
+      protocol: mqtt
+      paths:
+      - /actuator/pump
+      - /actuator/focus
+      - /imager/image
+      - /status/pump
+      - /status/focus
+      - /status/imager

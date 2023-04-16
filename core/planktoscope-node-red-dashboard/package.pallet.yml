@@ -31,6 +31,23 @@ host:
 deployment:
   name: cockpit-proxy-config
   definition: /docker-stack.yml
+  requires:
+    services:
+    - tags: [planktoscope-api-v2]
+      port: 1883
+      protocol: mqtt
+      paths:
+      - /actuator/pump
+      - /actuator/focus
+      - /imager/image
+      - /segmenter/segment
+      - /status/pump
+      - /status/focus
+      - /status/imager
+      - /status/segmenter
+      - /status/segmenter/name
+      - /status/segmenter/object_id
+      - /status/segmenter/metric
   default-features: [editor, frontend]
 
 features:

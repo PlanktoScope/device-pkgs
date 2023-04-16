@@ -17,6 +17,9 @@ deployment:
       port: 8000
       protocol: http
       path: /
+    - tags: [mqtt-broker]
+      port: 1883
+      protocol: mqtt
     - tags: [planktoscope-api-v2]
       port: 1883
       protocol: mqtt

@@ -1,0 +1,17 @@
+package:
+  version: 0.1.0
+  description: SSH server ambiently provided by the PlanktoScope
+  maintainers:
+  - name: Ethan Li
+    email: lietk12@gmail.com
+  license: SSH-OpenSSH
+  sources:
+  - https://github.com/openssh/openssh-portable
+
+host:
+  provides:
+    services:
+    - description: SSH server
+      tags: [sshd]
+      port: 22
+      protocol: ssh

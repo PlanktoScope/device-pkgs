@@ -1,6 +1,6 @@
 package:
   version: 0.1.0
-  description: Web GUI for system administration
+  description: Web GUI for system administration ambiently provided by the PlanktoScope
   maintainers:
   - name: Ethan Li
     email: lietk12@gmail.com
