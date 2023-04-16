@@ -1,0 +1,38 @@
+package:
+  version: 0.1.0
+  description: Reverse proxy for web services
+  maintainers:
+  - name: Ethan Li
+    email: lietk12@gmail.com
+  license: MIT
+  sources:
+  - https://github.com/lucaslorentz/caddy-docker-proxy
+
+deployment:
+  name: caddy-ingress
+  definition: /docker-stack.yml
+  default-features: [service-proxy]
+
+features:
+  service-proxy:
+    description: Provides reverse-proxying access to Docker Swarm services defined by other packages
+    requires:
+      networks: [bridge]
+    provides:
+      networks: [caddy-ingress]
+      listeners:
+      - description: Web server for all HTTP requests
+        port: 80
+        protocol: tcp
+      - description: Web server for all HTTPS requests
+        port: 443
+        protocol: tcp
+      services:
+      - description: Web server which reverse-proxies PlanktoScope web services
+        tags: [caddy-docker-proxy]
+        port: 80
+        protocol: http
+      - description: Reverse-proxy web server which provides TLS termination to PlanktoScope web services
+        tags: [caddy-docker-proxy]
+        port: 443
+        protocol: http

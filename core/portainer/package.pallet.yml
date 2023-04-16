@@ -1,0 +1,54 @@
+package:
+  version: 0.1.0
+  description: Admin GUI for Docker
+  maintainers:
+  - name: Ethan Li
+    email: lietk12@gmail.com
+  license: Zlib
+  sources:
+  - https://github.com/portainer/portainer
+
+deployment:
+  name: portainer
+  definition: /docker-stack.yml
+  default-features: [frontend, frontend-direct, edge-agent-tunnel]
+
+features:
+  frontend:
+    description: Provides access to the GUI
+    requires:
+      networks: [caddy-ingress]
+      services:
+      - tags: [caddy-docker-proxy]
+        port: 80
+        protocol: http
+    provides:
+      services:
+      - description: The Portainer Docker management dashboard
+        port: 80
+        protocol: http
+        paths:
+        - /admin/portainer
+        - /admin/portainer/*
+  frontend-direct:
+    description: Provides direct access to the GUI
+    provides:
+      services:
+      - port: 9000
+        application: portainer-gui
+        protocol: http
+        paths:
+        - /*
+      - port: 9443
+        application: portainer-gui
+        protocol: https
+        paths:
+        - /*
+  edge-agent-tunnel:
+    description: Provides a TLS tunnel server which Portainer Edge Agents can connect to
+    provides:
+      services:
+      - description: The Portainer Edge Agent TLS tunnel server
+        port: 8008
+        application: portainer-edge-tunnel
+        protocol: ssh

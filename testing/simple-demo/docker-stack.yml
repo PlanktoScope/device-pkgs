@@ -6,8 +6,8 @@ services:
       - caddy-ingress
     labels:
       caddy: :80
-      caddy.redir: /demo/hello-1 /demo/hello-1/
-      caddy.handle_path: /demo/hello-1/*
+      caddy.redir: /demo/hello-nginx /demo/hello-nginx/
+      caddy.handle_path: /demo/hello-nginx/*
       caddy.handle_path.reverse_proxy: "{{upstreams 80}}"
   whoami:
     image: containous/whoami
@@ -15,8 +15,8 @@ services:
       - caddy-ingress
     labels:
       caddy: :80
-      caddy.redir: /demo/whoami-1 /demo/whoami-1/
-      caddy.handle_path: /demo/whoami-1/*
+      caddy.redir: /demo/whoami /demo/whoami/
+      caddy.handle_path: /demo/whoami/*
       caddy.handle_path.reverse_proxy: "{{upstreams 80}}"
 
 networks:

@@ -1,0 +1,48 @@
+package:
+  version: 0.1.0
+  description: An experimental GUI for the PlanktoScope with configurable automation
+  maintainers:
+  - name: Ethan Li
+    email: lietk12@gmail.com
+  license: Apache-2.0
+  sources:
+  - https://github.com/sargassum-world/pslive
+
+deployment:
+  name: pslocal
+  definition: /docker-stack.yml
+  requires:
+    services:
+    - tags: [mjpeg]
+      port: 8000
+      protocol: http
+      path: /
+    - tags: [planktoscope-api-v2]
+      port: 1883
+      protocol: mqtt
+      paths:
+      - /actuator/pump
+      - /actuator/focus
+      - /imager/image
+      - /segmenter/segment
+      - /status/pump
+      - /status/focus
+      - /status/imager
+      - /status/segmenter
+      - /status/segmenter/name
+      - /status/segmenter/object_id
+      - /status/segmenter/metric
+  default-features: [frontend-direct]
+
+features:
+  frontend-direct:
+    description: Provides access to the GUI
+    requires:
+      networks: [bridge]
+    provides:
+      services:
+      - description: The pslocal PlanktoScope dashboard
+        port: 3000
+        protocol: http
+        paths:
+        - /*

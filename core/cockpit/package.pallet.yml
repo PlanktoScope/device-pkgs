@@ -1,0 +1,49 @@
+package:
+  version: 0.1.0
+  description: Web GUI for system administration
+  maintainers:
+  - name: Ethan Li
+    email: lietk12@gmail.com
+  license: LGPL-2.1
+  sources:
+  - https://github.com/cockpit-project/cockpit
+
+host:
+  provides:
+    listeners:
+    - description: Web server for the Cockpit dashboard
+      port: 9090
+      protocol: tcp
+    services:
+    - description: The Cockpit system administration dashboard
+      port: 9090
+      protocol: http
+      paths:
+      - /admin/cockpit/*
+
+deployment:
+  name: cockpit-proxy-config
+  definition: /docker-stack.yml
+  default-features: [frontend]
+
+features:
+  frontend:
+    description: Provides access to the GUI
+    requires:
+      networks: [caddy-ingress]
+      services:
+      - tags: [caddy-docker-proxy]
+        port: 80
+        protocol: http
+      - port: 9090
+        protocol: http
+        paths:
+        - /admin/cockpit/*
+    provides:
+      services:
+      - description: The Cockpit system administration dashboard
+        port: 80
+        protocol: http
+        paths:
+        - /admin/cockpit
+        - /admin/cockpit/*

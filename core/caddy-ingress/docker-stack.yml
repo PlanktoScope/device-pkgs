@@ -7,9 +7,6 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - server_data:/data
       - server_config:/config
-    configs:
-      - source: caddyfile
-        target: /etc/caddy/Caddyfile
     ports:
       - 80:80
       - 443:443
@@ -20,7 +17,8 @@ services:
       - bridge
     environment:
       - CADDY_INGRESS_NETWORKS=caddy-ingress
-      - CADDY_DOCKER_CADDYFILE_PATH=/etc/caddy/Caddyfile
+    labels:
+      caddy.auto_https: disable_redirects
 networks:
   proxied_network:
     name: caddy-ingress
@@ -32,8 +30,3 @@ networks:
 volumes:
   server_data:
   server_config:
-
-# TODO: instead embed files in a custom Docker image instead
-configs:
-  caddyfile:
-    file: ./Caddyfile

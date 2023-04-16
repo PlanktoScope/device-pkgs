@@ -1,0 +1,15 @@
+version: 3
+services:
+  reverse-proxy-config:
+    image: docksal/empty
+    networks:
+      - caddy-ingress
+    labels:
+      caddy: :80
+      caddy.handle_path: /ps/processing/segmenter/streams/object.mjpg
+      caddy.handle_path.rewrite: * /object.mjpg
+      caddy.handle_path.reverse_proxy: host.docker.internal:8001
+
+networks:
+  caddy-ingress:
+    external: true

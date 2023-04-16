@@ -1,0 +1,49 @@
+package:
+  version: 0.1.0
+  description: Object segmenter for PlanktoScope data
+  maintainers:
+  - name: Ethan Li
+    email: lietk12@gmail.com
+  license: GPL-3.0
+  sources:
+  - https://github.com/PlanktoScope/PlanktoScope
+
+host:
+  provides:
+    listeners:
+    - description: MJPEG streaming web server for the PlanktoScope object segmenter
+      port: 8001
+      protocol: tcp
+    services:
+    - description: MJPEG stream of last segmented object from the PlanktoScope object segmenter
+      port: 8001
+      protocol: http
+      paths:
+      - /
+      - /stream.mjpg
+
+deployment:
+  name: planktoscope-processing-segmenter-object-mjpeg-proxy-config
+  definition: /docker-stack.yml
+  default-features: [mjpeg-object-stream]
+
+features:
+  mjpeg-object-stream:
+    description: Provides access to the last segmented object MJPEG stream
+    requires:
+      networks: [caddy-ingress]
+      services:
+      - tags: [caddy-docker-proxy]
+        port: 80
+        protocol: http
+      - port: 8001
+        protocol: http
+        paths:
+        - /stream.mjpg
+    provides:
+      services:
+      - description: Last segmented object MJPEG stream from the segmenter
+        port: 80
+        protocol: http
+        paths:
+        - /ps/processing/segmenter/streams/object.mjpg

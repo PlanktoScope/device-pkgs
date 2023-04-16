@@ -1,0 +1,49 @@
+package:
+  version: 0.1.0
+  description: A hello-world and whoami demo
+  maintainers:
+  - name: Ethan Li
+    email: lietk12@gmail.com
+  license: Apache-2.0
+  sources:
+  - https://github.com/nginxinc/NGINX-Demos
+  - https://github.com/traefik/whoami
+
+deployment:
+  name: simple-demo
+  definition: /docker-stack.yml
+  default-features: [hello, whoami]
+
+features:
+  hello:
+    description: Provides a hello-world endpoint
+    requires:
+      networks: [caddy-ingress]
+      services:
+      - tags: [caddy-docker-proxy]
+        port: 80
+        protocol: http
+    provides:
+      services:
+      - description: An nginx hello-world landing page for testing
+        port: 80
+        protocol: http
+        paths:
+        - /demo/hello-nginx
+        - /demo/hello-nginx/*
+  whoami:
+    description: Provides a whoami endpoint
+    requires:
+      networks: [caddy-ingress]
+      services:
+      - tags: [caddy-docker-proxy]
+        port: 80
+        protocol: http
+    provides:
+      services:
+      - description: An unformatted whoami endpoint for testing
+        port: 80
+        protocol: http
+        paths:
+        - /demo/whoami
+        - /demo/whoami/*

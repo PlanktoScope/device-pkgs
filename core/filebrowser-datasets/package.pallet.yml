@@ -1,0 +1,32 @@
+package:
+  version: 0.1.0
+  description: Filesystem browser and manager for PlanktoScope datasets
+  maintainers:
+  - name: Ethan Li
+    email: lietk12@gmail.com
+  license: Apache-2.0
+  sources:
+  - https://github.com/filebrowser/filebrowser
+
+deployment:
+  name: filebrowser-datasets
+  definition: /docker-stack.yml
+  default-features: [frontend]
+
+features:
+  frontend:
+    description: Provides access to the GUI
+    requires:
+      networks: [caddy-ingress]
+      services:
+      - tags: [caddy-docker-proxy]
+        port: 80
+        protocol: http
+    provides:
+      services:
+      - description: File browser & manager for PlanktoScope's datasets
+        port: 80
+        protocol: http
+        paths:
+        - /ps/data/browse
+        - /ps/data/browse/*
