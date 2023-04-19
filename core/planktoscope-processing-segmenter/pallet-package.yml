@@ -34,7 +34,7 @@ host:
       - /status/segmenter/metric
 
 deployment:
-  name: planktoscope-processing-segmenter-object-mjpeg-proxy-config
+  name: planktoscope-processing-segmenter
   definition: /docker-stack.yml
   default-features: [mjpeg-object-stream]
 

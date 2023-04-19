@@ -22,7 +22,7 @@ host:
       - /admin/cockpit/*
 
 deployment:
-  name: cockpit-proxy-config
+  name: cockpit
   definition: /docker-stack.yml
   default-features: [frontend]
 

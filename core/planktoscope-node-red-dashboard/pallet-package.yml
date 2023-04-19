@@ -29,7 +29,7 @@ host:
       - /ps/node-red-v2/ui/*
 
 deployment:
-  name: cockpit-proxy-config
+  name: planktoscope-node-red-dashboard
   definition: /docker-stack.yml
   requires:
     services:

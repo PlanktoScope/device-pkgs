@@ -10,6 +10,10 @@ package:
 
 host:
   provides:
+    listeners:
+    - description: MJPEG streaming web server for the PlanktoScope's pi camera
+      port: 8000
+      protocol: tcp
     services:
     - description: MQTT handling of HAL & controller commands and broadcasting of HAL & controller statuses
       tags: [planktoscope-api-v2]
@@ -22,3 +26,36 @@ host:
       - /status/pump
       - /status/focus
       - /status/imager
+    services:
+    - description: MJPEG preview stream of the PlanktoScope's Pi camera
+      port: 8000
+      protocol: http
+      paths:
+      - /
+      - /stream.mjpg
+
+deployment:
+  name: planktoscope-controller
+  definition: /docker-stack.yml
+  default-features: [camera-preview-stream-mjpeg]
+
+features:
+  camera-preview-stream-mjpeg:
+    description: Provides access to the preview MJPEG stream
+    requires:
+      networks: [caddy-ingress]
+      services:
+      - tags: [caddy-docker-proxy]
+        port: 80
+        protocol: http
+      - port: 8000
+        protocol: http
+        paths:
+        - /stream.mjpg
+    provides:
+      services:
+      - description: Preview MJPEG stream from the Pi camera
+        port: 80
+        protocol: http
+        paths:
+        - /ps/hal/camera/streams/preview.mjpg
