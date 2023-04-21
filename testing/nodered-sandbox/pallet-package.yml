@@ -1,32 +1,32 @@
 package:
-  version: 0.1.0
   description: An isolated Node-RED instance for prototyping
   maintainers:
-  - name: Ethan Li
-    email: lietk12@gmail.com
+    - name: Ethan Li
+      email: lietk12@gmail.com
   license: Apache-2.0
   sources:
-  - https://github.com/node-red/node-red
+    - https://github.com/node-red/node-red
 
 deployment:
   name: nodered-sandbox
-  definition: /docker-stack.yml
-  default-features: [editor]
+  definition-file: /docker-stack.yml
 
 features:
   editor:
     description: Provides access to the Node-RED editor
     requires:
-      networks: [caddy-ingress]
+      networks:
+        - description: Overlay network for Caddy to connect to upstream services
+          name: caddy-ingress
       services:
-      - tags: [caddy-docker-proxy]
-        port: 80
-        protocol: http
+        - tags: [caddy-docker-proxy]
+          port: 80
+          protocol: http
     provides:
       services:
-      - description: Node-RED editor for sandboxed prototyping
-        port: 80
-        protocol: http
-        paths:
-        - /demo/nodered-sandbox
-        - /demo/nodered-sandbox/*
+        - description: Node-RED editor for sandboxed prototyping
+          port: 80
+          protocol: http
+          paths:
+            - /demo/nodered-sandbox
+            - /demo/nodered-sandbox/*

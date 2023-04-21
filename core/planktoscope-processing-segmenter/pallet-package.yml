@@ -1,60 +1,60 @@
 package:
-  version: 0.1.0
   description: Object segmenter ambiently provided by the PlanktoScope
   maintainers:
-  - name: Ethan Li
-    email: lietk12@gmail.com
+    - name: Ethan Li
+      email: lietk12@gmail.com
   license: GPL-3.0
   sources:
-  - https://github.com/PlanktoScope/PlanktoScope
+    - https://github.com/PlanktoScope/PlanktoScope
 
 host:
   provides:
     listeners:
-    - description: MJPEG streaming web server for the PlanktoScope object segmenter
-      port: 8001
-      protocol: tcp
+      - description: MJPEG streaming web server for the PlanktoScope object segmenter
+        port: 8001
+        protocol: tcp
     services:
-    - description: MJPEG stream of last segmented object from the PlanktoScope object segmenter
-      port: 8001
-      protocol: http
-      paths:
-      - /
-      - /stream.mjpg
+      - description: MJPEG stream of last segmented object from the PlanktoScope object segmenter
+        port: 8001
+        protocol: http
+        paths:
+          - /
+          - /stream.mjpg
     services:
-    - description: MQTT handling of segmenter commands and broadcasting of segmenter statuses
-      tags: [planktoscope-api-v2]
-      port: 1883
-      protocol: mqtt
-      paths:
-      - /segmenter/segment
-      - /status/segmenter
-      - /status/segmenter/name
-      - /status/segmenter/object_id
-      - /status/segmenter/metric
+      - description: MQTT handling of segmenter commands and broadcasting of segmenter statuses
+        tags: [planktoscope-api-v2]
+        port: 1883
+        protocol: mqtt
+        paths:
+          - /segmenter/segment
+          - /status/segmenter
+          - /status/segmenter/name
+          - /status/segmenter/object_id
+          - /status/segmenter/metric
 
 deployment:
   name: planktoscope-processing-segmenter
-  definition: /docker-stack.yml
-  default-features: [mjpeg-object-stream]
+  definition-file: /docker-stack.yml
 
 features:
   mjpeg-object-stream:
     description: Provides access to the last segmented object MJPEG stream
     requires:
-      networks: [caddy-ingress]
+      networks:
+        - description: Overlay network for Caddy to connect to upstream services
+          name: caddy-ingress
       services:
-      - tags: [caddy-docker-proxy]
-        port: 80
-        protocol: http
-      - port: 8001
-        protocol: http
-        paths:
-        - /stream.mjpg
+        - tags: [caddy-docker-proxy]
+          port: 80
+          protocol: http
+        - port: 8001
+          protocol: http
+          paths:
+            - /stream.mjpg
     provides:
       services:
-      - description: Last segmented object MJPEG stream from the segmenter
-        port: 80
-        protocol: http
-        paths:
-        - /ps/processing/segmenter/streams/object.mjpg
+        - description: Last segmented object MJPEG stream from the segmenter
+          port: 80
+          protocol: http
+          paths:
+            - /ps/processing/segmenter/streams/object.mjpg

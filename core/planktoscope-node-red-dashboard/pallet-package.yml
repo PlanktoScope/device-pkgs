@@ -1,98 +1,98 @@
 package:
-  version: 0.1.0
   description: Web GUI for operating the PlanktoScope
   maintainers:
-  - name: Ethan Li
-    email: lietk12@gmail.com
+    - name: Ethan Li
+      email: lietk12@gmail.com
   license: GPL-3.0
   sources:
-  - https://github.com/PlanktoScope/PlanktoScope
+    - https://github.com/PlanktoScope/PlanktoScope
 
 host:
   provides:
     listeners:
-    - description: Node-RED server for the PlanktoScope v2 dashboard
-      port: 1880
-      protocol: tcp
+      - description: Node-RED server for the PlanktoScope v2 dashboard
+        port: 1880
+        protocol: tcp
     services:
-    - description: The Node-RED editor for the v2 PlanktoScope dashboard
-      port: 1880
-      protocol: http
-      paths:
-      - /admin/ps/node-red-v2
-      - /admin/ps/node-red-v2/*
+      - description: The Node-RED editor for the v2 PlanktoScope dashboard
+        port: 1880
+        protocol: http
+        paths:
+          - /admin/ps/node-red-v2
+          - /admin/ps/node-red-v2/*
     - description: The v2 PlanktoScope dashboard for configuring the PlanktoScope and collecting data
       port: 1880
       protocol: http
       paths:
-      - /ps/node-red-v2/ui
-      - /ps/node-red-v2/ui/*
+        - /ps/node-red-v2/ui
+        - /ps/node-red-v2/ui/*
 
 deployment:
   name: planktoscope-node-red-dashboard
-  definition: /docker-stack.yml
+  definition-file: /docker-stack.yml
   requires:
     services:
-    - tags: [planktoscope-api-v2]
-      port: 1883
-      protocol: mqtt
-      paths:
-      - /actuator/pump
-      - /actuator/focus
-      - /imager/image
-      - /segmenter/segment
-      - /status/pump
-      - /status/focus
-      - /status/imager
-      - /status/segmenter
-      - /status/segmenter/name
-      - /status/segmenter/object_id
-      - /status/segmenter/metric
-  default-features: [editor, frontend]
+      - tags: [planktoscope-api-v2]
+        port: 1883
+        protocol: mqtt
+        paths:
+          - /actuator/pump
+          - /actuator/focus
+          - /imager/image
+          - /segmenter/segment
+          - /status/pump
+          - /status/focus
+          - /status/imager
+          - /status/segmenter
+          - /status/segmenter/name
+          - /status/segmenter/object_id
+          - /status/segmenter/metric
 
 features:
   editor:
     description: Provides access to the Node-RED admin editor for modifying the GUI
     requires:
-      networks: [caddy-ingress]
+      networks:
+        - description: Overlay network for Caddy to connect to upstream services
+          name: caddy-ingress
       services:
-      - tags: [caddy-docker-proxy]
-        port: 80
-        protocol: http
-      - port: 1880
-        protocol: http
-        paths:
-        - /admin/ps/node-red-v2/*
+        - tags: [caddy-docker-proxy]
+          port: 80
+          protocol: http
+        - port: 1880
+          protocol: http
+          paths:
+            - /admin/ps/node-red-v2/*
     provides:
       services:
-      - description: The Node-RED editor for the v2 PlanktoScope dashboard
-        port: 80
-        protocol: http
-        paths:
-        - /admin/ps/node-red-v2
-        - /admin/ps/node-red-v2/*
+        - description: The Node-RED editor for the v2 PlanktoScope dashboard
+          port: 80
+          protocol: http
+          paths:
+            - /admin/ps/node-red-v2
+            - /admin/ps/node-red-v2/*
   frontend:
     description: Provides access to the GUI
     requires:
       networks: [caddy-ingress]
       services:
-      - tags: [caddy-docker-proxy]
-        port: 80
-        protocol: http
-      - port: 1880
-        protocol: http
-        paths:
-        - /ps/node-red-v2/ui/*
-      - port: 80
-        protocol: http
-        paths:
-        - /ps/streams/camera/preview.mjpg
-        - /ps/streams/segmenter/object.mjpg
+        - tags: [caddy-docker-proxy]
+          port: 80
+          protocol: http
+        - port: 1880
+          protocol: http
+          paths:
+            - /ps/node-red-v2/ui/*
+        - port: 80
+          protocol: http
+          paths:
+            - /ps/streams/camera/preview.mjpg
+            - /ps/streams/segmenter/object.mjpg
     provides:
       services:
-      - description: The v2 PlanktoScope dashboard for configuring the PlanktoScope and collecting data
-        port: 80
-        protocol: http
-        paths:
-        - /ps/node-red-v2/ui
-        - /ps/node-red-v2/ui/*
+        - description: The v2 PlanktoScope dashboard for configuring the PlanktoScope and collecting data
+          port: 80
+          protocol: http
+          paths:
+            - /ps/node-red-v2/ui
+            - /ps/node-red-v2/ui/*

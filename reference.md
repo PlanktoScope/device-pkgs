@@ -14,7 +14,7 @@ A Pallet *repository* is a collection of packages that are tested, released, dis
 Each Pallet *package* within a repository specifies the preconditions and consequences of its deployment on the host. Typically, a package declares some or all of the following:
 
 - A Docker stack which will be deployed on the Docker host to a stack name specified by the package. If a newer version of a package uses the same stack name as an older version of that package, the stack will be replaced when upgrading or downgrading between those versions. If two or more packages with different repository paths use the same stack name, only one of those packages may be deployed on a host at any given time.
-- A set of optional [*features*](#package-features) which may be enabled for the deployment; some features may be enabled by default. Features control the functionalities or behavior of the *package deployment*, which is fully and uniquely specified by declaring the package to deploy along with the features to enable in the deployment.
+- A set of optional [*features*](#package-features) which may be enabled for the deployment. Features control the functionalities or behavior of the *package deployment*, which is fully and uniquely specified by declaring the package to deploy along with the features to enable in the deployment.
 - A set of [*constraints*](#package-deployments-and-constraints) for determining whether the package deployment is allowed on the Docker host, including a list of any host [*resources*](#package-resource-constraints) which are required by the package deployment or provided by the package deployment. Features may also declare their own constraints, which are only used when those features are enabled.
 
 All of this information is declared in a `pallet-package.yml` file. The *package root directory* is the directory that contains the package's `pallet-package.yml` file.
@@ -32,15 +32,16 @@ A repository path should communicate both what the repository does and where to 
   - As another example, the Pallet repository `github.com/PlanktoScope/forklift` is defined in the root directory of the Github repository `github.com/PlanktoScope/forklift`, so it has no Pallet repository subdirectory, and the Github repository's root directory is also the Pallet repository's root directory.
 
 ### Repository versions
-A *repository version* is a Git tag which identifies an immutable snapshot of all Pallet repositories in a Github repository and all Pallet packages in each Pallet repository; thus, all Pallet repositories in a Github repository will have always have identical repository versions. A repository version may be either a release or a pre-release.
+A *repository version* is a Git tag which identifies an immutable snapshot of all Pallet repositories in a Github repository and all Pallet packages in each Pallet repository; thus, all Pallet repositories in a Github repository will have always have identical repository versions, and all Pallet packages in a Github repository will have the same repository version. A repository version may be either a release or a pre-release. Once a Git tag is created, it should not be deleted or changed to a different revision. Versions will be authenticated to ensure safe, repeatable deployments. If a tag is modified, clients may see a security error when downloading it.
 
-Each version starts with the letter `v`, followed by either a semantic version or a calendar version. See the [Semantic Versioning 2.0.0 specification](https://semver.org/spec/v2.0.0.html) for details on how semantic versions are formatted, interpreted, and compared; see the [Calendar Versioning reference](https://calver.org/) for details on how calendar versions may be constructed.
+Each version starts with the letter `v`, followed by either a semantic version or a calendar version. See the [Semantic Versioning 2.0.0 specification](https://semver.org/spec/v2.0.0.html) for details on how semantic versions are formatted, interpreted, and compared; the [Calendar Versioning reference](https://calver.org/) describes a variety of ways that calendar versions may be constructed, but any calendar versioning scheme used for a Pallet repository must meet the following requirements:
+
+- The calendar version must have three parts (major, minor, and micro), and it may have additional labels for pre-release and build metadata following the semantic versioning specification.
+- No version part may be zero-padded (so e.g. `2022.4.0` and `22.4.0` are allowed, while `2022.04.0` and `22.04.0` are not allowed).
+- The calendar version must conform to the semantic versioning specifications for precedence, so that versions can be compared and sequentially ordered.
 
 ### Package paths
 The path of a Pallet package is the Pallet repository path joined with the subdirectory (relative to the Pallet repository root) which contains the package's `pallet-package.yml` file. That subdirectory is the *package root directory*. For example, the Pallet repository `github.com/PlanktoScope/pallets/core` contains a Pallet package in the directory `caddy-ingress`. The `caddy-ingress` directory contains a `pallet-package.yml` file and thus is the root directory of a package which has a package path of `github.com/PlanktoScope/pallets/core/caddy-ingress`. Note that the package path cannot be resolved as a web page URL (so for example <https://github.com/PlanktoScope/pallets/core/caddy-ingress> gives a HTTP 404 Not Found error), because the package path is only resolvable in the context of a specific Github repository version.
-
-### Package versions
-A *package version* identifies a snapshot of a package, which may be either a release or a pre-release. Each version starts with the letter `v`, followed by a semantic version. Package versions are reported to users when applying an upgrade or downgrade of a Pallet repository in order to help users understand the changes they will make. The major component of the package's semantic version must be incremented whenever a backwards-incompatible change is made to any of the external interfaces of any possible deployment of that package. More specific examples of such changes are described [below](#changes-to-external-interfaces).
 
 ## Package deployments and constraints
 Usually, multiple package deployments are simultaneously active on a Docker host, and multiple package deployments will be modified by any package manager operation, for example:
@@ -76,7 +77,7 @@ Because some Docker hosts may already have ambiently-available resources not pro
 ### Package features
 Pallet *features* provide a mechanism to express optional resource constraints (both required resources and provided resources) and functionalities of a package. The design of Pallet features is inspired by the design of the [features system](https://doc.rust-lang.org/cargo/reference/features.html) in the Rust Cargo package management system.
 
-A package defines a set of named features in its `pallet-package.yml` metadata file, and each feature can be either enabled or disabled by a package manager. Each Pallet feature specifies any resources it requires from the Docker host, as well as any resources it provides on the Docker host. Additionally, a package may specify a default list of Pallet features to enable upon deployment, which is used if (and only if) a list of enabled features is not provided by the package manager deploying the package.
+A package defines a set of named features in its `pallet-package.yml` metadata file, and each feature can be either enabled or disabled by a package manager. Each Pallet feature specifies any resources it requires from the Docker host, as well as any resources it provides on the Docker host.
 
 ### Versioning with constraints and features
 
@@ -87,8 +88,6 @@ Usually, the following changes to a package will require incrementing the major 
   - In the host specification or the deployment specification:
     - Adding a provided resource
     - Modifying the identification criteria of a provided resource
-  - In the deployment specification:
-    - Adding a feature to the package's default list of features, if doing so would add a provided resource to the default package deployment
   - In any optional feature:
     - Adding a new provided resource
 - Making changes which may make dependencies between provided and required resources unresolvable, for certain combinations of package deployments:
@@ -97,8 +96,6 @@ Usually, the following changes to a package will require incrementing the major 
   - In the deployment specification:
     - Adding a resource requirement
     - Modifying the identification criteria of a resource requirement
-    - Adding a feature to the package's default list of features, if doing so would add a resource requirement to the default package deployment.
-    - Removing a feature from the package's default list of features, if doing so would remove a provided resources from the default package deployment.
   - In any optional feature:
     - Adding a new resource requirement
     - Removing a provided resource
@@ -113,7 +110,7 @@ Usually, the following changes to a package will require incrementing the major 
 
 The following changes to a package will usually only require incrementing the minor component of the package's semantic version:
 
-- Adding a new optional feature, without adding it to the default list of enabled features
+- Adding a new optional feature
 - Removing a requirement from any optional feature
 - Making a backwards-compatible change to any external technical or user interfaces provided or required by that package. Backwards-compatible changes in an interface include:
   - Removing a requirement from the interface

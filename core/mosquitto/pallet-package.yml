@@ -1,30 +1,29 @@
 package:
-  version: 0.1.0
-  description: MQTT broker for the PlanktoScope backend's MQTT API
   maintainers:
-  - name: Ethan Li
-    email: lietk12@gmail.com
+    - name: Ethan Li
+      email: lietk12@gmail.com
   license: (EPL-2.0 OR BSD-3-Clause)
   sources:
-  - https://github.com/eclipse/mosquitto
+    - https://github.com/eclipse/mosquitto
 
 deployment:
   name: mosquitto
-  definition: /docker-stack.yml
-  default-features: [mqtt-broker]
+  definition-file: /docker-stack.yml
 
 features:
   mqtt-broker:
     description: Provides access to the MQTT broker
     requires:
-      networks: [bridge]
+      networks:
+        - description: Bridge network to the host
+          name: bridge
     provides:
       listeners:
-      - description: MQTT broker
-        port: 1883
-        protocol: mqtt
+        - description: MQTT broker
+          port: 1883
+          protocol: mqtt
       services:
-      - description: MQTT broker for the PlanktoScope backend's MQTT API
-        tags: [mqtt-broker]
-        port: 1883
-        protocol: mqtt
+        - description: MQTT broker for the PlanktoScope backend's MQTT API
+          tags: [mqtt-broker]
+          port: 1883
+          protocol: mqtt

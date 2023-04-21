@@ -1,49 +1,48 @@
 package:
-  version: 0.1.0
-  description: Web GUI for system administration ambiently provided by the PlanktoScope
   maintainers:
-  - name: Ethan Li
-    email: lietk12@gmail.com
+    - name: Ethan Li
+      email: lietk12@gmail.com
   license: LGPL-2.1
   sources:
-  - https://github.com/cockpit-project/cockpit
+    - https://github.com/cockpit-project/cockpit
 
 host:
   provides:
     listeners:
-    - description: Web server for the Cockpit dashboard
-      port: 9090
-      protocol: tcp
+      - description: Web server for the Cockpit dashboard
+        port: 9090
+        protocol: tcp
     services:
-    - description: The Cockpit system administration dashboard
-      port: 9090
-      protocol: http
-      paths:
-      - /admin/cockpit/*
+      - description: The Cockpit system administration dashboard
+        port: 9090
+        protocol: http
+        paths:
+          - /admin/cockpit/*
 
 deployment:
   name: cockpit
-  definition: /docker-stack.yml
-  default-features: [frontend]
+  definition-file: /docker-stack.yml
 
 features:
   frontend:
     description: Provides access to the GUI
     requires:
-      networks: [caddy-ingress]
+      networks:
+        - description: Overlay network for Caddy to connect to upstream services
+          name: caddy-ingress
       services:
-      - tags: [caddy-docker-proxy]
-        port: 80
-        protocol: http
-      - port: 9090
-        protocol: http
-        paths:
-        - /admin/cockpit/*
+        - tags: [caddy-docker-proxy]
+          port: 80
+          protocol: http
+        - port: 9090
+          protocol: http
+          paths:
+            - /admin/cockpit/*
     provides:
       services:
-      - description: The Cockpit system administration dashboard
-        port: 80
-        protocol: http
-        paths:
-        - /admin/cockpit
-        - /admin/cockpit/*
+        - description: The Cockpit system administration dashboard
+          port: 80
+          protocol: http
+          paths:
+            - /admin/cockpit
+            - /admin/cockpit/*
