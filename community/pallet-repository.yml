@@ -1,1 +1,4 @@
-path: github.com/PlanktoScope/pallets/community
+repository:
+  path: github.com/PlanktoScope/pallets/community
+  description: Community-maintained open-source PlanktoScope packages
+  readme-file: README.md

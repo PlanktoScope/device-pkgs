@@ -10,7 +10,7 @@ package:
 
 deployment:
   name: simple-demo
-  definition-file: /docker-stack.yml
+  definition-file: docker-stack.yml
 
 features:
   hello:

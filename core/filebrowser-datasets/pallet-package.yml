@@ -8,7 +8,7 @@ package:
 
 deployment:
   name: filebrowser-datasets
-  definition-file: /docker-stack.yml
+  definition-file: docker-stack.yml
 
 features:
   frontend:

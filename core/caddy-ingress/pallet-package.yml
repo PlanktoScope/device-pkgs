@@ -9,7 +9,7 @@ package:
 
 deployment:
   name: caddy-ingress
-  definition-file: /docker-stack.yml
+  definition-file: docker-stack.yml
 
 features:
   service-proxy:

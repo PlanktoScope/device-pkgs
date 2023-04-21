@@ -34,7 +34,7 @@ host:
 
 deployment:
   name: planktoscope-controller
-  definition-file: /docker-stack.yml
+  definition-file: docker-stack.yml
 
 features:
   camera-preview-stream-mjpeg:

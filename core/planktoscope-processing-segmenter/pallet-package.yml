@@ -33,7 +33,7 @@ host:
 
 deployment:
   name: planktoscope-processing-segmenter
-  definition-file: /docker-stack.yml
+  definition-file: docker-stack.yml
 
 features:
   mjpeg-object-stream:

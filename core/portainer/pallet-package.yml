@@ -9,7 +9,7 @@ package:
 
 deployment:
   name: portainer
-  definition-file: /docker-stack.yml
+  definition-file: docker-stack.yml
 
 features:
   frontend:

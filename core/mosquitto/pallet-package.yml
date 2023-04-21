@@ -8,7 +8,7 @@ package:
 
 deployment:
   name: mosquitto
-  definition-file: /docker-stack.yml
+  definition-file: docker-stack.yml
 
 features:
   mqtt-broker:

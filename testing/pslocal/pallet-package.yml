@@ -9,7 +9,7 @@ package:
 
 deployment:
   name: pslocal
-  definition-file: /docker-stack.yml
+  definition-file: docker-stack.yml
   requires:
     services:
       - tags: [mjpeg]

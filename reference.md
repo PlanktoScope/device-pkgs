@@ -123,10 +123,12 @@ It is the reponsibility of the package maintainer to document the package's exte
 The metadata for a repository is defined by a YAML file named `pallet-repository.yml` in the repository's root directory. Here is an example of a `pallet-repository.yml` file:
 
 ```yaml
-path: github.com/PlanktoScope/pallets/core
+repository:
+  path: github.com/PlanktoScope/pallets/core
+  description: Officially-maintained open-source PlanktoScope packages
 ```
 
-The rest of this section describes the fields in the repository metadata file:
+Currently, all fields in the repository metadata file are under a `repository` section. The rest of this section describes the fields in the repository metadata file:
 
 ### `path`
 `path` is the repository path.
@@ -135,6 +137,26 @@ The rest of this section describes the fields in the repository metadata file:
 
   ```yaml
   path: github.com/PlanktoScope/pallets/core
+  ```
+
+### `description`
+`description` is a short (one-sentence) description of the repository to be shown to users.
+- This field is required.
+- Example:
+
+  ```yaml
+  description: github.com/PlanktoScope/pallets/core
+  ```
+
+### `readme-file`
+`readme-file` is the filename of a readme file to be shown to users.
+- This field is required.
+- The file must be located in the same directory as the `pallet-repository.yml` file.
+- It is recommended for this file to be named `README.md`.
+- Example:
+
+  ```yaml
+  readme-file: README.md
   ```
 
 ## Package metadata
