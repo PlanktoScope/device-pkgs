@@ -20,12 +20,12 @@ host:
         paths:
           - /admin/ps/node-red-v2
           - /admin/ps/node-red-v2/*
-    - description: The v2 PlanktoScope dashboard for configuring the PlanktoScope and collecting data
-      port: 1880
-      protocol: http
-      paths:
-        - /ps/node-red-v2/ui
-        - /ps/node-red-v2/ui/*
+      - description: The v2 PlanktoScope dashboard for configuring the PlanktoScope and collecting data
+        port: 1880
+        protocol: http
+        paths:
+          - /ps/node-red-v2/ui
+          - /ps/node-red-v2/ui/*
 
 deployment:
   name: planktoscope-node-red-dashboard
@@ -74,7 +74,9 @@ features:
   frontend:
     description: Provides access to the GUI
     requires:
-      networks: [caddy-ingress]
+      networks:
+        - description: Overlay network for Caddy to connect to upstream services
+          name: caddy-ingress
       services:
         - tags: [caddy-docker-proxy]
           port: 80

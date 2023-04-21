@@ -20,7 +20,6 @@ host:
         paths:
           - /
           - /stream.mjpg
-    services:
       - description: MQTT handling of segmenter commands and broadcasting of segmenter statuses
         tags: [planktoscope-api-v2]
         port: 1883
