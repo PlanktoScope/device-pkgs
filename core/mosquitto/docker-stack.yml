@@ -1,4 +1,3 @@
-version: 3
 services:
   reverse-proxy-config:
     image: eclipse-mosquitto:2.0.15

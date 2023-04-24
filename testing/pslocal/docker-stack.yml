@@ -1,5 +1,3 @@
-version: 3
-
 services:
   server:
     image: ghcr.io/sargassum-world/pslocal:0.3.8
