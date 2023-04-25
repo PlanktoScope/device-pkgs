@@ -6,7 +6,7 @@ services:
     labels:
       caddy: :80
       caddy.handle_path: /ps/processing/segmenter/streams/object.mjpg
-      caddy.handle_path.rewrite: * /object.mjpg
+      caddy.handle_path.rewrite: "* /object.mjpg"
       caddy.handle_path.reverse_proxy: host.docker.internal:8001
 
 networks:
