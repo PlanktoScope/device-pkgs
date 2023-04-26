@@ -1,8 +1,11 @@
 services:
-  reverse-proxy-config:
+  mqtt-broker:
     image: eclipse-mosquitto:2.0.15
+    command: mosquitto -c /mosquitto-no-auth.conf
     ports:
-      - 1883:1883
+      - target: 1883
+        published: 1883
+        mode: host
     networks:
       - bridge
 

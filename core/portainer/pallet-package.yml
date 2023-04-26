@@ -10,6 +10,10 @@ package:
 deployment:
   name: portainer
   definition-file: docker-stack.yml
+  provides:
+    networks:
+      - description: Overlay network for the Portainer server to connect to Portainer agents
+        name: portainer-agent
 
 features:
   frontend:
@@ -32,6 +36,10 @@ features:
             - /admin/portainer/*
   frontend-direct:
     description: Provides direct access to the GUI
+    requires:
+      networks:
+        - description: Bridge network to the host
+          name: bridge
     provides:
       services:
         - port: 9000

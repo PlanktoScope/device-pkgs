@@ -1,6 +1,7 @@
 services:
   reverse-proxy-config:
-    image: docksal/empty
+    image: alpine:3.17.3
+    command: sh -c 'while sleep 3600; do :; done'
     networks:
       - caddy-ingress
     labels:
