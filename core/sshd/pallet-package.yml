@@ -8,6 +8,11 @@ package:
     - https://github.com/openssh/openssh-portable
 
 host:
+  tags:
+    - device-portal-name=SSH server
+    - device-portal-description=Provides SSH access to the PlanktoScope on port 22
+    - device-portal-type=System infrastructure
+    - device-portal-purpose=Networking
   provides:
     services:
       - description: SSH server

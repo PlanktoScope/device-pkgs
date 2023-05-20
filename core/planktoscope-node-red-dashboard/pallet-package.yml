@@ -51,6 +51,12 @@ deployment:
 features:
   editor:
     description: Provides access to the Node-RED admin editor for modifying the GUI
+    tags:
+    - device-portal.name=Node-RED dashboard editor
+    - device-portal.description=Provides a Node-RED flow editor to modify the Node-RED dashboard
+    - device-portal.type=Browser applications
+    - device-portal.purpose=Software development
+    - device-portal.entrypoint=/admin/ps/node-red-v2/
     requires:
       networks:
         - description: Overlay network for Caddy to connect to upstream services
@@ -73,6 +79,12 @@ features:
             - /admin/ps/node-red-v2/*
   frontend:
     description: Provides access to the GUI
+    tags:
+    - device-portal.name=Node-RED dashboard
+    - device-portal.description=Provides a Node-RED dashboard to operate the PlanktoScope
+    - device-portal.type=Browser applications
+    - device-portal.purpose=PlanktoScope operation
+    - device-portal.entrypoint=/ps/node-red-v2/ui/
     requires:
       networks:
         - description: Overlay network for Caddy to connect to upstream services

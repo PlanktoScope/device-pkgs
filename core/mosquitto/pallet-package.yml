@@ -1,4 +1,5 @@
 package:
+  description: MQTT broker ambiently provided by the PlanktoScope
   maintainers:
     - name: Ethan Li
       email: lietk12@gmail.com
@@ -13,6 +14,11 @@ deployment:
 features:
   mqtt-broker:
     description: Provides access to the MQTT broker
+    tags:
+      - device-portal-name=MQTT broker
+      - device-portal-description=Provides a broker for MQTT messages on port 1883
+      - device-portal-type=System infrastructure
+      - device-portal-purpose=Networking
     requires:
       networks:
         - description: Bridge network to the host

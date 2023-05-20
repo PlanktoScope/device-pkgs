@@ -18,6 +18,11 @@ deployment:
 features:
   frontend:
     description: Provides access to the GUI
+    tags:
+      - device-portal-name=Portainer
+      - device-portal-description=Provides a Docker administration dashboard
+      - device-portal-type=Browser applications
+      - device-portal-purpose=System administration and troubleshooting
     requires:
       networks:
         - description: Overlay network for Caddy to connect to upstream services
@@ -36,6 +41,11 @@ features:
             - /admin/portainer/*
   frontend-direct:
     description: Provides direct access to the GUI
+    tags:
+      - device-portal-name=Portainer (direct-access fallback)
+      - device-portal-description=Provides fallback access to the Portainer application, accessible even if the system's service proxy stops working
+      - device-portal-type=Browser applications
+      - device-portal-purpose=System recovery
     requires:
       networks:
         - description: Bridge network to the host
@@ -54,6 +64,11 @@ features:
             - /*
   edge-agent-tunnel:
     description: Provides a TLS tunnel server which Portainer Edge Agents can connect to
+    tags:
+      - device-portal-name=Portainer Edge Agent tunnel
+      - device-portal-description=Provides a TLS tunnel server on port 8008 which Portainer Edge Agents can connect to
+      - device-portal-type=System infrastructure
+      - device-portal-purpose=Networking
     provides:
       services:
         - description: The Portainer Edge Agent TLS tunnel server

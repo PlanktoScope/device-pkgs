@@ -1,4 +1,5 @@
 package:
+  description: In-browser file manager for PlanktoScope datasets
   maintainers:
     - name: Ethan Li
       email: lietk12@gmail.com
@@ -13,6 +14,11 @@ deployment:
 features:
   frontend:
     description: Provides access to the GUI
+    tags:
+      - device-portal-name=Dataset file manager
+      - device-portal-description=Provides a file browsing and management interface for the datasets collected by the PlanktoScope
+      - device-portal-type=Browser applications
+      - device-portal-purpose=PlanktoScope operation
     requires:
       networks:
         - description: Overlay network for Caddy to connect to upstream services

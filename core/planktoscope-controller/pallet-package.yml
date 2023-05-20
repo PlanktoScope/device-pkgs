@@ -8,6 +8,11 @@ package:
     - https://github.com/PlanktoScope/PlanktoScope
 
 host:
+  tags:
+    - device-portal.name=PlanktoScope hardware controller
+    - device-portal.description=Provides an MQTT service on /actuator, /imager, /status/pump, /status/focus, /status/imager for operating the PlanktoScope hardware
+    - device-portal.type=Network APIs
+    - device-portal.purpose=PlanktoScope operation
   provides:
     listeners:
       - description: MJPEG streaming web server for the PlanktoScope's pi camera
@@ -39,6 +44,12 @@ deployment:
 features:
   camera-preview-stream-mjpeg:
     description: Provides access to the preview MJPEG stream
+    tags:
+    - device-portal.name=PlanktoScope microscope camera preview
+    - device-portal.description=Provides an MJPEG stream to preview the latest microscope camera frame
+    - device-portal.type=Network APIs
+    - device-portal.purpose=PlanktoScope operation
+    - device-portal.entrypoint=/ps/hal/camera/streams/preview.mjpg
     requires:
       networks:
         - description: Overlay network for Caddy to connect to upstream services

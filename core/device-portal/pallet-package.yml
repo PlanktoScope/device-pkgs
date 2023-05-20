@@ -1,0 +1,39 @@
+package:
+  maintainers:
+    - name: Ethan Li
+      email: lietk12@gmail.com
+  license: Apache-2.0
+  sources:
+    - https://github.com/PlanktoScope/device-portal
+
+deployment:
+  name: device-portal
+  definition-file: docker-stack.yml
+
+features:
+  frontend:
+    description: Provides access to a browser landing page
+    tags:
+      - device-portal-name=Device portal
+      - device-portal-description=Provides a landing page as a portal to the browser applications, network APIs, and system infrastructure on the PlanktoScope
+      - device-portal-type=System infrastructure
+      - device-portal-purpose=Networking
+    requires:
+      networks:
+        - description: Overlay network for Caddy to connect to upstream services
+          name: caddy-ingress
+      services:
+        - tags: [caddy-docker-proxy]
+          port: 80
+          protocol: http
+    provides:
+      services:
+        - description: Landing page for the PlanktoScope's network services
+          port: 80
+          protocol: http
+          paths:
+            - /
+            - /favicon.ico
+            - /app/*
+            - /static/*
+            - /fonts/*

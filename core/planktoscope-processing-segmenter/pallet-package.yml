@@ -8,6 +8,11 @@ package:
     - https://github.com/PlanktoScope/PlanktoScope
 
 host:
+  tags:
+    - device-portal.name=PlanktoScope object segmenter
+    - device-portal.description=Provides an MQTT service on /segmenter and /status/segmenter for operating the PlanktoScope object segmenter
+    - device-portal.type=Network APIs
+    - device-portal.purpose=PlanktoScope operation
   provides:
     listeners:
       - description: MJPEG streaming web server for the PlanktoScope object segmenter
@@ -38,6 +43,12 @@ deployment:
 features:
   mjpeg-object-stream:
     description: Provides access to the last segmented object MJPEG stream
+    tags:
+    - device-portal.name=PlanktoScope segmented object preview
+    - device-portal.description=Provides an MJPEG stream to preview the latest segmented object
+    - device-portal.type=Network APIs
+    - device-portal.purpose=PlanktoScope operation
+    - device-portal.entrypoint=/ps/processing/segmenter/streams/object.mjpg
     requires:
       networks:
         - description: Overlay network for Caddy to connect to upstream services
