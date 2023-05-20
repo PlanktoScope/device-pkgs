@@ -1,6 +1,6 @@
 services:
   server:
-    image: ghcr.io/PlanktoScope/device-portal:0.1.0
+    image: ghcr.io/planktoscope/device-portal:0.1.0
     volumes:
       - /sys/firmware/devicetree/base/serial-number:/sys/firmware/devicetree/base/serial-number
     networks:
@@ -8,15 +8,15 @@ services:
     labels:
       caddy: :80
       caddy.handle_0: /
-      caddy.handle_0.reverse_proxy: "{{upstreams 80}}"
+      caddy.handle_0.reverse_proxy: "{{upstreams 3000}}"
       caddy.handle_1: /favicon.ico
-      caddy.handle_1.reverse_proxy: "{{upstreams 80}}"
+      caddy.handle_1.reverse_proxy: "{{upstreams 3000}}"
       caddy.handle_2: /app/*
-      caddy.handle_2.reverse_proxy: "{{upstreams 80}}"
+      caddy.handle_2.reverse_proxy: "{{upstreams 3000}}"
       caddy.handle_3: /static/*
-      caddy.handle_3.reverse_proxy: "{{upstreams 80}}"
+      caddy.handle_3.reverse_proxy: "{{upstreams 3000}}"
       caddy.handle_4: /fonts/*
-      caddy.handle_4.reverse_proxy: "{{upstreams 80}}"
+      caddy.handle_4.reverse_proxy: "{{upstreams 3000}}"
 
 networks:
   caddy-ingress:

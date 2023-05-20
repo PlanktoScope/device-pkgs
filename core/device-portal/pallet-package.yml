@@ -1,4 +1,5 @@
 package:
+  description: Landing page for easy access to browser applications provided by the PlanktoScope
   maintainers:
     - name: Ethan Li
       email: lietk12@gmail.com
