@@ -1,11 +1,11 @@
 # Reference
 
-This document is a detailed reference for *Pallet*, the packaging system used by PlanktoScopes to manage software installations.
+This document is a detailed reference for *Pallets*, the packaging system used by PlanktoScopes to manage software installations.
 
 
 ## Introduction
 
-Pallet is a declarative software packaging system for uniformly distributing and deploying software as [Docker Stacks](https://docs.docker.com/engine/reference/commandline/stack/) on single-host Docker Swarm Mode environments. Its design is heavily inspired by the Go programming language's module system, and this reference document tries to echo the [reference document for Go modules](https://go.dev/ref/mod) for familiarity; certain aspects of Pallet are also inspired by the Rust programming language's [Cargo](https://doc.rust-lang.org/cargo/) package management system.
+Pallets is a declarative software packaging system for uniformly distributing and deploying software as [Docker Stacks](https://docs.docker.com/engine/reference/commandline/stack/) on single-host Docker Swarm Mode environments. Its design is heavily inspired by the Go programming language's module system, and this reference document tries to echo the [reference document for Go modules](https://go.dev/ref/mod) for familiarity; certain aspects of Pallets are also inspired by the Rust programming language's [Cargo](https://doc.rust-lang.org/cargo/) package management system.
 
 ## Repositories, packages, and versions
 
@@ -44,6 +44,7 @@ Each version starts with the letter `v`, followed by either a semantic version o
 The path of a Pallet package is the Pallet repository path joined with the subdirectory (relative to the Pallet repository root) which contains the package's `pallet-package.yml` file. That subdirectory is the *package root directory*. For example, the Pallet repository `github.com/PlanktoScope/pallets/core` contains a Pallet package in the directory `caddy-ingress`. The `caddy-ingress` directory contains a `pallet-package.yml` file and thus is the root directory of a package which has a package path of `github.com/PlanktoScope/pallets/core/caddy-ingress`. Note that the package path cannot be resolved as a web page URL (so for example <https://github.com/PlanktoScope/pallets/core/caddy-ingress> gives a HTTP 404 Not Found error), because the package path is only resolvable in the context of a specific Github repository version.
 
 ## Package deployments and constraints
+
 Usually, multiple package deployments are simultaneously active on a Docker host, and multiple package deployments will be modified by any package manager operation, for example:
 
 - Adding new package deployments
@@ -75,9 +76,9 @@ Resource requirements and provided resources are specified as a set of *identifi
 Because some Docker hosts may already have ambiently-available resources not provided by applications running in Docker Stacks (for example, an SSH server on port 22 installed using `apt-get`), a Pallet package may also include a list of resources already ambiently provided by the host; if such a resource is declared, it should be provided by the Docker host regardless of whether the Pallet package is installed. Installing or uninstalling such a package will not affect the actual existence of such resources; it will only change a package manager's assumptions about what resources are ambiently provided by the host.
 
 ### Package features
-Pallet *features* provide a mechanism to express optional resource constraints (both required resources and provided resources) and functionalities of a package. The design of Pallet features is inspired by the design of the [features system](https://doc.rust-lang.org/cargo/reference/features.html) in the Rust Cargo package management system.
+Pallet package *features* provide a mechanism to express optional resource constraints (both required resources and provided resources) and functionalities of a package. The design of Pallet package features is inspired by the design of the [features system](https://doc.rust-lang.org/cargo/reference/features.html) in the Rust Cargo package management system.
 
-A package defines a set of named features in its `pallet-package.yml` metadata file, and each feature can be either enabled or disabled by a package manager. Each Pallet feature specifies any resources it requires from the Docker host, as well as any resources it provides on the Docker host.
+A package defines a set of named features in its `pallet-package.yml` metadata file, and each feature can be either enabled or disabled by a package manager. Each Pallet package feature specifies any resources it requires from the Docker host, as well as any resources it provides on the Docker host.
 
 ### Versioning with constraints and features
 
