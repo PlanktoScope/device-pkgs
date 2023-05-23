@@ -1,8 +1,11 @@
 services:
   server:
-    image: ghcr.io/planktoscope/device-portal:0.1.0
+    image: ghcr.io/planktoscope/device-portal:0.1.1
     volumes:
-      - /sys/firmware/devicetree/base/serial-number:/sys/firmware/devicetree/base/serial-number
+      - type: bind
+        source: /sys/firmware/devicetree/base/serial-number
+        target: /sys/firmware/devicetree/base/serial-number
+        read_only: true
     networks:
       - caddy-ingress
     labels:
