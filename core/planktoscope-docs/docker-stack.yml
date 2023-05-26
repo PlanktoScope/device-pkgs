@@ -9,8 +9,8 @@ services:
     labels:
       caddy: :80
       caddy.redir: /ps/docs /ps/docs/
-      caddy.handle: /ps/docs/*
-      caddy.handle.reverse_proxy: "{{upstreams 80}}"
+      caddy.handle_path: /ps/docs/*
+      caddy.handle_path.reverse_proxy: "{{upstreams 80}}"
 
 networks:
   caddy-ingress:
