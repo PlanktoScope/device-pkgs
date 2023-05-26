@@ -23,6 +23,7 @@ features:
       - device-portal-description=Provides a Docker administration dashboard
       - device-portal-type=Browser applications
       - device-portal-purpose=System administration and troubleshooting
+      - device-portal-entrypoint=/admin/portainer/
     requires:
       networks:
         - description: Overlay network for Caddy to connect to upstream services

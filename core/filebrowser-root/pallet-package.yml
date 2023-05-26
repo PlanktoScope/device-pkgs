@@ -19,6 +19,7 @@ features:
       - device-portal-description=Provides a file browsing and management interface for the entire filesystem of the computer embedded in the PlanktoScope
       - device-portal-type=Browser applications
       - device-portal-purpose=System administration and troubleshooting
+      - device-portal-entrypoint=/admin/files/
     requires:
       networks:
         - description: Overlay network for Caddy to connect to upstream services

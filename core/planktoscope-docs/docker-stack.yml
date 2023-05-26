@@ -1,0 +1,21 @@
+services:
+  server:
+    image: ghcr.io/planktoscope/project-docs:sha-2fe6719
+    volumes:
+      - server_data:/data
+      - server_config:/config
+    networks:
+      - caddy-ingress
+    labels:
+      caddy: :80
+      caddy.redir: /ps/docs /ps/docs/
+      caddy.handle: /ps/docs/*
+      caddy.handle.reverse_proxy: "{{upstreams 80}}"
+
+networks:
+  caddy-ingress:
+    external: true
+
+volumes:
+  server_data:
+  server_config:

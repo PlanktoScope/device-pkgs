@@ -19,6 +19,7 @@ features:
       - device-portal-description=Provides a landing page as a portal to the browser applications, network APIs, and system infrastructure on the PlanktoScope
       - device-portal-type=System infrastructure
       - device-portal-purpose=Networking
+      - device-portal-entrypoint=/
     requires:
       networks:
         - description: Overlay network for Caddy to connect to upstream services

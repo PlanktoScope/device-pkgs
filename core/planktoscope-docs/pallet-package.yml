@@ -1,0 +1,38 @@
+package:
+  description: Official documentation for the PlanktoScope project
+  maintainers:
+    - name: Ethan Li
+      email: lietk12@gmail.com
+  license: CC-BY-SA-4.0
+  sources:
+    - https://github.com/PlanktoScope/PlanktoScope
+
+deployment:
+  name: planktoscope-docs
+  definition-file: docker-stack.yml
+
+features:
+  website:
+    description: Provides access to the website
+    tags:
+      - device-portal-name=PlanktoScope documentation
+      - device-portal-description=Provides an offline copy of the official PlanktoScope project documentation
+      - device-portal-type=Browser applications
+      - device-portal-purpose=Documentation
+      - device-portal-entrypoint=/ps/docs/
+    requires:
+      networks:
+        - description: Overlay network for Caddy to connect to upstream services
+          name: caddy-ingress
+      services:
+        - tags: [caddy-docker-proxy]
+          port: 80
+          protocol: http
+    provides:
+      services:
+        - description: PlanktoScope documentation site
+          port: 80
+          protocol: http
+          paths:
+            - /ps/docs
+            - /ps/docs/*
