@@ -1,0 +1,18 @@
+package:
+  description: SMTP server ambiently provided by the PlanktoScope
+  maintainers:
+    - name: Ethan Li
+      email: lietk12@gmail.com
+  license: GPL-2.0-or-later
+  sources:
+    - https://www.exim.org/
+
+host:
+  provides:
+    listeners:
+      - description: SMTP server
+        port: 25
+        protocol: tcp
+
+deployment:
+  name: exim

@@ -1,0 +1,18 @@
+package:
+  description: DHCP client ambiently provided by the PlanktoScope
+  maintainers:
+    - name: Ethan Li
+      email: lietk12@gmail.com
+  license: BSD-2-Clause
+  sources:
+    - https://github.com/NetworkConfiguration/dhcpcd
+
+host:
+  provides:
+    listeners:
+      - description: DHCP client
+        port: 68
+        protocol: udp
+
+deployment:
+  name: dhcpcd

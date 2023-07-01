@@ -9,9 +9,26 @@ package:
 
 host:
   provides:
+    listeners:
+      - description: Docker inbound swarm manager traffic
+        port: 2377
+        protocol: tcp
+      - description: Docker swarm mode container network discovery
+        port: 7946
+        protocol: tcp
+      - description: Docker swarm mode container network discovery
+        port: 7946
+        protocol: udp
+      - description: Docker container ingress network
+        port: 4789
+        protocol: udp
     networks:
       - description: Default bridge to host
         name: bridge
+    services:
+      - description: Docker swarm management
+        port: 2377
+        protocol: docker-swarm
 
 deployment:
   name: docker

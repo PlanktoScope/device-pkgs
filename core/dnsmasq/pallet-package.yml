@@ -1,0 +1,24 @@
+package:
+  description: DNS and DHCP server ambiently provided by the PlanktoScope
+  maintainers:
+    - name: Ethan Li
+      email: lietk12@gmail.com
+  license: (GPL-2.0-only OR GPL-3.0-only)
+  sources:
+    - https://thekelleys.org.uk/dnsmasq/doc.html
+
+host:
+  provides:
+    listeners:
+      - description: DNS server
+        port: 53
+        protocol: tcp
+      - description: DNS server
+        port: 53
+        protocol: udp
+      - description: DHCP server
+        port: 67
+        protocol: udp
+
+deployment:
+  name: dnsmasq

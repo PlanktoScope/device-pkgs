@@ -1,0 +1,28 @@
+package:
+  description: Chrony daemon ambiently provided by the PlanktoScope
+  maintainers:
+    - name: Ethan Li
+      email: lietk12@gmail.com
+  license: GPL-2.0-only
+  sources:
+    - https://chrony.tuxfamily.org/
+
+host:
+  provides:
+    listeners:
+      - description: NTP server communication
+        port: 123
+        protocol: udp
+      - description: Chrony daemon API
+        port: 323
+        protocol: udp
+    services:
+      - description: NTP server
+        port: 123
+        protocol: ntp
+      - description: Chrony daemon
+        port: 323
+        protocol: chrony
+
+deployment:
+  name: avahi-daemon

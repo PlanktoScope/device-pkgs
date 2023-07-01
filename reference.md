@@ -249,6 +249,7 @@ This field of the `package` section is a short (one-sentence) description of the
 #### `maintainers` field
 This field of the `package` section is an array of maintainer objects listing the people who maintain the Pallet package.
 - This field is optional.
+- In most cases, the maintainers of the Pallet package will be different from the maintainers of the original software applications provided by the Pallet package. The maintainers of the Pallet package are specifically the people responsible for maintaining the software configurations specified by the Pallet package.
 - Example:
   ```yaml
   maintainers:
@@ -327,7 +328,7 @@ host:
 ```
 
 #### `tags` field
-This field of the `host` section is an array of strings to associate with resources provided by the host. These tags have no semantic meaning within the Pallet package specification, but can be used by other applications.
+This field of the `host` section is an array of strings to associate with resources provided by the host. These tags have no semantic meaning within the Pallet package specification, but can be used by other applications for arbitrary purposes.
 - This field is optional.
 - Example:
   ```yaml
