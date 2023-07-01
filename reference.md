@@ -138,7 +138,7 @@ Currently, all fields in the repository metadata file are under a `repository` s
 
 ### `repository` section
 
-This section contains some basic metadata to help describe and identify the repository. Here is an example of a `repository` section:
+This section of the `pallet-repository.yml` file contains some basic metadata to help describe and identify the repository. Here is an example of a `repository` section:
 
 ```yaml
 repository:
@@ -148,31 +148,28 @@ repository:
 ```
 
 #### `path` field
-`path` is the repository path.
+This field of the `repository` section is the repository path.
 - This field is required.
 - Example:
-
   ```yaml
   path: github.com/PlanktoScope/pallets/community
   ```
 
 #### `description` field
-`description` is a short (one-sentence) description of the repository to be shown to users.
+This field of the `repository` section is a short (one-sentence) description of the repository to be shown to users.
 - This field is required.
 - Example:
-
   ```yaml
   description: Community-maintained open-source PlanktoScope packages
   ```
 
 #### `readme-file` field
-`readme-file` is the filename of a readme file to be shown to users.
+This field of the `repository` section is the filename of a readme file to be shown to users.
 - This field is required.
 - The file must be located in the same directory as the `pallet-repository.yml` file.
 - The file must be a text file.
 - It is recommended for this file to be named `README.md` and to be formatted in [GitHub-flavored Markdown](https://github.github.com/gfm/).
 - Example:
-
   ```yaml
   readme-file: README.md
   ```
@@ -228,7 +225,7 @@ The file has four sections: `package`, `host` (an optional section), `deployment
 
 ### `package` section
 
-This section contains some basic metadata to help describe and identify the package. Here is an example of a `package` section:
+This section of the `pallet-package.yml` file contains some basic metadata to help describe and identify the package. Here is an example of a `package` section:
 
 ```yaml
 package:
@@ -242,19 +239,17 @@ package:
 ```
 
 #### `description` field
-`description` is a short (one-sentence) description of the package to be shown to users.
+This field of the `package` section is a short (one-sentence) description of the package to be shown to users.
 - This field is required.
 - Example:
-
   ```yaml
   description: Web GUI for operating the PlanktoScope
   ```
 
 #### `maintainers` field
-`maintainers` is an array of maintainer objects listing the people who maintain the Pallet package.
+This field of the `package` section is an array of maintainer objects listing the people who maintain the Pallet package.
 - This field is optional.
 - Example:
-
   ```yaml
   maintainers:
     - name: Ethan Li
@@ -266,7 +261,6 @@ A maintainer object consists of the following fields:
 - `name` is a string with the maintainer's name.
   - This field is optional.
   - Example:
-
     ```yaml
     name: Ethan Li
     ```
@@ -274,37 +268,33 @@ A maintainer object consists of the following fields:
 - `email` is a string with an email address for contacting the maintainer.
   - This field is optional.
   - Example:
-
     ```yaml
     email: lietk12@gmail.com
     ```
 
 #### `license` field
-`license` is an [SPDX license expression](https://spdx.github.io/spdx-spec/v2-draft/SPDX-license-expressions/) describing the licensing terms of the software provided by the Pallet package.
+This field of the `package` section is an [SPDX license expression](https://spdx.github.io/spdx-spec/v2-draft/SPDX-license-expressions/) describing the licensing terms of the software provided by the Pallet package.
 - This field is required if a correct SPDX license expression exists which describes the licensing terms of the software provided by the Pallet package; otherwise, this field is optional.
 - If a value is not provided for this field to specify licensing terms, then a value must be provided in the `license-file` field in the `package` section.
 - Example:
-
   ```yaml
   license: GPL-3.0
   ```
 
 #### `license-file` field
-`license-file` is the filename of a license file describing the licensing terms of the software provided by the Pallet package.
+This field of the `package` section is the filename of a license file describing the licensing terms of the software provided by the Pallet package.
 - This field is optional, unless the `license` field is omitted from the `package section`; in that case, this fied is required.
 - The file must be a text file.
 - The file must be located in the same directory as the `pallet-package.yml` file.
 - Example:
-
   ```yaml
   license-file: LICENSE-ZeroTier-BSL
   ```
 
 #### `sources` field
-`sources` is an array of URLs which can be opened to access the source code for the software provided by the Pallet package.
+This field of the `package` section is an array of URLs which can be opened to access the source code for the software provided by the Pallet package.
 - This field is optional.
 - Example:
-
   ```yaml
   sources:
     - https://github.com/zerotier/ZeroTierOne
@@ -313,7 +303,7 @@ A maintainer object consists of the following fields:
 
 ### `host` section
 
-This optional section describes any relevant resources already ambiently provided by the Docker host. Such resources will exist whether or not the package is deployed; specifying resources in this section provides necessary information for checking [package resource constraints](#package-resource-constraints). Here is an example of a `host` section:
+This optional section of the `pallet-package.yml` file describes any relevant resources already ambiently provided by the Docker host. Such resources will exist whether or not the package is deployed; specifying resources in this section provides necessary information for checking [package resource constraints](#package-resource-constraints). Here is an example of a `host` section:
 
 ```yaml
 host:
@@ -337,10 +327,9 @@ host:
 ```
 
 #### `tags` field
-`tags` is an array of strings to associate with resources provided by the host. These tags have no semantic meaning within the Pallet package specification, but can be used by other applications.
+This field of the `host` section is an array of strings to associate with resources provided by the host. These tags have no semantic meaning within the Pallet package specification, but can be used by other applications.
 - This field is optional.
 - Example:
-
   ```yaml
   tags:
     - device-portal-name=SSH server
@@ -373,13 +362,12 @@ provides:
 
 ##### `listeners` field
 
-`listeners` is an array of host port listener objects listing the network port/protocol pairs which are already bound to host processes listening for incoming traffic on those port/protocol pairs, on any/all IP addresses.
+This field of the `provides` subsection is an array of host port listener objects listing the network port/protocol pairs which are already bound to host processes listening for incoming traffic on those port/protocol pairs, on any/all IP addresses.
 - This field is optional.
 - Each host port listener object describes a host port listener resource which may or may not be in conflict with other host port listener resources; this is because multiple processes are not allowed to simultaneously bind to the same port/protocol pair on all IP addresses.
 - If a set of Pallet package deployments contains two or more host port listener resources for the same port/protocol pair, the package deployments declaring those respective host port listeners will be reported as conflicting with each other. Therefore, the overall set of Pallet package deployments will not be allowed because its [package resource constraints](#package-resource-constraints) for uniqueness of host port listener resources will not be not satisfied.
 - Currently, this specification does not handle situations where a port/protocol pair is only bound on a specific IP address; instead for simplicity, processes are assumed to be listening for that port/protocol pair on *all* IP addresses on the host.
 - Example:
-
   ```yaml
   listeners:
     - description: ZeroTier traffic to the rest of the world
@@ -394,7 +382,6 @@ A host port listener object consists of the following fields:
 - `description` is a short (one-sentence) description of the host port listener resource to be shown to users.
   - This field is required.
   - Example:
-
     ```yaml
     description: Web server for the Cockpit dashboard
     ```
@@ -402,7 +389,6 @@ A host port listener object consists of the following fields:
 - `port` is a number specifying the [network port](https://en.wikipedia.org/wiki/Port_(computer_networking) bound by a process running on the host.
   - This field is required.
   - Example:
-
     ```yaml
     port: 9090
     ```
@@ -411,7 +397,6 @@ A host port listener object consists of the following fields:
   - This field is required.
   - The value of this field must be either `tcp` or `udp`.
   - Example:
-
     ```yaml
     protocol: tcp
     ```
