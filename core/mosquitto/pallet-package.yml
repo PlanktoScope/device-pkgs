@@ -3,7 +3,7 @@ package:
   maintainers:
     - name: Ethan Li
       email: lietk12@gmail.com
-  license: (EPL-2.0 OR BSD-3-Clause)
+  license: EPL-2.0 OR BSD-3-Clause
   sources:
     - https://github.com/eclipse/mosquitto
 

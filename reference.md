@@ -274,9 +274,10 @@ A maintainer object consists of the following fields:
     ```
 
 #### `license` field
-This field of the `package` section is an [SPDX license expression](https://spdx.github.io/spdx-spec/v2-draft/SPDX-license-expressions/) describing the licensing terms of the software provided by the Pallet package.
-- This field is required if a correct SPDX license expression exists which describes the licensing terms of the software provided by the Pallet package; otherwise, this field is optional.
-- If a value is not provided for this field to specify licensing terms, then a value must be provided in the `license-file` field in the `package` section.
+This field of the `package` section is an [SPDX 2.1 license expression](https://spdx.github.io/spdx-spec/v2-draft/SPDX-license-expressions/) specifying the software license terms which the software is released under. These license terms are for the software provided by the Pallet package.
+- This field is optional.
+- Usually, an SPDX license name will be sufficient; however, some software applications are released under multiple licenses, in which case a more complex SPDX license expression (such as `MIT OR Apache-2.0`) is needed.
+- If a package is using a nonstandard license, then the `license-file` field may be specified in lieu of the `license` field.
 - Example:
   ```yaml
   license: GPL-3.0
@@ -284,7 +285,7 @@ This field of the `package` section is an [SPDX license expression](https://spdx
 
 #### `license-file` field
 This field of the `package` section is the filename of a license file describing the licensing terms of the software provided by the Pallet package.
-- This field is optional, unless the `license` field is omitted from the `package section`; in that case, this fied is required.
+- This field is optional.
 - The file must be a text file.
 - The file must be located in the same directory as the `pallet-package.yml` file.
 - Example:
@@ -406,7 +407,7 @@ A host port listener object consists of the following fields:
 
 This field of the `provides` subsection is an array of host Docker network objects listing the Docker networks which are already available on the Docker host.
 - This field is optional.
-- Each host Docker network object describes a Docker network resource which may or may not be in conflict with other Docker network resources; this is because multiple Docker networks may not have the same name.
+- Each host Docker network object describes a Docker network resource which may or may not be in conflict with other Docker network resources; this is because multiple Docker networks are not allowed to have the same name.
 - If a set of Pallet package deployments contains two or more Docker network resources for networks with the same name from different Pallet package deployments, the package deployments declaring those respective Docker networks will be reported as conflicting with each other. Therefore, the overall set of Pallet package deployments will not be allowed because its [package resource constraints](#package-resource-constraints) for uniqueness of host Docker network names will not be satisfied.
 - Example:
   ```yaml
@@ -434,9 +435,9 @@ A Docker network object consists of the following fields:
 
 This field of the `provides` subsection is an array of network service objects listing the network services which are already available on the Docker host.
 - This field is optional.
-- The route of a network service can be defined either as a port/protocol pair or as a combination of port, protocol, and one or more paths.
-- Each host network service object describes a network service resource which may or may not be in conflict with other network service resources; this is because multiple networks may not have overlapping routes.
-- If a set of Pallet package deployments contains two or more network service resources for services with overlapping routes from different Pallet package deployments, the package deployments declaring those respective network services will be reported as conflicting with each other. Therefore, the overall set of Pallet package deployments will not be allowed because its [package resource constraints](#package-resource-constraints) for uniqueness of network services will not be satisfied.
+- The route of a network service can be defined either as a port/protocol pair or as a combination of port, protocol, and one or more paths. A network service whose route is defined only as a port/protocol pair will overlap with another network service if and only if the other network service whose route is also defined only as a port/protocol pair. A network service whose route is defined with one or more paths will overlap with another network service if and only if both network services have the same port, the same protocol, and at least one overlapping path (for a definition of overlapping paths, refer below to description of the `path` field of the network service object).
+- Each host network service object describes a network service resource which may or may not be in conflict with other network service resources; this is because multiple networks are not allowed to have overlapping routes.
+- If a set of Pallet package deployments contains two or more network service resources for services with overlapping routes from different Pallet package deployments, then the package deployments declaring those respective network services will be reported as conflicting with each other. Therefore, the overall set of Pallet package deployments will not be allowed because its [package resource constraints](#package-resource-constraints) for uniqueness of network services will not be satisfied.
 - Example:
   ```yaml
   services:
@@ -479,7 +480,7 @@ A network service object consists of the following fields:
 
 - `paths` is an array of strings which are paths used for accessing the service.
   - This field is optional.
-  - A path may optionally have an asterisk (`*`) at the end, in which it is a prefix path - so the network service covers all paths beginning with that prefix (i.e. the string before the asterisk).
+  - A path may optionally have an asterisk (`*`) at the end, in which case it is a prefix path - so the network service covers all paths beginning with that prefix (i.e. the string before the asterisk).
   - If a network service specifies a port and protocol but no paths, it will conflict with another network service which also specifies the same port and protocol but no paths. It will not conflict with another network service which specifies the same port protocol, but also specifies some paths. This is useful for describing systems involving HTTP reverse-proxies and message brokers, where one package deployment may provide a network service which routes specific messages to network services from other package deployments on specific paths; then the reverse-proxy or message broker would be specified on some port and protocol with no paths, while the network services behind it would be specified on the same port and protocol but with a set of specific paths.
   - If a package deployment has a dependency on a network service with a specific path which matches a prefix path in a network service from another package deployment, that dependency will be satisfied. For example, a dependency on a network service requiring a path `/admin/cockpit/system` would be met by a network service provded with the path prefix `/admin/cockpit/*`, assuming they have the same port and protocol.
   - If a package deployment provides a network service with a specific path which matches a prefix path in a network service provided by another package deployment, those two package deployments will be in conflict with each other. For example, a network service providing a path `/admin/cockpit/system` would conflict with a network service providing the path prefix `/admin/cockpit/*`, assuming they have the same port and protocol. This is because those overlapping paths would cause the network services to overlap with each other, which is not allowed.

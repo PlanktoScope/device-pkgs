@@ -3,7 +3,7 @@ package:
   maintainers:
     - name: Ethan Li
       email: lietk12@gmail.com
-  license: (GPL-2.0-only OR GPL-3.0-only)
+  license: GPL-2.0-only OR GPL-3.0-only
   sources:
     - https://thekelleys.org.uk/dnsmasq/doc.html
 
