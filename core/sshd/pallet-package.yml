@@ -14,6 +14,10 @@ host:
     - device-portal-type=System infrastructure
     - device-portal-purpose=Networking
   provides:
+    listeners:
+      - description: SSH server
+        port: 22
+        protocol: tcp
     services:
       - description: SSH server
         tags: [sshd]

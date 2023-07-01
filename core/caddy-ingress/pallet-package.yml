@@ -42,4 +42,4 @@ features:
         - description: Reverse-proxy web server which provides TLS termination to PlanktoScope web services
           tags: [caddy-docker-proxy]
           port: 443
-          protocol: http
+          protocol: https

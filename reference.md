@@ -68,7 +68,7 @@ The resource requirements and provided resources associated with a package deplo
 A package deployment's declaration of resource requirements and provided resources is also a declaration of its external interface on the Docker host. Currently, resources can be:
 
 - Docker networks
-- Port listeners on ports mapped to the host
+- Host port listeners bound to network ports on the host
 - Network services mapped to the host
 
 Resource requirements and provided resources are specified as a set of *identification criteria* for determining whether two provided resources have conflicting identities or whether the identity of a package deployment's required resource matches the identity of a resource provided by another package.
@@ -82,7 +82,7 @@ A package defines a set of named features in its `pallet-package.yml` metadata f
 
 ### Versioning with constraints and features
 
-Usually, the following changes to a package will require incrementing the major component of that package's semantic version if the major component was already nonzero:
+Usually, the following changes to a package are backwards-incompatible, in which case they will require incrementing the major component of the semantic version of the repository providing that package, if the major component of the semantic version was already nonzero:
 
 - Changing the Docker stack name to use for deploying the package
 - Making changes which may introduce conflicts between provided resources, for certain combinations of package deployments:
@@ -91,15 +91,19 @@ Usually, the following changes to a package will require incrementing the major 
     - Modifying the identification criteria of a provided resource
   - In any optional feature:
     - Adding a new provided resource
+    - Modifying the identification criteria of a provided resource
 - Making changes which may make dependencies between provided and required resources unresolvable, for certain combinations of package deployments:
   - In the host specification or the deployment specification:
     - Removing a provided resource
+    - Modifying the identification criteria of a provided resource
   - In the deployment specification:
     - Adding a resource requirement
     - Modifying the identification criteria of a resource requirement
   - In any optional feature:
     - Adding a new resource requirement
     - Removing a provided resource
+    - Modifying the identification criteria of a provided resource
+    - Modifying the identification criteria of a resource requirement
 - Making changes which may make a package deployment declaration invalid:
   - In the list of optional features offered by the package:
     - Removing any feature
@@ -109,59 +113,321 @@ Usually, the following changes to a package will require incrementing the major 
   - Removing a previously-provided functionality from the interface
 - Making a change to any user interfaces provided or by that package which would probably break users' existing mental models of how to use the interface.
 
-The following changes to a package will usually only require incrementing the minor component of the package's semantic version:
+The following changes to a package are usually backwards-compatible, in which case they would only require incrementing the minor component of the semantic version of the repository providing that package:
 
 - Adding a new optional feature
-- Removing a requirement from any optional feature
+- Removing a resource requirement from any optional feature
 - Making a backwards-compatible change to any external technical or user interfaces provided or required by that package. Backwards-compatible changes in an interface include:
   - Removing a requirement from the interface
-  - Adding new optional functionality  to the interface
+  - Adding new optional functionality to the interface
 
-It is the reponsibility of the package maintainer to document the package's external interfaces, to increment the major component of a package's semantic version when needed, and to help users migrate smoothly across version upgrades and downgrades.
+It is the reponsibility of the package maintainer to document the package's external interfaces, to increment the major component of a repository's semantic version when needed, and to help users migrate smoothly across version upgrades and downgrades. If the repository uses calendar versioning rather than semantic versioning, the above requirements for incrementing the version components do not apply.
 
-## Repository metadata
+## Repository definition
 
-The metadata for a repository is defined by a YAML file named `pallet-repository.yml` in the repository's root directory. Here is an example of a `pallet-repository.yml` file:
+The definition of a repository is stored in a YAML file named `pallet-repository.yml` in the repository's root directory. Here is an example of a `pallet-repository.yml` file:
 
 ```yaml
 repository:
   path: github.com/PlanktoScope/pallets/core
   description: Officially-maintained open-source PlanktoScope packages
+  readme-file: README.md
 ```
 
-Currently, all fields in the repository metadata file are under a `repository` section. The rest of this section describes the fields in the repository metadata file:
+Currently, all fields in the repository metadata file are under a `repository` section.
 
-### `path`
+### `repository` section
+
+This section contains some basic metadata to help describe and identify the repository. Here is an example of a `repository` section:
+
+```yaml
+repository:
+  path: github.com/PlanktoScope/pallets/testing
+  description: Unstable PlanktoScope packages for testing
+  readme-file: README.md
+```
+
+#### `path` field
 `path` is the repository path.
 - This field is required.
 - Example:
 
   ```yaml
-  path: github.com/PlanktoScope/pallets/core
+  path: github.com/PlanktoScope/pallets/community
   ```
 
-### `description`
+#### `description` field
 `description` is a short (one-sentence) description of the repository to be shown to users.
 - This field is required.
 - Example:
 
   ```yaml
-  description: github.com/PlanktoScope/pallets/core
+  description: Community-maintained open-source PlanktoScope packages
   ```
 
-### `readme-file`
+#### `readme-file` field
 `readme-file` is the filename of a readme file to be shown to users.
 - This field is required.
 - The file must be located in the same directory as the `pallet-repository.yml` file.
-- It is recommended for this file to be named `README.md`.
+- The file must be a text file.
+- It is recommended for this file to be named `README.md` and to be formatted in [GitHub-flavored Markdown](https://github.github.com/gfm/).
 - Example:
 
   ```yaml
   readme-file: README.md
   ```
 
-## Package metadata
+## Package definition
 
-The metadata for a package is defined by a YAML file named `pallet-package.yml` in the package's root directory. Here is an example of a `pallet-package.yml` file:
+The definition of a package is stored in a YAML file named `pallet-package.yml` in the package's root directory. Here is an example of a `pallet-package.yml` file:
 
-TODO: document the schema
+```yaml
+package:
+  description: Reverse proxy for web services
+  maintainers:
+    - name: Ethan Li
+      email: lietk12@gmail.com
+  license: MIT
+  sources:
+    - https://github.com/lucaslorentz/caddy-docker-proxy
+
+deployment:
+  name: caddy-ingress
+  definition-file: docker-stack.yml
+
+features:
+  service-proxy:
+    description: Provides reverse-proxying access to Docker Swarm services defined by other packages
+    requires:
+      networks:
+        - description: Bridge network to the host
+          name: bridge
+    provides:
+      networks:
+        - description: Overlay network for Caddy to connect to upstream services
+          name: caddy-ingress
+      listeners:
+        - description: Web server for all HTTP requests
+          port: 80
+          protocol: tcp
+        - description: Web server for all HTTPS requests
+          port: 443
+          protocol: tcp
+      services:
+        - description: Web server which reverse-proxies PlanktoScope web services
+          tags: [caddy-docker-proxy]
+          port: 80
+          protocol: http
+        - description: Reverse-proxy web server which provides TLS termination to PlanktoScope web services
+          tags: [caddy-docker-proxy]
+          port: 443
+          protocol: https
+```
+
+The file has four sections: `package`, `host` (an optional section), `deployment` (a required section), and `features` (an optional section).
+
+### `package` section
+
+This section contains some basic metadata to help describe and identify the package. Here is an example of a `package` section:
+
+```yaml
+package:
+  description: MQTT broker ambiently provided by the PlanktoScope
+  maintainers:
+    - name: Ethan Li
+      email: lietk12@gmail.com
+  license: (EPL-2.0 OR BSD-3-Clause)
+  sources:
+    - https://github.com/eclipse/mosquitto
+```
+
+#### `description` field
+`description` is a short (one-sentence) description of the package to be shown to users.
+- This field is required.
+- Example:
+
+  ```yaml
+  description: Web GUI for operating the PlanktoScope
+  ```
+
+#### `maintainers` field
+`maintainers` is an array of maintainer objects listing the people who maintain the Pallet package.
+- This field is optional.
+- Example:
+
+  ```yaml
+  maintainers:
+    - name: Ethan Li
+      email: lietk12@gmail.com
+    - name: Thibaut Pollina
+  ```
+
+A maintainer object consists of the following fields:
+- `name` is a string with the maintainer's name.
+  - This field is optional.
+  - Example:
+
+    ```yaml
+    name: Ethan Li
+    ```
+
+- `email` is a string with an email address for contacting the maintainer.
+  - This field is optional.
+  - Example:
+
+    ```yaml
+    email: lietk12@gmail.com
+    ```
+
+#### `license` field
+`license` is an [SPDX license expression](https://spdx.github.io/spdx-spec/v2-draft/SPDX-license-expressions/) describing the licensing terms of the software provided by the Pallet package.
+- This field is required if a correct SPDX license expression exists which describes the licensing terms of the software provided by the Pallet package; otherwise, this field is optional.
+- If a value is not provided for this field to specify licensing terms, then a value must be provided in the `license-file` field in the `package` section.
+- Example:
+
+  ```yaml
+  license: GPL-3.0
+  ```
+
+#### `license-file` field
+`license-file` is the filename of a license file describing the licensing terms of the software provided by the Pallet package.
+- This field is optional, unless the `license` field is omitted from the `package section`; in that case, this fied is required.
+- The file must be a text file.
+- The file must be located in the same directory as the `pallet-package.yml` file.
+- Example:
+
+  ```yaml
+  license-file: LICENSE-ZeroTier-BSL
+  ```
+
+#### `sources` field
+`sources` is an array of URLs which can be opened to access the source code for the software provided by the Pallet package.
+- This field is optional.
+- Example:
+
+  ```yaml
+  sources:
+    - https://github.com/zerotier/ZeroTierOne
+    - https://github.com/sargassum-world/docker-zerotier-controller
+  ```
+
+### `host` section
+
+This optional section describes any relevant resources already ambiently provided by the Docker host. Such resources will exist whether or not the package is deployed; specifying resources in this section provides necessary information for checking [package resource constraints](#package-resource-constraints). Here is an example of a `host` section:
+
+```yaml
+host:
+  tags:
+    - device-portal-name=Cockpit (direct-access fallback)
+    - device-portal-description=Provides fallback access to the Cockpit application, accessible even if the system's service proxy stops working
+    - device-portal-type=Browser applications
+    - device-portal-purpose=System recovery
+    - device-portal-entrypoint=/admin/cockpit/
+  provides:
+    listeners:
+      - description: Web server for the Cockpit dashboard
+        port: 9090
+        protocol: tcp
+    services:
+      - description: The Cockpit system administration dashboard
+        port: 9090
+        protocol: http
+        paths:
+          - /admin/cockpit/*
+```
+
+#### `tags` field
+`tags` is an array of strings to associate with resources provided by the host. These tags have no semantic meaning within the Pallet package specification, but can be used by other applications.
+- This field is optional.
+- Example:
+
+  ```yaml
+  tags:
+    - device-portal-name=SSH server
+    - device-portal-description=Provides SSH access to the PlanktoScope on port 22
+    - device-portal-type=System infrastructure
+    - device-portal-purpose=Networking
+    - systemd-service=sshd.service
+    - config-file=/etc/ssh/sshd_config
+    - system
+    - networking
+    - remote-access
+  ```
+
+#### `provides` subsection
+
+This subsection of the `host` section specifies the resources ambiently provided by the Docker host. Here is an example of a `provides` section:
+
+```yaml
+provides:
+  listeners:
+    - description: SSH server
+      port: 22
+      protocol: tcp
+  services:
+    - description: SSH server
+      tags: [sshd]
+      port: 22
+      protocol: ssh
+```
+
+##### `listeners` field
+
+`listeners` is an array of host port listener objects listing the network port/protocol pairs which are already bound to host processes listening for incoming traffic on those port/protocol pairs, on any/all IP addresses.
+- This field is optional.
+- Each host port listener object describes a host port listener resource which may or may not be in conflict with other host port listener resources; this is because multiple processes are not allowed to simultaneously bind to the same port/protocol pair on all IP addresses.
+- If a set of Pallet package deployments contains two or more host port listener resources for the same port/protocol pair, the package deployments declaring those respective host port listeners will be reported as conflicting with each other. Therefore, the overall set of Pallet package deployments will not be allowed because its [package resource constraints](#package-resource-constraints) for uniqueness of host port listener resources will not be not satisfied.
+- Currently, this specification does not handle situations where a port/protocol pair is only bound on a specific IP address; instead for simplicity, processes are assumed to be listening for that port/protocol pair on *all* IP addresses on the host.
+- Example:
+
+  ```yaml
+  listeners:
+    - description: ZeroTier traffic to the rest of the world
+      port: 9993
+      protocol: udp
+    - description: ZeroTier API for control from the ZeroTier UI and the ZeroTier CLI
+      port: 9993
+      protocol: tcp
+  ```
+
+A host port listener object consists of the following fields:
+- `description` is a short (one-sentence) description of the host port listener resource to be shown to users.
+  - This field is required.
+  - Example:
+
+    ```yaml
+    description: Web server for the Cockpit dashboard
+    ```
+
+- `port` is a number specifying the [network port](https://en.wikipedia.org/wiki/Port_(computer_networking) bound by a process running on the host.
+  - This field is required.
+  - Example:
+
+    ```yaml
+    port: 9090
+    ```
+
+- `protocol` is a number specifying whether the bound network port is for the TCP transport protocol or for the UDP transport protocol.
+  - This field is required.
+  - The value of this field must be either `tcp` or `udp`.
+  - Example:
+
+    ```yaml
+    protocol: tcp
+    ```
+
+##### `networks` field
+
+TODO
+
+##### `services` field
+
+TODO
+
+### `deployment` section
+
+TODO
+
+### `features` section
+
+TODO
