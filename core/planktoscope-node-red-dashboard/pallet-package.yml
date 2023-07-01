@@ -97,11 +97,12 @@ features:
           protocol: http
           paths:
             - /ps/node-red-v2/ui/*
-        - port: 80
+        - tags: [mjpeg-stream]
+          port: 80
           protocol: http
           paths:
-            - /ps/streams/camera/preview.mjpg
-            - /ps/streams/segmenter/object.mjpg
+            - /ps/hal/camera/streams/preview.mjpg
+            - /ps/processing/segmenter/streams/object.mjpg
     provides:
       services:
         - description: The v2 PlanktoScope dashboard for configuring the PlanktoScope and collecting data

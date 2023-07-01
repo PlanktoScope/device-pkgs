@@ -20,6 +20,7 @@ host:
         protocol: tcp
     services:
       - description: MJPEG preview stream of the PlanktoScope's Pi camera
+        tags: [mjpeg-stream]
         port: 8000
         protocol: http
         paths:
@@ -58,13 +59,15 @@ features:
         - tags: [caddy-docker-proxy]
           port: 80
           protocol: http
-        - port: 8000
+        - tags: [mjpeg-stream]
+          port: 8000
           protocol: http
           paths:
             - /stream.mjpg
     provides:
       services:
         - description: Preview MJPEG stream from the Pi camera
+          tags: [mjpeg-stream]
           port: 80
           protocol: http
           paths:

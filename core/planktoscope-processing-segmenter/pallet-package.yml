@@ -20,6 +20,7 @@ host:
         protocol: tcp
     services:
       - description: MJPEG stream of last segmented object from the PlanktoScope object segmenter
+        tags: [mjpeg-stream]
         port: 8001
         protocol: http
         paths:
@@ -57,13 +58,15 @@ features:
         - tags: [caddy-docker-proxy]
           port: 80
           protocol: http
-        - port: 8001
+        - tags: [mjpeg-stream]
+          port: 8001
           protocol: http
           paths:
             - /stream.mjpg
     provides:
       services:
         - description: Last segmented object MJPEG stream from the segmenter
+          tags: [mjpeg-stream]
           port: 80
           protocol: http
           paths:
