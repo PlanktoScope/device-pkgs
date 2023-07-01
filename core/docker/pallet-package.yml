@@ -1,0 +1,17 @@
+package:
+  description: Docker networks ambiently provided by the PlanktoScope
+  maintainers:
+    - name: Ethan Li
+      email: lietk12@gmail.com
+  license: Apache-2.0
+  sources:
+    - https://github.com/docker/cli
+
+host:
+  provides:
+    networks:
+      - description: Default bridge to host
+        name: bridge
+
+deployment:
+  name: docker
