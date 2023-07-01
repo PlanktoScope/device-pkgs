@@ -34,12 +34,12 @@ features:
         - description: Web server for all HTTPS requests
           port: 443
           protocol: tcp
-          services:
-            - description: Web server which reverse-proxies PlanktoScope web services
-              tags: [caddy-docker-proxy]
-              port: 80
-              protocol: http
-            - description: Reverse-proxy web server which provides TLS termination to PlanktoScope web services
-              tags: [caddy-docker-proxy]
-              port: 443
-              protocol: http
+      services:
+        - description: Web server which reverse-proxies PlanktoScope web services
+          tags: [caddy-docker-proxy]
+          port: 80
+          protocol: http
+        - description: Reverse-proxy web server which provides TLS termination to PlanktoScope web services
+          tags: [caddy-docker-proxy]
+          port: 443
+          protocol: http
