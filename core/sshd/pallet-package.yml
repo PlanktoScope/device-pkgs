@@ -20,7 +20,6 @@ host:
         protocol: tcp
     services:
       - description: SSH server
-        tags: [sshd]
         port: 22
         protocol: ssh
 

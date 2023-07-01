@@ -363,11 +363,11 @@ provides:
 
 ##### `listeners` field
 
-This field of the `provides` subsection is an array of host port listener objects listing the network port/protocol pairs which are already bound to host processes listening for incoming traffic on those port/protocol pairs, on any/all IP addresses.
+This field of the `provides` subsection is an array of host port listener objects listing the network port/protocol pairs which are already bound to host processes which are running on the Docker host and listening for incoming traffic on those port/protocol pairs, on any/all IP addresses.
 - This field is optional.
 - Each host port listener object describes a host port listener resource which may or may not be in conflict with other host port listener resources; this is because multiple processes are not allowed to simultaneously bind to the same port/protocol pair on all IP addresses.
-- If a set of Pallet package deployments contains two or more host port listener resources for the same port/protocol pair, the package deployments declaring those respective host port listeners will be reported as conflicting with each other. Therefore, the overall set of Pallet package deployments will not be allowed because its [package resource constraints](#package-resource-constraints) for uniqueness of host port listener resources will not be not satisfied.
-- Currently, this specification does not handle situations where a port/protocol pair is only bound on a specific IP address; instead for simplicity, processes are assumed to be listening for that port/protocol pair on *all* IP addresses on the host.
+- If a set of Pallet package deployments contains two or more host port listener resources for the same port/protocol pair from different Pallet package deployments, the package deployments declaring those respective host port listeners will be reported as conflicting with each other. Therefore, the overall set of Pallet package deployments will not be allowed because its [package resource constraints](#package-resource-constraints) for uniqueness of host port listener resources will not be satisfied.
+- Currently, this specification does not allow multiple host port listeners to bind to the same port/protocol pair on different IP addresses; instead for simplicity, processes are assumed to be listening for that port/protocol pair on *all* IP addresses on the host.
 - Example:
   ```yaml
   listeners:
@@ -387,14 +387,14 @@ A host port listener object consists of the following fields:
     description: Web server for the Cockpit dashboard
     ```
 
-- `port` is a number specifying the [network port](https://en.wikipedia.org/wiki/Port_(computer_networking) bound by a process running on the host.
+- `port` is a number specifying the [network port](https://en.wikipedia.org/wiki/Port_(computer_networking)) bound by a process running on the host.
   - This field is required.
   - Example:
     ```yaml
     port: 9090
     ```
 
-- `protocol` is a number specifying whether the bound network port is for the TCP transport protocol or for the UDP transport protocol.
+- `protocol` is a string specifying whether the bound network port is for the TCP transport protocol or for the UDP transport protocol.
   - This field is required.
   - The value of this field must be either `tcp` or `udp`.
   - Example:
@@ -404,11 +404,90 @@ A host port listener object consists of the following fields:
 
 ##### `networks` field
 
-TODO
+This field of the `provides` subsection is an array of host Docker network objects listing the Docker networks which are already available on the Docker host.
+- This field is optional.
+- Each host Docker network object describes a Docker network resource which may or may not be in conflict with other Docker network resources; this is because multiple Docker networks may not have the same name.
+- If a set of Pallet package deployments contains two or more Docker network resources for networks with the same name from different Pallet package deployments, the package deployments declaring those respective Docker networks will be reported as conflicting with each other. Therefore, the overall set of Pallet package deployments will not be allowed because its [package resource constraints](#package-resource-constraints) for uniqueness of host Docker network names will not be satisfied.
+- Example:
+  ```yaml
+  networks:
+    - description: Default bridge to the host
+      name: bridge
+  ```
+
+A Docker network object consists of the following fields:
+- `description` is a short (one-sentence) description of the Docker network resource to be shown to users.
+  - This field is required.
+  - Example:
+    ```yaml
+    description: Default host network
+    ```
+
+- `name` is a string specifying the name of the Docker network.
+  - This field is required.
+  - Example:
+    ```yaml
+    name: host
+    ```
 
 ##### `services` field
 
-TODO
+This field of the `provides` subsection is an array of network service objects listing the network services which are already available on the Docker host.
+- This field is optional.
+- The route of a network service can be defined either as a port/protocol pair or as a combination of port, protocol, and one or more paths.
+- Each host network service object describes a network service resource which may or may not be in conflict with other network service resources; this is because multiple networks may not have overlapping routes.
+- If a set of Pallet package deployments contains two or more network service resources for services with overlapping routes from different Pallet package deployments, the package deployments declaring those respective network services will be reported as conflicting with each other. Therefore, the overall set of Pallet package deployments will not be allowed because its [package resource constraints](#package-resource-constraints) for uniqueness of network services will not be satisfied.
+- Example:
+  ```yaml
+  services:
+    - description: SSH server
+      port: 22
+      protocol: ssh
+  ```
+
+A network service object consists of the following fields:
+- `description` is a short (one-sentence) description of the network service resource to be shown to users.
+  - This field is required.
+  - Example:
+    ```yaml
+    description: The Cockpit system administration dashboard
+    ```
+
+- `tags` is an array of strings which constrain resolution of network service resource dependencies among package deployments. These tags are ignored in determining whether network services conflict with each other, since they are not part of the network service's route.
+  - This field is optional.
+  - Tags can be used to annotate a network service with information about API versions, subprotocols, etc. If a package deployment specifies that it requires a network service with one or more tags, then another package deployment will only be considered to satisfy the network service dependency if it provides a network service matching both the required route and all required tags. This is useful in ensuring that a network service provided by one package deployment is compatible with the API version required by a service client from another package deployment, for example.
+  - Example:
+    ```yaml
+    tags:
+      - https-only
+      - tls-client-certs-required
+    ```
+
+- `port` is a number specifying the network port used for accessing the service.
+  - This field is required.
+  - Example:
+    ```yaml
+    port: 9090
+    ```
+
+- `protocol` is a string specifying the application-level protocol used for accessing the service.
+  - This field is required.
+  - Example:
+    ```yaml
+    protocol: https
+    ```
+
+- `paths` is an array of strings which are paths used for accessing the service.
+  - This field is optional.
+  - A path may optionally have an asterisk (`*`) at the end, in which it is a prefix path - so the network service covers all paths beginning with that prefix (i.e. the string before the asterisk).
+  - If a network service specifies a port and protocol but no paths, it will conflict with another network service which also specifies the same port and protocol but no paths. It will not conflict with another network service which specifies the same port protocol, but also specifies some paths. This is useful for describing systems involving HTTP reverse-proxies and message brokers, where one package deployment may provide a network service which routes specific messages to network services from other package deployments on specific paths; then the reverse-proxy or message broker would be specified on some port and protocol with no paths, while the network services behind it would be specified on the same port and protocol but with a set of specific paths.
+  - If a package deployment has a dependency on a network service with a specific path which matches a prefix path in a network service from another package deployment, that dependency will be satisfied. For example, a dependency on a network service requiring a path `/admin/cockpit/system` would be met by a network service provded with the path prefix `/admin/cockpit/*`, assuming they have the same port and protocol.
+  - If a package deployment provides a network service with a specific path which matches a prefix path in a network service provided by another package deployment, those two package deployments will be in conflict with each other. For example, a network service providing a path `/admin/cockpit/system` would conflict with a network service providing the path prefix `/admin/cockpit/*`, assuming they have the same port and protocol. This is because those overlapping paths would cause the network services to overlap with each other, which is not allowed.
+  - Example:
+    ```yaml
+    paths:
+      - /admin/cockpit/*
+    ```
 
 ### `deployment` section
 
