@@ -347,7 +347,7 @@ This field of the `host` section is an array of strings to associate with resour
 
 #### `provides` subsection
 
-This subsection of the `host` section specifies the resources ambiently provided by the Docker host. Here is an example of a `provides` section:
+This optional subsection of the `host` section specifies the resources ambiently provided by the Docker host. Here is an example of a `provides` section:
 
 ```yaml
 provides:
@@ -454,6 +454,20 @@ A network service object consists of the following fields:
     description: The Cockpit system administration dashboard
     ```
 
+- `port` is a number specifying the network port used for accessing the service.
+  - This field is required.
+  - Example:
+    ```yaml
+    port: 9090
+    ```
+
+- `protocol` is a string specifying the application-level protocol used for accessing the service.
+  - This field is required.
+  - Example:
+    ```yaml
+    protocol: https
+    ```
+
 - `tags` is an array of strings which constrain resolution of network service resource dependencies among package deployments. These tags are ignored in determining whether network services conflict with each other, since they are not part of the network service's route.
   - This field is optional.
   - Tags can be used to annotate a network service with information about API versions, subprotocols, etc. If a package deployment specifies that it requires a network service with one or more tags, then another package deployment will only be considered to satisfy the network service dependency if it provides a network service matching both the required route and all required tags. This is useful in ensuring that a network service provided by one package deployment is compatible with the API version required by a service client from another package deployment, for example.
@@ -464,7 +478,50 @@ A network service object consists of the following fields:
       - tls-client-certs-required
     ```
 
-- `port` is a number specifying the network port used for accessing the service.
+- `paths` is an array of strings which are paths used for accessing the service.
+  - This field is optional.
+  - A path may optionally have an asterisk (`*`) at the end, in which case it is a prefix path - so the network service covers all paths beginning with that prefix (i.e. the string before the asterisk).
+  - If a network service specifies a port and protocol but no paths, it will conflict with another network service which also specifies the same port and protocol but no paths. It will not conflict with another network service which specifies the same port and protocol, but also specifies some paths. This is useful for describing systems involving HTTP reverse-proxies and message brokers, where one package deployment may provide a network service which routes specific messages to network services from other package deployments on specific paths; then the reverse-proxy or message broker would be specified on some port and protocol with no paths, while the network services behind it would be specified on the same port and protocol but with a set of specific paths.
+  - If a package deployment has a dependency on a network service with a specific path which matches a prefix path in a network service from another package deployment, that dependency will be satisfied. For example, a dependency on a network service requiring a path `/admin/cockpit/system` would be met by a network service provded with the path prefix `/admin/cockpit/*`, assuming they have the same port and protocol.
+  - If a package deployment provides a network service with a specific path which matches a prefix path in a network service provided by another package deployment, those two package deployments will be in conflict with each other. For example, a network service providing a path `/admin/cockpit/system` would conflict with a network service providing the path prefix `/admin/cockpit/*`, assuming they have the same port and protocol. This is because those overlapping paths would cause the network services to overlap with each other, which is not allowed.
+  - Example:
+    ```yaml
+    paths:
+      - /admin/cockpit/*
+    ```
+
+### `deployment` section
+
+This optional section of the `pallet-package.yml` file specifies the Docker stack definition file provided by the package, as well as any resources required for deployment of the package to succeed and any resources provided by deployment of the package. If required resources are not met, the deployment will not be allowed; resources provided by deployment of the package will only exist once the package deployment is successfully applied. Here is an example of a `deployment` section:
+
+```yaml
+deployment:
+  definition-file: docker-stack.yml
+  provides:
+    networks:
+      - description: Overlay network for the Portainer server to connect to Portainer agents
+        name: portainer-agent
+```
+
+#### `definition-file` field
+This field of the `deployment` section is the filename of a Docker stack definition file specifying the Docker stack which will be deployed when the package is deployed.
+- This field is optional.
+- The file must be a YAML file following the [Docker Compose file specification](https://docs.docker.com/compose/compose-file/).
+- The file must be located in the same directory as the `pallet-package.yml` file.
+- It only makes sense to omit the Docker stack definition file from a package if the package also specifies some host resources in the `host` section of the `pallet-package.yml` file; otherwise, the package would do nothing and have no effect.
+- Example:
+  ```yaml
+  definition-file: docker-stack.yml
+  ```
+
+#### `tags` field
+This field of the `deployment` section is an array of strings to associate with resources provided by the package deployment. These tags have no semantic meaning within the Pallet package specification, but can be used by other applications for arbitrary purposes.
+- This field is optional.
+- Example:
+  ```yaml
+  tags:
+    - remote-access
+  ```
   - This field is required.
   - Example:
     ```yaml

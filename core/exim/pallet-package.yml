@@ -13,6 +13,3 @@ host:
       - description: SMTP server
         port: 25
         protocol: tcp
-
-deployment:
-  name: exim

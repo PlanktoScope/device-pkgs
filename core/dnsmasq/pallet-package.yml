@@ -19,6 +19,3 @@ host:
       - description: DHCP server
         port: 67
         protocol: udp
-
-deployment:
-  name: dnsmasq

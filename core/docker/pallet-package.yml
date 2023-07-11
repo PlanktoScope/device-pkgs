@@ -29,6 +29,3 @@ host:
       - description: Docker swarm management
         port: 2377
         protocol: docker-swarm
-
-deployment:
-  name: docker

@@ -23,6 +23,3 @@ host:
       - description: Chrony daemon
         port: 323
         protocol: chrony
-
-deployment:
-  name: avahi-daemon

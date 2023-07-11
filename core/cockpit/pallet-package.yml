@@ -27,7 +27,6 @@ host:
           - /admin/cockpit/*
 
 deployment:
-  name: cockpit
   definition-file: docker-stack.yml
 
 features:

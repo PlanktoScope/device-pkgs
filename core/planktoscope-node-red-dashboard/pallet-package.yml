@@ -28,7 +28,6 @@ host:
           - /ps/node-red-v2/ui/*
 
 deployment:
-  name: planktoscope-node-red-dashboard
   definition-file: docker-stack.yml
   requires:
     services:

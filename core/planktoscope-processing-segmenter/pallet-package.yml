@@ -38,8 +38,12 @@ host:
           - /status/segmenter/metric
 
 deployment:
-  name: planktoscope-processing-segmenter
   definition-file: docker-stack.yml
+  requires:
+    services:
+      - tags: [mqtt-broker]
+        port: 1883
+        protocol: mqtt
 
 features:
   mjpeg-object-stream:

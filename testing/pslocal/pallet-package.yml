@@ -8,7 +8,6 @@ package:
     - https://github.com/sargassum-world/pslive
 
 deployment:
-  name: pslocal
   definition-file: docker-stack.yml
   requires:
     services:

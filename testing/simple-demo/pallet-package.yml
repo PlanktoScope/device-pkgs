@@ -9,7 +9,6 @@ package:
     - https://github.com/traefik/whoami
 
 deployment:
-  name: simple-demo
   definition-file: docker-stack.yml
 
 features:

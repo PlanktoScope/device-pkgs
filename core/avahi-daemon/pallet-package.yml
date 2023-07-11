@@ -13,6 +13,3 @@ host:
       - description: mDNS messaging
         port: 5353
         protocol: udp
-
-deployment:
-  name: avahi-daemon

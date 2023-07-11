@@ -17,6 +17,3 @@ host:
       - description: GPSd server
         port: 2947
         protocol: gpsd
-
-deployment:
-  name: gpsd

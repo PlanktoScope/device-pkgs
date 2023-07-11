@@ -8,7 +8,6 @@ package:
     - https://github.com/eclipse/mosquitto
 
 deployment:
-  name: mosquitto
   definition-file: docker-stack.yml
 
 features:

@@ -13,6 +13,3 @@ host:
       - description: DHCP client
         port: 68
         protocol: udp
-
-deployment:
-  name: dhcpcd

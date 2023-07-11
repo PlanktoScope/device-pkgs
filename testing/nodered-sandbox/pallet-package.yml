@@ -8,7 +8,6 @@ package:
     - https://github.com/node-red/node-red
 
 deployment:
-  name: nodered-sandbox
   definition-file: docker-stack.yml
 
 features:
