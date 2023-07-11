@@ -481,8 +481,8 @@ A network service object consists of the following fields:
 - `paths` is an array of strings which are paths used for accessing the service.
   - This field is optional.
   - A path may optionally have an asterisk (`*`) at the end, in which case it is a prefix path - so the network service covers all paths beginning with that prefix (i.e. the string before the asterisk).
-  - If a network service specifies a port and protocol but no paths, it will conflict with another network service which also specifies the same port and protocol but no paths. It will not conflict with another network service which specifies the same port and protocol, but also specifies some paths. This is useful for describing systems involving HTTP reverse-proxies and message brokers, where one package deployment may provide a network service which routes specific messages to network services from other package deployments on specific paths; then the reverse-proxy or message broker would be specified on some port and protocol with no paths, while the network services behind it would be specified on the same port and protocol but with a set of specific paths.
-  - If a package deployment has a dependency on a network service with a specific path which matches a prefix path in a network service from another package deployment, that dependency will be satisfied. For example, a dependency on a network service requiring a path `/admin/cockpit/system` would be met by a network service provded with the path prefix `/admin/cockpit/*`, assuming they have the same port and protocol.
+  - If a network service specifies a port and protocol but no paths, it will conflict with another network service which also specifies the same port and protocol but no paths; it will not conflict with another network service which specifies the same port and protocol and also specifies some paths. In other words, not listing any paths in a network service is equivalent to not having any conflicts with other services available at specific paths on the same port and protocol. This is useful for describing systems involving HTTP reverse-proxies or involving message brokers, where one package deployment may provide a network service which routes specific messages to network services from other package deployments on specific paths; then the reverse-proxy or message broker would be specified on some port and protocol with no paths, while the network services behind it would be specified on the same port and protocol but with a set of specific paths.
+  - If a package deployment has a dependency on a network service with a specific path which matches a prefix path in a network service from another package deployment, that dependency will be satisfied. For example, a dependency on a network service requiring a path `/admin/cockpit/system` would be met by a network service provided with the path prefix `/admin/cockpit/*`, assuming they have the same port and protocol.
   - If a package deployment provides a network service with a specific path which matches a prefix path in a network service provided by another package deployment, those two package deployments will be in conflict with each other. For example, a network service providing a path `/admin/cockpit/system` would conflict with a network service providing the path prefix `/admin/cockpit/*`, assuming they have the same port and protocol. This is because those overlapping paths would cause the network services to overlap with each other, which is not allowed.
   - Example:
     ```yaml
@@ -522,32 +522,117 @@ This field of the `deployment` section is an array of strings to associate with 
   tags:
     - remote-access
   ```
+
+#### `requires` subsection
+
+This optional subsection of the `deployment` section specifies the resources required for a deployment of the Pallet package to successfully become active. Here is an example of a `requires` section:
+
+```yaml
+requires:
+  services:
+    - tags: [planktoscope-api-v2]
+      port: 1883
+      protocol: mqtt
+      paths:
+        - /actuator/pump
+        - /actuator/focus
+        - /imager/image
+        - /segmenter/segment
+        - /status/pump
+        - /status/focus
+        - /status/imager
+        - /status/segmenter
+        - /status/segmenter/name
+        - /status/segmenter/object_id
+        - /status/segmenter/metric
+```
+
+##### `networks` field
+
+This field of the `requires` subsection is an array of Docker network objects listing the Docker networks which must be available on the Docker host in order for a deployment of the Pallet package to successfully become active.
+- This field is optional.
+- The Docker network object describes a Docker network which must be provided by either the Docker host itself or by another Pallet package deployment. If the Docker network does not exist and won't be created, then the Pallet package deployment will not be allowed because its [package resource constraints](#package-resource-constraints) for dependencies on Docker networks will not be satisfied.
+- Example:
+  ```yaml
+  networks:
+    - description: Overlay network for Caddy to connect to upstream services
+      name: caddy-ingress
+  ```
+
+A Docker network object consists of the following fields:
+- `description` is a short (one-sentence) description of the required Docker network resource to be shown to users.
   - This field is required.
   - Example:
     ```yaml
-    port: 9090
+    description: Overlay network for the Portainer server to connect to Portainer agents
     ```
 
-- `protocol` is a string specifying the application-level protocol used for accessing the service.
+- `name` is a string specifying the name of the required Docker network.
   - This field is required.
   - Example:
     ```yaml
-    protocol: https
+    name: portainer-agent
     ```
 
-- `paths` is an array of strings which are paths used for accessing the service.
+##### `services` field
+
+This field of the `requires` subsection is an array of network service objects listing the network services which must be available on the Docker host in order for a deployment of the Pallet package to successfully become active.
+- This field is optional.
+- The route of a network service requirement can be defined either as a port/protocol pair or as a combination of port, protocol, and one or more paths. A network service requirement whose route is defined only as a port/protocol pair will be satisfied by a network service if and only if the network service's route is also defined only as a port/protocol pair. A network service requirement whose route is defined with one or more paths will be satisfied by one or more network services if and only if all of those network services have the same port and same protocol as the network service requirement, *and* the set union of their paths overlaps with every path listed in the network service requirement (for a definition of overlapping paths, refer below to description of the `path` field of the network service object). Thus, in any particular set of package deployments, one network service from one package deployment may be sufficient to satisfy a network service requirement from some other package deployment, or it multiple network services from multiple packages may be necessary to fully satisfy the network service requirement.
+- If a set of Pallet package deployments contains a network service resource requirement with a route which does not overlap with the routes of any network services provided by other Pallet package deployments, then the package deployment declaring that network service requirement will be reported as having an unmet dependency. Therefore, the overall set of Pallet package deployments will not be allowed because its [package resource constraints](#package-resource-constraints) for resource dependencies will not be satisfied.
+- Example:
+  ```yaml
+  services:
+    - tags: [caddy-docker-proxy]
+      port: 80
+      protocol: http
+  ```
+
+A network service object consists of the following fields:
+- `description` is a short (one-sentence) description of the network service resource requirement to be shown to users.
+  - This field is required.
+  - Example:
+    ```yaml
+    description: An MJPEG stream from the Raspberry Pi's camera
+    ```
+
+- `port` is a number specifying the network port which must be usable for accessing the required service.
+  - This field is required.
+  - Example:
+    ```yaml
+    port: 8000
+    ```
+
+- `protocol` is a string specifying the application-level protocol which must be usable for accessing the required service.
+  - This field is required.
+  - Example:
+    ```yaml
+    protocol: http
+    ```
+
+- `tags` is an array of strings specifying labels which must be associated with the required service.
   - This field is optional.
-  - A path may optionally have an asterisk (`*`) at the end, in which case it is a prefix path - so the network service covers all paths beginning with that prefix (i.e. the string before the asterisk).
-  - If a network service specifies a port and protocol but no paths, it will conflict with another network service which also specifies the same port and protocol but no paths. It will not conflict with another network service which specifies the same port protocol, but also specifies some paths. This is useful for describing systems involving HTTP reverse-proxies and message brokers, where one package deployment may provide a network service which routes specific messages to network services from other package deployments on specific paths; then the reverse-proxy or message broker would be specified on some port and protocol with no paths, while the network services behind it would be specified on the same port and protocol but with a set of specific paths.
-  - If a package deployment has a dependency on a network service with a specific path which matches a prefix path in a network service from another package deployment, that dependency will be satisfied. For example, a dependency on a network service requiring a path `/admin/cockpit/system` would be met by a network service provded with the path prefix `/admin/cockpit/*`, assuming they have the same port and protocol.
-  - If a package deployment provides a network service with a specific path which matches a prefix path in a network service provided by another package deployment, those two package deployments will be in conflict with each other. For example, a network service providing a path `/admin/cockpit/system` would conflict with a network service providing the path prefix `/admin/cockpit/*`, assuming they have the same port and protocol. This is because those overlapping paths would cause the network services to overlap with each other, which is not allowed.
+  - Tags can be used to require a network service annotated with information about specific API versions, subprotocols, etc. If a package deployment specifies that it requires a network service with one or more tags, then another package deployment will only be considered to satisfy the network service dependency if it provides a network service matching both the required route and all required tags. This is useful in ensuring that a network service provided by one package deployment is compatible with the API version required by a service client from another package deployment, for example.
+  - Example:
+    ```yaml
+    tags:
+      - mjpeg-stream
+    ```
+
+- `paths` is an array of strings which are paths which must be accessible on the required service.
+  - This field is optional.
+  - A path may optionally have an asterisk (`*`) at the end, in which case it is a prefix path - so the required network service must declare that it can be used with any path beginning with that prefix (i.e. the string before the asterisk).
+  - If a network service requirement specifies a port and protocol but no paths, that requirement will be satisfied by any network service which also specifies the same port and protocol and has the required tags (if any), regardless of whether the service specifies any paths. In other words, not listing any paths in a network service requirement is equivalent to not having any requirements about the paths exposed by a network service.
+  - If a package deployment has a requirement for a network service with a specific path which matches a prefix path in a network service provided by another package deployment, the requirement will be met. For example, a requirement for a network service with a path `/stream.mjpg` would be met by a network service provided with the path prefix `/*`, assuming they have the same port and protocol.
   - Example:
     ```yaml
     paths:
-      - /admin/cockpit/*
+      - /stream.mjpg
     ```
 
-### `deployment` section
+#### `provides` subsection
+
+This optional subsection of the `deployment` section specifies the resources provided by an active deployment of the Pallet package. This is the same as the `provides` subsection of the `host` section, except that here the resources only exist when a package deployment is active. Here is an example of a `provides` section:
 
 TODO
 
