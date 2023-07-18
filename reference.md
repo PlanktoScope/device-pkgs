@@ -492,7 +492,7 @@ A network service object consists of the following fields:
 
 ### `deployment` section
 
-This optional section of the `pallet-package.yml` file specifies the Docker stack definition file provided by the package, as well as any resources required for deployment of the package to succeed, as well as any resources provided by deployment of the package. If required resources are not met, the deployment will not be allowed; resources provided by deployment of the package will only exist once the package deployment is successfully applied. Here is an example of a `deployment` section:
+This optional section of the `pallet-package.yml` file specifies the Docker stack definition file provided by the package, as well as any resources required for deployment of the package to succeed, as well as any resources provided by deployment of the package. If resource requirements are not met, the deployment will not be allowed; resources provided by deployment of the package will only exist once the package deployment is successfully applied. Here is an example of a `deployment` section:
 
 ```yaml
 deployment:
@@ -515,7 +515,7 @@ This field of the `deployment` section is the filename of a Docker stack definit
   ```
 
 #### `tags` field
-This field of the `deployment` section is an array of strings to associate with the package deployment or with resources provided by the package deployment. These tags have no semantic meaning within the Pallet package specification, but can be used by other applications for arbitrary purposes.
+This field of the `deployment` section is an array of strings to associate with the package deployment or with resources required or provided by the package deployment. These tags have no semantic meaning within the Pallet package specification, but can be used by other applications for arbitrary purposes.
 - This field is optional.
 - Example:
   ```yaml
@@ -788,4 +788,124 @@ A network service object consists of the following fields:
 
 ### `features` section
 
-TODO
+This optional section of the `pallet-package.yml` file specifies the optional features which can be enabled for a deployment of the package, as well as any resources required for each enabled feature, as well as any resources provided by each enabled feature. If resource requirements of any enabled feature are not met, the deployment will not be allowed; resources provided by an enabled feature in a deployment of the package will only exist once the package deployment is successfully applied.
+
+The `features` section is a map (i.e. dictionary) whose keys are feature names and whose values are feature specification objects.  Here is an example of a `features` section:
+
+```yaml
+features:
+  editor:
+    description: Provides access to the Node-RED admin editor for modifying the GUI
+    tags:
+    - device-portal.name=Node-RED dashboard editor
+    - device-portal.description=Provides a Node-RED flow editor to modify the Node-RED dashboard
+    - device-portal.type=Browser applications
+    - device-portal.purpose=Software development
+    - device-portal.entrypoint=/admin/ps/node-red-v2/
+    requires:
+      networks:
+        - description: Overlay network for Caddy to connect to upstream services
+          name: caddy-ingress
+      services:
+        - tags: [caddy-docker-proxy]
+          port: 80
+          protocol: http
+        - port: 1880
+          protocol: http
+          paths:
+            - /admin/ps/node-red-v2/*
+    provides:
+      services:
+        - description: The Node-RED editor for the v2 PlanktoScope dashboard
+          port: 80
+          protocol: http
+          paths:
+            - /admin/ps/node-red-v2
+            - /admin/ps/node-red-v2/*
+  frontend:
+    description: Provides access to the GUI
+    tags:
+    - device-portal.name=Node-RED dashboard
+    - device-portal.description=Provides a Node-RED dashboard to operate the PlanktoScope
+    - device-portal.type=Browser applications
+    - device-portal.purpose=PlanktoScope operation
+    - device-portal.entrypoint=/ps/node-red-v2/ui/
+    requires:
+      networks:
+        - description: Overlay network for Caddy to connect to upstream services
+          name: caddy-ingress
+      services:
+        - tags: [caddy-docker-proxy]
+          port: 80
+          protocol: http
+        - port: 1880
+          protocol: http
+          paths:
+            - /ps/node-red-v2/ui/*
+        - tags: [mjpeg-stream]
+          port: 80
+          protocol: http
+          paths:
+            - /ps/hal/camera/streams/preview.mjpg
+            - /ps/processing/segmenter/streams/object.mjpg
+    provides:
+      services:
+        - description: The v2 PlanktoScope dashboard for configuring the PlanktoScope and collecting data
+          port: 80
+          protocol: http
+          paths:
+            - /ps/node-red-v2/ui
+            - /ps/node-red-v2/ui/*
+```
+
+A feature specification object consists of the following fields:
+
+- `description` is a short (one-sentence) description of the network service resource requirement to be shown to users.
+  - This field is required.
+  - Example:
+    ```yaml
+    description: Provides access to the GUI
+    ```
+
+- `tags` is an array of strings to associate with the feature or with resources required or provided by the feature.
+  - This field is optional.
+  - These tags have no semantic meaning within the Pallet package specification, but can be used by other applictions for arbitrary purposes.
+  - Example:
+    ```yaml
+    tags:
+      - device-portal-name=Portainer
+      - device-portal-description=Provides a Docker administration dashboard
+      - device-portal-type=Browser applications
+      - device-portal-purpose=System administration and troubleshooting
+      - device-portal-entrypoint=/admin/portainer/
+    ```
+
+- `requires` is a specification of resources required for a deployment of the Pallet package, with the feature enabled, to successfully become active.
+  - This field is optional.
+  - The contents of this field have the same syntax and semantics as the contents of the [`requires` subsection](#requires-subsection) of the `deployment` section of the Pallet package specification, except that resource requirements are only evaluated for features configured as "enabled" for each deployment of each Pallet package; resource requirements for disabled features will be ignored.
+  - Example:
+    ```yaml
+    requires:
+      networks:
+        - description: Overlay network for Caddy to connect to upstream services
+          name: caddy-ingress
+      services:
+        - tags: [caddy-docker-proxy]
+          port: 80
+          protocol: http
+    ```
+
+- `provides` is a specification of resources provided by a deployment of the Pallet package, if the feature is enabled for that deployment.
+  - This field is optional.
+  - The contents of this field have the same syntax and semantics as the contents of the [`provides` subsection](#provides-subsection) of the `deployment` section of the Pallet package specification, except that provided resources are only considered for features configured as "enabled" for each deployment of each Pallet package; provided resources for disabled features will be ignored.
+  - Example:
+    ```yaml
+    provides:
+      services:
+        - description: The Portainer Docker management dashboard
+          port: 80
+          protocol: http
+          paths:
+            - /admin/portainer
+            - /admin/portainer/*
+    ```
