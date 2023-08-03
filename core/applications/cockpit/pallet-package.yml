@@ -7,25 +7,6 @@ package:
   sources:
     - https://github.com/cockpit-project/cockpit
 
-host:
-  tags:
-    - device-portal-name=Cockpit (direct-access fallback)
-    - device-portal-description=Provides fallback access to the Cockpit application, accessible even if the system's service proxy stops working
-    - device-portal-type=Browser applications
-    - device-portal-purpose=System recovery
-    - device-portal-entrypoint=/admin/cockpit/
-  provides:
-    listeners:
-      - description: Web server for the Cockpit dashboard
-        port: 9090
-        protocol: tcp
-    services:
-      - description: The Cockpit system administration dashboard
-        port: 9090
-        protocol: http
-        paths:
-          - /admin/cockpit/*
-
 deployment:
   definition-file: docker-stack.yml
 
