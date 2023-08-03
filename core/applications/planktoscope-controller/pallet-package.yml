@@ -13,11 +13,6 @@ host:
     - device-portal.description=Provides an MQTT service on /actuator, /imager, /status/pump, /status/focus, /status/imager for operating the PlanktoScope hardware
     - device-portal.type=Network APIs
     - device-portal.purpose=PlanktoScope operation
-  requires:
-    services:
-      - tags: [mqtt-broker]
-        port: 1883
-        protocol: mqtt
   provides:
     listeners:
       - description: MJPEG streaming web server for the PlanktoScope's pi camera
@@ -45,6 +40,11 @@ host:
 
 deployment:
   definition-file: docker-stack.yml
+  requires:
+    services:
+      - tags: [mqtt-broker]
+        port: 1883
+        protocol: mqtt
 
 features:
   camera-preview-stream-mjpeg:
