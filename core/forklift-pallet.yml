@@ -1,4 +1,4 @@
-repository:
+pallet:
   path: github.com/PlanktoScope/pallets/core
   description: Officially-maintained open-source PlanktoScope packages
   readme-file: README.md
