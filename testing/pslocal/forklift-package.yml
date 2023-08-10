@@ -8,7 +8,7 @@ package:
     - https://github.com/sargassum-world/pslive
 
 deployment:
-  definition-file: docker-compose.yml
+  definition-files: [docker-compose.yml]
   requires:
     services:
       - tags: [mjpeg]

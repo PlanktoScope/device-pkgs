@@ -38,7 +38,7 @@ host:
           - /status/segmenter/metric
 
 deployment:
-  definition-file: docker-compose.yml
+  definition-files: [docker-compose.yml]
   requires:
     services:
       - tags: [mqtt-broker]

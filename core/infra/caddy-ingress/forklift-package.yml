@@ -8,7 +8,7 @@ package:
     - https://github.com/lucaslorentz/caddy-docker-proxy
 
 deployment:
-  definition-file: docker-compose.yml
+  definition-files: [docker-compose.yml]
 
 features:
   service-proxy:

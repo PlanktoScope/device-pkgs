@@ -1,9 +1,10 @@
 services:
   server:
-    image: ghcr.io/planktoscope/device-portal:0.1.5
+    image: ghcr.io/planktoscope/device-portal:0.1.6
     volumes:
       - type: bind
         source: /sys/firmware/devicetree/base/serial-number
+        # TODO: make a feature for RPi-specific support vs. a Docker volume vs. a test machine name (0xdeadc0de)
         target: /serial-number
         # By default, Docker masks /sys/firmware inside the container. For more information, see
         # https://github.com/moby/moby/issues/43419

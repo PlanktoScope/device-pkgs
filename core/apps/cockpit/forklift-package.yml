@@ -8,7 +8,7 @@ package:
     - https://github.com/cockpit-project/cockpit
 
 deployment:
-  definition-file: docker-compose.yml
+  definition-files: [docker-compose.yml]
 
 features:
   frontend:
