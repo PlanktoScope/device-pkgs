@@ -28,7 +28,7 @@ host:
           - /ps/node-red-v2/ui/*
 
 deployment:
-  definition-file: docker-stack.yml
+  definition-file: docker-compose.yml
   requires:
     services:
       - tags: [planktoscope-api-v2]

@@ -5,10 +5,3 @@ services:
     ports:
       - target: 1883
         published: 1883
-        mode: host
-    networks:
-      - bridge
-
-networks:
-  bridge:
-    external: true

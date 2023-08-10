@@ -8,7 +8,7 @@ package:
     - https://github.com/lucaslorentz/caddy-docker-proxy
 
 deployment:
-  definition-file: docker-stack.yml
+  definition-file: docker-compose.yml
 
 features:
   service-proxy:
@@ -18,10 +18,6 @@ features:
       - device-portal-description=Provides a reverse-proxy to make browser applications and HTTP network APIs uniformly available at different paths on port 80
       - device-portal-type=System infrastructure
       - device-portal-purpose=Networking
-    requires:
-      networks:
-        - description: Bridge network to the host
-          name: bridge
     provides:
       networks:
         - description: Overlay network for Caddy to connect to upstream services

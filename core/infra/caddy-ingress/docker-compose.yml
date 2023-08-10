@@ -6,28 +6,23 @@ services:
       - server_data:/data
       - server_config:/config
     ports:
-      - target: 80
-        published: 80
-        mode: host
-      - target: 443
-        published: 443
-        mode: host
+      - 80:80
+      - 443:443
     extra_hosts:
       - host.docker.internal:host-gateway
     networks:
-      - proxied_network
-      - bridge
+      - proxied
     environment:
       - CADDY_INGRESS_NETWORKS=caddy-ingress
     labels:
       caddy.auto_https: disable_redirects
+
 networks:
-  proxied_network:
-    name: caddy-ingress
-    driver: overlay
-    attachable: true
-  bridge:
+  default:
+    name: none
     external: true
+  proxied:
+    name: caddy-ingress
 
 volumes:
   server_data:

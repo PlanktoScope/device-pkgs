@@ -22,9 +22,6 @@ host:
       - description: Docker container ingress network
         port: 4789
         protocol: udp
-    networks:
-      - description: Default bridge to host
-        name: bridge
     services:
       - description: Docker swarm management
         port: 2377

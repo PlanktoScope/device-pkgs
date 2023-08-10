@@ -8,7 +8,7 @@ package:
     - https://github.com/PlanktoScope/PlanktoScope
 
 deployment:
-  definition-file: docker-stack.yml
+  definition-file: docker-compose.yml
 
 features:
   website:

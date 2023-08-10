@@ -8,7 +8,7 @@ package:
     - https://github.com/node-red/node-red
 
 deployment:
-  definition-file: docker-stack.yml
+  definition-file: docker-compose.yml
 
 features:
   editor:

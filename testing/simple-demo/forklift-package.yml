@@ -9,7 +9,7 @@ package:
     - https://github.com/traefik/whoami
 
 deployment:
-  definition-file: docker-stack.yml
+  definition-file: docker-compose.yml
 
 features:
   hello:

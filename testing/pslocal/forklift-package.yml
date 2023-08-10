@@ -8,7 +8,7 @@ package:
     - https://github.com/sargassum-world/pslive
 
 deployment:
-  definition-file: docker-stack.yml
+  definition-file: docker-compose.yml
   requires:
     services:
       - tags: [mjpeg]
@@ -37,10 +37,6 @@ deployment:
 features:
   frontend-direct:
     description: Provides access to the GUI
-    requires:
-      networks:
-        - description: Bridge network to the host
-          name: bridge
     provides:
       listeners:
         - description: Web server for the pslocal PlanktoScope dashboard

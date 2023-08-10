@@ -8,7 +8,7 @@ package:
     - https://github.com/PlanktoScope/device-portal
 
 deployment:
-  definition-file: docker-stack.yml
+  definition-file: docker-compose.yml
 
 features:
   frontend:

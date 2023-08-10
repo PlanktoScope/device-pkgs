@@ -8,11 +8,7 @@ package:
     - https://github.com/portainer/portainer
 
 deployment:
-  definition-file: docker-stack.yml
-  provides:
-    networks:
-      - description: Overlay network for the Portainer server to connect to Portainer agents
-        name: portainer-agent
+  definition-file: docker-compose.yml
 
 features:
   frontend:
@@ -46,10 +42,6 @@ features:
       - device-portal-description=Provides fallback access to the Portainer application, accessible even if the system's service proxy stops working
       - device-portal-type=Browser applications
       - device-portal-purpose=System recovery
-    requires:
-      networks:
-        - description: Bridge network to the host
-          name: bridge
     provides:
       services:
         - port: 9000
@@ -62,16 +54,3 @@ features:
           protocol: https
           paths:
             - /*
-  edge-agent-tunnel:
-    description: Provides a TLS tunnel server which Portainer Edge Agents can connect to
-    tags:
-      - device-portal-name=Portainer Edge Agent tunnel
-      - device-portal-description=Provides a TLS tunnel server on port 8008 which Portainer Edge Agents can connect to
-      - device-portal-type=System infrastructure
-      - device-portal-purpose=Networking
-    provides:
-      services:
-        - description: The Portainer Edge Agent TLS tunnel server
-          port: 8008
-          application: portainer-edge-tunnel
-          protocol: ssh
