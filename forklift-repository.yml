@@ -1,0 +1,4 @@
+repository:
+  path: github.com/PlanktoScope/device-pkgs
+  description: Forklift packages for the PlanktoScope software distribution
+  readme-file: README.md

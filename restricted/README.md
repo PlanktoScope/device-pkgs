@@ -1,7 +1,7 @@
 # restricted
 License-restricted PlanktoScope packages
 
-This repository contains packages which are only available under licenses not
+This directory contains packages which are only available under licenses not
 [approved by the OSI](https://opensource.org/licenses/); some licenses may include restrictions on
 how the software may be used, for example restrictions on governmental uses, commercial uses, or
 unethical uses of the software. None of these packages are necessary for operating PlanktoScopes.

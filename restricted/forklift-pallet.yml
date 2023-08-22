@@ -1,4 +1,0 @@
-pallet:
-  path: github.com/PlanktoScope/pallets/restricted
-  description: License-restricted PlanktoScope packages
-  readme-file: README.md

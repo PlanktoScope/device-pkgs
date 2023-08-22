@@ -1,4 +1,0 @@
-pallet:
-  path: github.com/PlanktoScope/pallets/testing
-  description: Unstable PlanktoScope packages for testing
-  readme-file: README.md
