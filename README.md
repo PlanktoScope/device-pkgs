@@ -17,11 +17,10 @@ Refer to the README for [Forklift](https://github.com/PlanktoScope/forklift) for
 
 ## Licensing
 
-The Forklift packages provided by these pallets have their own software licenses, as specified by
-SPDX short form identifiers (e.g. "Apache-2.0") in the packages' corresponding
-`forklift-package.yml` metadata files and/or by LICENSE files provided in the package directories.
-Any other source code provided here is covered by the following information, except where otherwise
-indicated:
+The Forklift packages in this repository each have their own software licenses, as specified by SPDX
+short form identifiers (e.g. "Apache-2.0") in the packages' corresponding `forklift-package.yml`
+metadata files and/or by LICENSE files provided in the package directories.  Any other source code
+provided here is covered by the following information, except where otherwise indicated:
 
 Copyright Ethan Li and PlanktoScope project contributors
 
