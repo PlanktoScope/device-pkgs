@@ -1,6 +1,6 @@
 services:
   server:
-    image: portainer/portainer-ce:2.18.3
+    image: portainer/portainer-ce:2.18.4
     command: --tlsskipverify
     volumes:
       - server_data:/data

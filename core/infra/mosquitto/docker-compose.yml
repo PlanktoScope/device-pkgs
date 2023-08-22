@@ -1,6 +1,6 @@
 services:
   mqtt-broker:
-    image: eclipse-mosquitto:2.0.15
+    image: eclipse-mosquitto:2.0.17
     command: mosquitto -c /mosquitto-no-auth.conf
     ports:
       - target: 1883

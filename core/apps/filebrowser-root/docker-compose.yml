@@ -1,6 +1,6 @@
 services:
   server:
-    image: filebrowser/filebrowser:v2.23.0
+    image: filebrowser/filebrowser:v2.24.2
     volumes:
       - /:/root
       - server_data:/database
