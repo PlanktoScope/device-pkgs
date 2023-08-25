@@ -8,7 +8,6 @@ services:
     ports:
       - 9443:9443
       - 9000:9000
-      - 8000:8008
     networks:
       - caddy-ingress
     labels:
