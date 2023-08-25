@@ -1,12 +1,7 @@
 services:
   server:
     image: portainer/portainer-ce:2.18.4
-    # The default admin username is `admin` with a password of `copeportainer`. We set this because
-    # Portainer locks itself a few minutes after starting if no admin account has been created yet.
-    # This makes it difficult to use Portainer the first time right in order to troubleshoot a
-    # problem which has just occurred, because then Portainer must be restarted so that it can be
-    # unlocked.
-    command: --tlsskipverify --admin-password='$2y$05$lQriuxkafjJGvAo2oAWV4OWKDi.vzUi.WQXT49fVlBLTjCO8C4ZYa'
+    command: --tlsskipverify
     volumes:
       - server_data:/data
       - /var/run/docker.sock:/var/run/docker.sock
