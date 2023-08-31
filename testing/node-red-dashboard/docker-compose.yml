@@ -1,0 +1,41 @@
+# TODO: make two separate packages for the adafruithat vs. pscopehat. Either build two separate containers (layered on top of the same underlying Node-RED image) or build one container but toggle the hat-specific flows file with an environment variable set by the forklift package.
+services:
+  reverse-proxy-config:
+    image: nodered/node-red:3.0.2-16
+    volumes:
+      # TODO: build a docker image which contains the flows already set up
+      - /home/pi/.node-red:/data
+      - /home/pi/PlanktoScope/config.json:/home/pi/PlanktoScope/config.json
+      - /home/pi/PlanktoScope/hardware.json:/home/pi/PlanktoScope/hardware.json
+      - /home/pi/PlanktoScope/data:/home/pi/PlanktoScope/data
+      - /home/pi/.local/lib:/home/pi/.local/lib
+    devices:
+      - /dev/mem:/dev/mem
+    networks:
+      - caddy-ingress
+    extra_hosts:
+      # TODO: modify the Node-RED nodes to use this instead of localhost
+      - host.docker.internal:host-gateway
+    labels:
+      caddy: :80
+      caddy.redir_0: /admin/ps/node-red-v2 /admin/ps/node-red-v2/
+      caddy.handle_0: /admin/ps/node-red-v2/*
+      caddy.handle_0.reverse_proxy: "{{upstreams 1880}}"
+      caddy.redir_1: /ps/node-red-v2/ui /ps/node-red-v2/ui/
+      caddy.handle_1: /ps/node-red-v2/ui/*
+      caddy.handle_1.reverse_proxy: "{{upstreams 1880}}"
+    environment:
+      - USER_DIR=/data
+      - NODES_DIR=/data/nodes
+      - HTTP_ADMIN_ROOT=/admin/ps/node-red-v2
+      - HTTP_NODE_ROOT=/ps/node-red-v2
+    # Support running commands on the host from within nodes, using /usr/bin/nsenter -t 1 -m -u -n -i <host command>
+    # Warning: this is a big security hole! We should only keep it around until we can remove all nodes running
+    # host commands from the Node-RED dashboard.
+    privileged: true
+    pid: "host"
+    user: root
+
+networks:
+  caddy-ingress:
+    external: true

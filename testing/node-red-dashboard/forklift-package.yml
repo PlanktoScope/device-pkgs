@@ -1,0 +1,85 @@
+package:
+  description: Web GUI for operating the PlanktoScope
+  maintainers:
+    - name: Ethan Li
+      email: lietk12@gmail.com
+  license: GPL-3.0-or-later
+  sources:
+    - https://github.com/node-red/node-red
+    - https://github.com/PlanktoScope/PlanktoScope
+
+deployment:
+  definition-files: [docker-compose.yml]
+  requires:
+    services:
+      - tags: [planktoscope-api-v2]
+        port: 1883
+        protocol: mqtt
+        paths:
+          - /actuator/pump
+          - /actuator/focus
+          - /imager/image
+          - /segmenter/segment
+          - /status/pump
+          - /status/focus
+          - /status/imager
+          - /status/segmenter
+          - /status/segmenter/name
+          - /status/segmenter/object_id
+          - /status/segmenter/metric
+
+features:
+  editor:
+    description: Provides access to the Node-RED admin editor for modifying the GUI
+    tags:
+    - device-portal.name=Node-RED dashboard editor
+    - device-portal.description=Provides a Node-RED flow editor to modify the Node-RED dashboard
+    - device-portal.type=Browser applications
+    - device-portal.purpose=Software development
+    - device-portal.entrypoint=/admin/ps/node-red-v2/
+    requires:
+      networks:
+        - description: Overlay network for Caddy to connect to upstream services
+          name: caddy-ingress
+      services:
+        - tags: [caddy-docker-proxy]
+          port: 80
+          protocol: http
+    provides:
+      services:
+        - description: The Node-RED editor for the v2 PlanktoScope dashboard
+          port: 80
+          protocol: http
+          paths:
+            - /admin/ps/node-red-v2
+            - /admin/ps/node-red-v2/*
+  frontend:
+    description: Provides access to the GUI
+    tags:
+    - device-portal.name=Node-RED dashboard
+    - device-portal.description=Provides a Node-RED dashboard to operate the PlanktoScope
+    - device-portal.type=Browser applications
+    - device-portal.purpose=PlanktoScope operation
+    - device-portal.entrypoint=/ps/node-red-v2/ui/
+    requires:
+      networks:
+        - description: Overlay network for Caddy to connect to upstream services
+          name: caddy-ingress
+      services:
+        - tags: [caddy-docker-proxy]
+          port: 80
+          protocol: http
+        - tags: [mjpeg-stream]
+          port: 80
+          protocol: http
+          paths:
+            - /ps/hal/camera/streams/preview.mjpg
+            - /ps/processing/segmenter/streams/object.mjpg
+    provides:
+      services:
+        - description: The v2 PlanktoScope dashboard for configuring the PlanktoScope and collecting data
+          port: 80
+          protocol: http
+          paths:
+            - /ps/node-red-v2/ui
+            - /ps/node-red-v2/ui/*

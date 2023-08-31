@@ -20,7 +20,7 @@ features:
       - device-portal-purpose=Networking
     provides:
       networks:
-        - description: Overlay network for Caddy to connect to upstream services
+        - description: Bridge network for Caddy to connect to upstream services
           name: caddy-ingress
       listeners:
         - description: Web server for all HTTP requests
