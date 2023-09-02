@@ -8,6 +8,8 @@ All dates in this file are given in the [UTC time zone](https://en.wikipedia.org
 
 ## Unreleased
 
+## v2023.9.0-beta.0 - 2023-09-02
+
 ### Added
 
 - Core packages for the v2023.9.0 release of the PlanktoScope software distro
