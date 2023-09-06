@@ -1,6 +1,6 @@
 services:
   server:
-    image: ghcr.io/planktoscope/device-portal:0.1.10
+    image: ghcr.io/planktoscope/device-portal:0.1.11
     volumes:
       - type: bind
         source: /sys/firmware/devicetree/base/serial-number
