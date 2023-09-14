@@ -8,6 +8,13 @@ All dates in this file are given in the [UTC time zone](https://en.wikipedia.org
 
 ## Unreleased
 
+## v2023.9.0-beta.1 - 2023-09-14
+
+### Changed
+
+- Upgraded core/apps/planktoscope/device-backend's container image from v0.1.10 to v0.1.11
+- Upgraded core/apps/planktoscope/project-docs's container image from v2023.9.0-alpha.2 to v2023.9.0-beta.1
+
 ## v2023.9.0-beta.0 - 2023-09-02
 
 ### Added
