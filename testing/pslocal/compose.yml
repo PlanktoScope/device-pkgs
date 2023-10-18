@@ -3,8 +3,6 @@ services:
     image: ghcr.io/sargassum-world/pslocal:0.3.8
     volumes:
       - server_data:/data
-    ports:
-      - 3000:3000
     extra_hosts:
       - host.docker.internal:host-gateway
     environment:

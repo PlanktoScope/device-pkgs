@@ -8,11 +8,12 @@ package:
     - https://github.com/cockpit-project/cockpit
 
 deployment:
-  definition-files: [docker-compose.yml]
+  compose-files: [compose.yml]
 
 features:
   frontend:
     description: Provides access to the GUI
+    compose-files: [compose-frontend.yml]
     tags:
       - device-portal-name=Cockpit
       - device-portal-description=Provides a general-purpose system administration dashboard for the computer embedded in the PlanktoScope

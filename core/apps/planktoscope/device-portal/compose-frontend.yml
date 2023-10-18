@@ -1,17 +1,7 @@
 services:
   server:
-    image: ghcr.io/planktoscope/device-portal:0.1.11
-    volumes:
-      - type: bind
-        source: /sys/firmware/devicetree/base/serial-number
-        target: /serial-number
-        # By default, Docker masks /sys/firmware inside the container. For more information, see
-        # https://github.com/moby/moby/issues/43419
-        read_only: true
     networks:
       - caddy-ingress
-    environment:
-      - MACHINENAME_SNFILE=/serial-number
     labels:
       caddy: :80
       caddy.handle_0: /

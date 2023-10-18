@@ -1,0 +1,12 @@
+services:
+  server:
+    image: filebrowser/filebrowser:v2.24.2
+    volumes:
+      - /home/pi/device-backend-logs:/home/pi/device-backend-logs
+      - server_data:/database
+    environment:
+      - FB_DATABASE=/database/filebrowser.db
+      - FB_ROOT=/home/pi/device-backend-logs
+
+volumes:
+  server_data: {}

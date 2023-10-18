@@ -1,9 +1,5 @@
 services:
   server:
-    image: ghcr.io/planktoscope/project-docs:2023.9.0-beta.1
-    volumes:
-      - server_data:/data
-      - server_config:/config
     networks:
       - caddy-ingress
     labels:
@@ -15,7 +11,3 @@ services:
 networks:
   caddy-ingress:
     external: true
-
-volumes:
-  server_data:
-  server_config:

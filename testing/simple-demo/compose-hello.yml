@@ -1,0 +1,14 @@
+services:
+  hello:
+    image: nginxdemos/hello
+    networks:
+      - caddy-ingress
+    labels:
+      caddy: :80
+      caddy.redir: /demo/hello-nginx /demo/hello-nginx/
+      caddy.handle_path: /demo/hello-nginx/*
+      caddy.handle_path.reverse_proxy: "{{upstreams 80}}"
+
+networks:
+  caddy-ingress:
+    external: true

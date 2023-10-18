@@ -1,14 +1,9 @@
 services:
   reverse-proxy-config:
-    image: alpine:3.18.3
-    command: sh -c 'while sleep 3600; do :; done'
     networks:
       - caddy-ingress
     labels:
       caddy: :80
-      caddy.redir_0: /admin/ps/node-red-v2 /admin/ps/node-red-v2/
-      caddy.handle_0: /admin/ps/node-red-v2/*
-      caddy.handle_0.reverse_proxy: host.docker.internal:1880
       caddy.redir_1: /ps/node-red-v2/ui /ps/node-red-v2/ui/
       caddy.handle_1: /ps/node-red-v2/ui/*
       caddy.handle_1.reverse_proxy: host.docker.internal:1880

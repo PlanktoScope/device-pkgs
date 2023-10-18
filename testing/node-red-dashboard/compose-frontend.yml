@@ -1,0 +1,15 @@
+services:
+  reverse-proxy-config:
+    networks:
+      - caddy-ingress
+    labels:
+      caddy: :80
+      caddy.redir_1: /ps/node-red-v2/ui /ps/node-red-v2/ui/
+      caddy.handle_1: /ps/node-red-v2/ui/*
+      caddy.handle_1.reverse_proxy: "{{upstreams 1880}}"
+    environment:
+      - HTTP_NODE_ROOT=/ps/node-red-v2
+
+networks:
+  caddy-ingress:
+    external: true

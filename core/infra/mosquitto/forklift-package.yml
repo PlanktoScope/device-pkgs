@@ -8,7 +8,7 @@ package:
     - https://github.com/eclipse/mosquitto
 
 deployment:
-  definition-files: [docker-compose.yml]
+  compose-files: [docker-compose.yml]
 
 features:
   mqtt-broker:

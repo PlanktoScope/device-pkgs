@@ -1,0 +1,4 @@
+services:
+  reverse-proxy-config:
+    image: alpine:3.18.3
+    command: sh -c 'while sleep 3600; do :; done'

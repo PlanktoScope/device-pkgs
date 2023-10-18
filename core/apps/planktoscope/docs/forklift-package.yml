@@ -8,11 +8,12 @@ package:
     - https://github.com/PlanktoScope/PlanktoScope
 
 deployment:
-  definition-files: [docker-compose.yml]
+  compose-files: [compose.yml]
 
 features:
   website:
     description: Provides access to the website
+    compose-files: [compose-website.yml]
     tags:
       - device-portal-name=PlanktoScope documentation
       - device-portal-description=Provides an offline copy of the official PlanktoScope project documentation

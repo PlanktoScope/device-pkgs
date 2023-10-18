@@ -1,16 +1,10 @@
 services:
   server:
-    image: filebrowser/filebrowser:v2.24.2
-    volumes:
-      - /home/pi/device-backend-logs:/home/pi/device-backend-logs
-      - server_data:/database
     networks:
       - caddy-ingress
     environment:
       - FB_PORT=80
       - FB_BASEURL=/admin/ps/device-backend-logs/browse
-      - FB_DATABASE=/database/filebrowser.db
-      - FB_ROOT=/home/pi/device-backend-logs
       - FB_NOAUTH=true
     labels:
       caddy: :80
@@ -21,6 +15,3 @@ services:
 networks:
   caddy-ingress:
     external: true
-
-volumes:
-  server_data: {}

@@ -28,7 +28,7 @@ host:
           - /ps/node-red-v2/ui/*
 
 deployment:
-  definition-files: [docker-compose.yml]
+  compose-files: [compose.yml]
   requires:
     services:
       - tags: [planktoscope-api-v2]
@@ -50,6 +50,7 @@ deployment:
 features:
   editor:
     description: Provides access to the Node-RED admin editor for modifying the GUI
+    compose-files: [compose-editor.yml]
     tags:
     - device-portal.name=Node-RED dashboard editor
     - device-portal.description=Provides a Node-RED flow editor to modify the Node-RED dashboard
@@ -78,6 +79,7 @@ features:
             - /admin/ps/node-red-v2/*
   frontend:
     description: Provides access to the GUI
+    compose-files: [compose-frontend.yml]
     tags:
     - device-portal.name=Node-RED dashboard
     - device-portal.description=Provides a Node-RED dashboard to operate the PlanktoScope
