@@ -12,6 +12,10 @@ All dates in this file are given in the [UTC time zone](https://en.wikipedia.org
 
 - (Breaking change) Updated files for use with v0.4.0 of the Forklift tool. Previous versions must be used with forklift v0.3.
 
+### Removed
+
+- Removed the `testing/nodered-sandbox` package.
+
 ## v2023.9.0-beta.1 - 2023-09-14
 
 ### Changed
