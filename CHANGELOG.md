@@ -8,6 +8,10 @@ All dates in this file are given in the [UTC time zone](https://en.wikipedia.org
 
 ## Unreleased
 
+### Changed
+
+- (Breaking change) Updated files for use with v0.4.0 of the Forklift tool. Previous versions must be used with forklift v0.3.
+
 ## v2023.9.0-beta.1 - 2023-09-14
 
 ### Changed
@@ -19,4 +23,15 @@ All dates in this file are given in the [UTC time zone](https://en.wikipedia.org
 
 ### Added
 
-- Core packages for the v2023.9.0 release of the PlanktoScope software distro
+- Deployments of various host-only packages for host resources.
+
+### Changed
+
+- (Breaking change) Updated files for use with v0.3.1 of the Forklift tool. Previous versions must be used with forklift v0.1.
+- (Breaking change) Reorganized deployment definitions with a directory tree structure.
+
+## v2023.9.0-alpha.0 - 2023-05-30
+
+### Added
+
+- Basic packages for the v2023.9.0 release of the PlanktoScope software distro.
