@@ -39,3 +39,9 @@ features:
             - /app/*
             - /static/*
             - /fonts/*
+  deploy-rpi:
+    description: Integrates with the Raspberry Pi OS
+    compose-files: [compose-deploy-rpi.yml]
+  dev-mock:
+    description: Provides a fake machine name, to enable development & testing without the Raspberry Pi OS
+    compose-files: [compose-dev-mock.yml]

@@ -1,0 +1,4 @@
+services:
+  server:
+    environment:
+      - MACHINENAME_SN=0xdeadc0de
