@@ -10,6 +10,8 @@ package:
 
 deployment:
   compose-files: [compose.yml]
+  # TODO: add some sort of resource constraint so that Node-RED starts well before the Python
+  # backend, or else Node-RED will miss a message the Python backend emits at startup
   requires:
     services:
       - tags: [planktoscope-api-v2]

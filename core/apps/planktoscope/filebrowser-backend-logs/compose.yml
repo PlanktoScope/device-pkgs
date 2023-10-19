@@ -8,5 +8,10 @@ services:
       - FB_DATABASE=/database/filebrowser.db
       - FB_ROOT=/home/pi/device-backend-logs
 
+networks:
+  default:
+    name: none
+    external: true
+
 volumes:
   server_data: {}

@@ -15,6 +15,7 @@ All dates in this file are given in the [UTC time zone](https://en.wikipedia.org
 ### Removed
 
 - Removed the `testing/nodered-sandbox` package.
+- Removed the default Docker Compose network from most Compose apps.
 
 ## v2023.9.0-beta.1 - 2023-09-14
 

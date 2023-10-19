@@ -1,0 +1,5 @@
+services:
+  mqtt-broker:
+    ports:
+      - target: 1883
+        published: 1883

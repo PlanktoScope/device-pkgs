@@ -5,6 +5,11 @@ services:
       - server_data:/data
       - server_config:/config
 
+networks:
+  default:
+    name: none
+    external: true
+
 volumes:
   server_data:
   server_config:

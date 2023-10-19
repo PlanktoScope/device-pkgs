@@ -31,3 +31,8 @@ services:
     privileged: true
     pid: "host"
     user: root
+
+networks:
+  default:
+    name: none
+    external: true
