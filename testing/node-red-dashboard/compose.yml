@@ -11,8 +11,6 @@ services:
       - /home/pi/.local/lib:/home/pi/.local/lib
     devices:
       - /dev/mem:/dev/mem
-    networks:
-      - caddy-ingress
     extra_hosts:
       # TODO: modify the Node-RED nodes to use this instead of localhost
       - host.docker.internal:host-gateway
@@ -27,8 +25,6 @@ services:
     environment:
       - USER_DIR=/data
       - NODES_DIR=/data/nodes
-      - HTTP_ADMIN_ROOT=/admin/ps/node-red-v2
-      - HTTP_NODE_ROOT=/ps/node-red-v2
     # Support running commands on the host from within nodes, using /usr/bin/nsenter -t 1 -m -u -n -i <host command>
     # Warning: this is a big security hole! We should only keep it around until we can remove all nodes running
     # host commands from the Node-RED dashboard.
@@ -37,5 +33,6 @@ services:
     user: root
 
 networks:
-  caddy-ingress:
+  default:
+    name: none
     external: true

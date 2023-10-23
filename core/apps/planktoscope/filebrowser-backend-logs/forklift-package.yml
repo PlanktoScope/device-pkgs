@@ -8,11 +8,12 @@ package:
     - https://github.com/filebrowser/filebrowser
 
 deployment:
-  definition-files: [docker-compose.yml]
+  compose-files: [compose.yml]
 
 features:
   frontend:
     description: Provides access to the GUI
+    compose-files: [compose-frontend.yml]
     tags:
       - device-portal-name=Backend logs file manager
       - device-portal-description=Provides a file browsing and management interface for the PlanktoScope device backend's logs

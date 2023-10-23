@@ -1,0 +1,13 @@
+services:
+  reverse-proxy-config:
+    networks:
+      - caddy-ingress
+    labels:
+      caddy: :80
+      caddy.redir_0: /admin/ps/node-red-v2 /admin/ps/node-red-v2/
+      caddy.handle_0: /admin/ps/node-red-v2/*
+      caddy.handle_0.reverse_proxy: host.docker.internal:1880
+
+networks:
+  caddy-ingress:
+    external: true

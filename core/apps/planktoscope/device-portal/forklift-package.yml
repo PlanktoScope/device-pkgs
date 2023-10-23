@@ -8,11 +8,12 @@ package:
     - https://github.com/PlanktoScope/device-portal
 
 deployment:
-  definition-files: [docker-compose.yml]
+  compose-files: [compose.yml]
 
 features:
   frontend:
     description: Provides access to a browser landing page
+    compose-files: [compose-frontend.yml]
     tags:
       - device-portal-name=Device portal
       - device-portal-description=Provides a landing page as a portal to the browser applications, network APIs, and system infrastructure on the PlanktoScope
@@ -38,3 +39,9 @@ features:
             - /app/*
             - /static/*
             - /fonts/*
+  deploy-rpi:
+    description: Integrates with the Raspberry Pi OS
+    compose-files: [compose-deploy-rpi.yml]
+  dev-mock:
+    description: Provides a fake machine name, to enable development & testing without the Raspberry Pi OS
+    compose-files: [compose-dev-mock.yml]

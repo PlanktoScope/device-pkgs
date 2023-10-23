@@ -5,24 +5,13 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - server_data:/data
       - server_config:/config
-    ports:
-      - 80:80
-      - 443:443
     extra_hosts:
       - host.docker.internal:host-gateway
-    networks:
-      - proxied
-    environment:
-      - CADDY_INGRESS_NETWORKS=caddy-ingress
-    labels:
-      caddy.auto_https: disable_redirects
 
 networks:
   default:
     name: none
     external: true
-  proxied:
-    name: caddy-ingress
 
 volumes:
   server_data:

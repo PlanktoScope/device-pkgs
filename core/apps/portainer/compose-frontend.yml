@@ -1,13 +1,5 @@
 services:
   server:
-    image: portainer/portainer-ce:2.18.4
-    command: --tlsskipverify
-    volumes:
-      - server_data:/data
-      - /var/run/docker.sock:/var/run/docker.sock
-    ports:
-      - 9443:9443
-      - 9000:9000
     networks:
       - caddy-ingress
     labels:
@@ -17,11 +9,5 @@ services:
       caddy.handle_path.reverse_proxy: "{{upstreams 9000}}"
 
 networks:
-  default:
-    name: none
-    external: true
   caddy-ingress:
     external: true
-
-volumes:
-  server_data:

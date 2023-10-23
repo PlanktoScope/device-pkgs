@@ -8,11 +8,12 @@ package:
     - https://github.com/eclipse/mosquitto
 
 deployment:
-  definition-files: [docker-compose.yml]
+  compose-files: [compose.yml]
 
 features:
   mqtt-broker:
     description: Provides access to the MQTT broker
+    compose-files: [compose-mqtt-broker.yml]
     tags:
       - device-portal-name=MQTT broker
       - device-portal-description=Provides a broker for MQTT messages on port 1883

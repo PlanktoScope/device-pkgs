@@ -8,11 +8,12 @@ package:
     - https://github.com/portainer/portainer
 
 deployment:
-  definition-files: [docker-compose.yml]
+  compose-files: [compose.yml]
 
 features:
   frontend:
     description: Provides access to the GUI
+    compose-files: [compose-frontend.yml]
     tags:
       - device-portal-name=Portainer
       - device-portal-description=Provides a Docker administration dashboard
@@ -37,6 +38,7 @@ features:
             - /admin/portainer/*
   frontend-direct:
     description: Provides direct access to the GUI
+    compose-files: [compose-frontend-direct.yml]
     tags:
       - device-portal-name=Portainer (direct-access fallback)
       - device-portal-description=Provides fallback access to the Portainer application, accessible even if the system's service proxy stops working

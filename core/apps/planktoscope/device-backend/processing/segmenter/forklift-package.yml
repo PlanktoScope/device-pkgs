@@ -38,7 +38,7 @@ host:
           - /status/segmenter/metric
 
 deployment:
-  definition-files: [docker-compose.yml]
+  compose-files: [compose.yml]
   requires:
     services:
       - tags: [mqtt-broker]
@@ -46,8 +46,9 @@ deployment:
         protocol: mqtt
 
 features:
-  mjpeg-object-stream:
+  object-stream-mjpeg:
     description: Provides access to the last segmented object MJPEG stream
+    compose-files: [compose-object-stream-mjpeg.yml]
     tags:
     - device-portal.name=PlanktoScope segmented object preview
     - device-portal.description=Provides an MJPEG stream to preview the latest segmented object
