@@ -36,3 +36,6 @@ features:
           paths:
             - /ps/docs
             - /ps/docs/*
+  full-site:
+    description: Provides the entire docs site, including hardware setup guides
+    compose-files: [compose-full-site.yml]

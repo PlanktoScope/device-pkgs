@@ -10,7 +10,8 @@ All dates in this file are given in the [UTC time zone](https://en.wikipedia.org
 
 ### Added
 
-- Added a `dev-mock` feature flag to the `core/apps/planktoscope/device-portal` allowing that package to be run on non-Raspberry Pi OS Docker hosts with a fake hardcoded machine name (`metal-slope-23501`, corresponding to serial number `0xdeadc0de`) instead of looking up a machine serial number from `/sys/firmware/devicetree/base/serial-number`.
+- Added a `dev-mock` feature flag to the `core/apps/planktoscope/device-portal` package allowing that package to be run on non-Raspberry Pi OS Docker hosts with a fake hardcoded machine name (`metal-slope-23501`, corresponding to serial number `0xdeadc0de`) instead of looking up a machine serial number from `/sys/firmware/devicetree/base/serial-number`.
+- Added a `full-site` feature flag to the `core/apps/planktoscope/docs` package which provides the entire documentation site, including hardware setup guides.
 
 ### Changed
 
@@ -22,6 +23,7 @@ All dates in this file are given in the [UTC time zone](https://en.wikipedia.org
 
 - Removed the `testing/nodered-sandbox` package.
 - Removed the default Docker Compose network from most Compose apps.
+- Removed the hardware setup guides from the default configuration of the `core/apps/planktoscope/docs` package. They can be added back using that package's `full-site` feature flag.
 
 ## v2023.9.0-beta.1 - 2023-09-14
 
