@@ -1,7 +1,8 @@
 # TODO: make two separate packages for the adafruithat vs. pscopehat. Either build two separate containers (layered on top of the same underlying Node-RED image) or build one container but toggle the hat-specific flows file with an environment variable set by the forklift package.
 services:
   reverse-proxy-config:
-    image: nodered/node-red:3.0.2-16
+    # TODO: add a dev-mode feature flag which uses a non-minimal container image
+    image: nodered/node-red:3.1.1-minimal
     volumes:
       # TODO: build a docker image which contains the flows already set up
       - /home/pi/.node-red:/data

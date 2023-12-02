@@ -8,6 +8,8 @@ All dates in this file are given in the [UTC time zone](https://en.wikipedia.org
 
 ## Unreleased
 
+## v2023.9.0-beta.2 - 2023-12-02
+
 ### Added
 
 - Added a `dev-mock` feature flag to the `core/apps/planktoscope/device-portal` package allowing that package to be run on non-Raspberry Pi OS Docker hosts with a fake hardcoded machine name (`metal-slope-23501`, corresponding to serial number `0xdeadc0de`) instead of looking up a machine serial number from `/sys/firmware/devicetree/base/serial-number`.
@@ -17,7 +19,7 @@ All dates in this file are given in the [UTC time zone](https://en.wikipedia.org
 
 - (Breaking change) Moved the `core/apps/planktoscope/device-portal` package's Compose App configuration related to Raspberry Pi OS integration (e.g. for deployment on PlanktoScopes) into a new feature flag named `deploy-rpi`. The machine name determined with this feature flag is overridden by the `dev-mock` feature flag, though if th `deploy-rpi` feature flag is enabled then the app will still require the existence of the `/sys/firmware/devicetree/base/serial-number` file on the Docker host.
 - (Breaking change) Updated files for use with v0.4.0 of the Forklift tool. Previous versions must be used with forklift v0.3.
-- Upgraded core/apps/planktoscope/project-docs's container image from v2023.9.0-beta.1 to v2023.9.0-beta.2.
+- Upgraded core/apps/planktoscope/docs's container images from v2023.9.0-beta.1 to v2023.9.0-beta.2.
 - Upgraded core/apps/planktoscope/device-portal's container image from v0.1.11 to v0.1.12.
 
 ### Removed
