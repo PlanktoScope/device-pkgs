@@ -8,7 +8,7 @@ services:
       caddy: :80
       caddy.redir: /admin/prometheus /admin/prometheus/
       caddy.handle: /admin/prometheus/*
-      caddy.handle.reverse_proxy: host.docker.internal:9090
+      caddy.handle.reverse_proxy: "{{upstreams 9090}}"
 
 networks:
   caddy-ingress:
