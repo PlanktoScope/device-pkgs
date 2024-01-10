@@ -3,6 +3,7 @@ services:
     networks:
       - caddy-ingress
     environment:
+      - FB_PORT=8080
       - FB_BASEURL=/ps/data/browse
       - FB_NOAUTH=true
     labels:
