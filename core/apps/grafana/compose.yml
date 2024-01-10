@@ -1,0 +1,15 @@
+services:
+  server:
+    image: grafana/grafana-oss:10.1.6
+    volumes:
+      - server_data:/var/lib/grafana
+
+networks:
+  default:
+    name: none
+    external: true
+  prometheus-metrics:
+    external: true
+
+volumes:
+  server_data: {}

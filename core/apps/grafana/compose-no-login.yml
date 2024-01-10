@@ -1,0 +1,9 @@
+services:
+  server:
+    environment:
+      - GF_AUTH_DISABLE_LOGIN_FORM=true
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_NAME=Main org.
+        # This is the required value according to https://stackoverflow.com/a/77549537/23202949
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+      - GF_AUTH_BASIC=false
