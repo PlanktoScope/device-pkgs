@@ -51,10 +51,10 @@ features:
     provides:
       listeners: # TODO: add a device-portal entry for this
         - description: Web server for the Prometheus service
-          port: 9090
+          port: 9091
           protocol: tcp
       services:
-        - port: 9090
+        - port: 9091
           application: prometheus
           protocol: http
           paths:
