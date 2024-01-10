@@ -40,3 +40,22 @@ features:
           paths:
             - /admin/prometheus
             - /admin/prometheus/*
+  direct:
+    description: Provides direct access to the GUI
+    compose-files: [compose-direct.yml]
+    tags:
+      - device-portal-name=Prometheus (direct-access)
+      - device-portal-description=Provides direct access to the Prometheus service, accessible beyond Docker
+      - device-portal-type=Browser applications
+      - device-portal-purpose=System recovery
+    provides:
+      listeners: # TODO: add a device-portal entry for this
+        - description: Web server for the Prometheus service
+          port: 9090
+          protocol: tcp
+      services:
+        - port: 9090
+          application: prometheus
+          protocol: http
+          paths:
+            - /*

@@ -3,12 +3,12 @@ services:
     image: grafana/grafana-oss:10.1.6
     volumes:
       - server_data:/var/lib/grafana
+      # TODO: add a volume or mount for grafana datasource+dashboard provisioning, perhaps provided
+      # by another container image
 
 networks:
   default:
     name: none
-    external: true
-  prometheus-metrics:
     external: true
 
 volumes:
