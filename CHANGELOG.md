@@ -11,6 +11,8 @@ All dates in this file are given in the [UTC time zone](https://en.wikipedia.org
 ### Added
 
 - Added a new `core/apps/dozzle` package for viewing Docker container logs.
+- Added a new `core/infra/prometheus` package for handling all Prometheus metrics.
+- Added a new `core/apps/node-exporter` package for generating Prometheus metrics about the state of the host system.
 
 ## v2023.9.0 - 2023-12-30
 
