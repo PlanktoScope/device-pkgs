@@ -16,3 +16,6 @@ networks:
     external: true
   metrics:
     name: prometheus-metrics
+
+volumes:
+  server_data:
