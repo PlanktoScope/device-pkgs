@@ -3,12 +3,11 @@ services:
     networks:
       - caddy-ingress
     environment:
-      - FB_BASEURL=/ps/data/browse
-      - FB_NOAUTH=true
+      - DOZZLE_BASE=/admin/dozzle
     labels:
       caddy: :80
-      caddy.redir: /ps/data/browse /ps/data/browse/
-      caddy.handle: /ps/data/browse/*
+      caddy.redir: /admin/dozzle /admin/dozzle/
+      caddy.handle: /admin/dozzle/*
       caddy.handle.reverse_proxy: "{{upstreams 8080}}"
 
 networks:
