@@ -1,0 +1,38 @@
+package:
+  description: Log viewer for Docker
+  maintainers:
+    - name: Ethan Li
+      email: lietk12@gmail.com
+  license: MIT
+  sources:
+    - https://github.com/amir20/dozzle
+
+deployment:
+  compose-files: [compose.yml]
+
+features:
+  frontend:
+    description: Provides access to the GUI
+    compose-files: [compose-frontend.yml]
+    tags:
+      - device-portal-name=App log viewer
+      - device-portal-description=Provides an interface to view logs of apps installed on the PlanktoScope
+      - device-portal-type=Browser applications
+      - device-portal-purpose=System administration and troubleshooting
+      - device-portal-entrypoint=/admin/dozzle/
+    requires:
+      networks:
+        - description: Overlay network for Caddy to connect to upstream services
+          name: caddy-ingress
+      services:
+        - tags: [caddy-docker-proxy]
+          port: 80
+          protocol: http
+    provides:
+      services:
+        - description: The Dozzle Docker log viewer
+          port: 80
+          protocol: http
+          paths:
+            - /admin/dozzle
+            - /admin/dozzle/*

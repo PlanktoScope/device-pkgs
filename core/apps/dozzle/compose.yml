@@ -1,0 +1,12 @@
+services:
+  server:
+    image: amir20/dozzle:v6.0.6
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - DOZZLE_ENABLE_ACTIONS=true
+
+networks:
+  default:
+    name: none
+    external: true
