@@ -38,4 +38,4 @@ features:
             - /admin/grafana/*
   no-login:
     description: Allows full access without user management or login
-      compose-files: [compose-no-login.yml]
+    compose-files: [compose-no-login.yml]
