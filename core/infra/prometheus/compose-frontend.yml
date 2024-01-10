@@ -1,5 +1,7 @@
 services:
   server:
+    command:
+      - --web.external-url=/admin/prometheus/
     networks:
       - caddy-ingress
     labels:

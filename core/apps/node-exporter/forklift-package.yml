@@ -10,7 +10,7 @@ package:
 deployment:
   compose-files: [compose.yml]
   provides:
-    listeners:
-      - description: Prometheus network interface
+    listeners: # TODO: add an entry in device-portal for this
+      - description: Prometheus node exporter network interface
         port: 9100
         protocol: tcp

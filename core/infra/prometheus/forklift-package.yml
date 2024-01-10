@@ -18,7 +18,7 @@ features:
   frontend:
     description: Provides access to the GUI
     compose-files: [compose-frontend.yml]
-    tags: # TODO: add a link in the device-portal
+    tags: # TODO: add a link in the device-portal for this
       - device-portal-name=Prometheus
       - device-portal-description=Interface for metrics monitoring system
       - device-portal-type=Browser applications
