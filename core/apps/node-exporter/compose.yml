@@ -1,0 +1,14 @@
+services:
+  node-exporter:
+    image: prom/node-exporter:v1.7.0
+    command:
+      - '--path.rootfs=/host'
+    network_mode: host # TODO: document port 9100 in the device-portal's API section
+    pid: host
+    volumes:
+      - '/:/host:ro,rslave'
+
+networks:
+  default:
+    name: none
+    external: true

@@ -1,0 +1,18 @@
+services:
+  server:
+    image: prom/prometheus:v2.48.1
+    volumes:
+      - server_data:/prometheus
+    networks:
+      - metrics
+    extra_hosts:
+      - host.docker.internal:host-gateway
+  #docker-service-discovery:
+  #  image: sqooba/prometheus-docker-labels-discovery:
+
+networks:
+  default:
+    name: none
+    external: true
+  metrics:
+    name: prometheus-metrics

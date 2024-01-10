@@ -1,0 +1,16 @@
+package:
+  description: Prometheus exporter for host metrics
+  maintainers:
+    - name: Ethan Li
+      email: lietk12@gmail.com
+  license: Apache-2.0
+  sources:
+    - https://github.com/prometheus/node_exporter
+
+deployment:
+  compose-files: [compose.yml]
+  provides:
+    listeners:
+      - description: Prometheus network interface
+        port: 9100
+        protocol: tcp
