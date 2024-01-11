@@ -10,6 +10,7 @@ services:
       caddy.redir: /admin/prometheus /admin/prometheus/
       caddy.handle: /admin/prometheus/*
       caddy.handle.reverse_proxy: "{{upstreams 9090}}"
+      prometheus-__metrics_path__: /admin/prometheus/metrics
 
 networks:
   caddy-ingress:
