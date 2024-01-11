@@ -1,4 +1,0 @@
-services:
-  server:
-    ports:
-      - 9091:9090 # We use port 9091 on the host because Cockpit takes port 9090
