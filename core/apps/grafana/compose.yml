@@ -4,6 +4,7 @@ services:
     volumes:
       - server-data:/var/lib/grafana
       - ./provisioning:/provisioning
+      - ./dashboards:/provisioned-dashboards
     extra_hosts:
       - host.docker.internal:host-gateway
     environment:

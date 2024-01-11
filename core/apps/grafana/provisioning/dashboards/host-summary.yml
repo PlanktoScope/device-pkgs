@@ -1,0 +1,11 @@
+# Configuration file version: increment this with each update to the file
+apiVersion: 1
+
+providers:
+  - name: 'forklift'
+    disableDeletion: true
+    updateIntervalSeconds: 10
+    allowUiUpdates: true
+    options:
+      path: /provisioned-dashboards
+      foldersFromFilesStructure: true
