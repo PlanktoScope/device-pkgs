@@ -3,7 +3,7 @@ services:
     image: portainer/portainer-ce:2.18.4
     command: --tlsskipverify
     volumes:
-      - server_data:/data
+      - server-data:/data
       - /var/run/docker.sock:/var/run/docker.sock
 
 networks:
@@ -12,4 +12,4 @@ networks:
     external: true
 
 volumes:
-  server_data:
+  server-data:

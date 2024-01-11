@@ -5,7 +5,7 @@ services:
       - --config.file=/etc/prometheus/prometheus.yml # note: this is copy-pasted to compose-frontend.yml
     volumes:
       - ./configs/prometheus.yml:/etc/prometheus/prometheus.yml
-      - server_data:/prometheus
+      - server-data:/prometheus
     networks:
       - metrics
       - docker-socket-access
@@ -38,4 +38,4 @@ networks:
   docker-socket-access:
 
 volumes:
-  server_data:
+  server-data:

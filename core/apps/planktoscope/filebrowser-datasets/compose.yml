@@ -4,7 +4,7 @@ services:
     volumes:
       - /home/pi/data:/home/pi/data
       - /home/pi/data:/srv # this prevents filebrowser from making an unnamed volume
-      - server_data:/database
+      - server-data:/database
     environment:
       - FB_DATABASE=/database/filebrowser.db
       - FB_ROOT=/home/pi/data
@@ -15,4 +15,4 @@ networks:
     external: true
 
 volumes:
-  server_data: {}
+  server-data: {}

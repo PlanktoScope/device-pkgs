@@ -3,8 +3,8 @@ services:
     image: lucaslorentz/caddy-docker-proxy:2.8.6
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - server_data:/data
-      - server_config:/config
+      - server-data:/data
+      - server-config:/config
     extra_hosts:
       - host.docker.internal:host-gateway
 
@@ -14,5 +14,5 @@ networks:
     external: true
 
 volumes:
-  server_data:
-  server_config:
+  server-data:
+  server-config:
