@@ -7,6 +7,8 @@ services:
       # by another container image
     extra_hosts:
       - host.docker.internal:host-gateway
+    environment:
+      - GF_SECURITY_ANGULAR_SUPPORT_ENABLED=false
 
 networks:
   default:
