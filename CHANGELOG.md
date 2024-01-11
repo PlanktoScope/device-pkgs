@@ -15,6 +15,11 @@ All dates in this file are given in the [UTC time zone](https://en.wikipedia.org
 - Added a new `core/apps/node-exporter` package for generating Prometheus metrics about the state of the host system.
 - Added a new `core/apps/grafana` package for visualizing Prometheus metrics.
 
+### Fixed
+
+- Removed unnamed volumes created by the packages for filebrowser instances and for mosquitto.
+- Changed underscores to hyphens in Docker volume names, for consistency with Docker network names.
+
 ## v2023.9.0 - 2023-12-30
 
 (this release involves no changes from v2023.9.0-beta.2; it's just a promotion of v2023.9.0-beta.2 to a stable release)

@@ -3,11 +3,11 @@ services:
     image: grafana/grafana-oss:10.1.6
     volumes:
       - server-data:/var/lib/grafana
-      # TODO: add a volume or mount for grafana datasource+dashboard provisioning, perhaps provided
-      # by another container image
+      - ./provisioning:/provisioning
     extra_hosts:
       - host.docker.internal:host-gateway
     environment:
+      - GF_PATHS_PROVISIONING=/provisioning
       - GF_SECURITY_ANGULAR_SUPPORT_ENABLED=false
 
 networks:
