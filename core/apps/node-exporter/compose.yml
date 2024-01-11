@@ -7,6 +7,9 @@ services:
     pid: host
     volumes:
       - '/:/host:ro,rslave'
+    labels:
+      prometheus-job: node-exporter
+      prometheus-scrape-interval: 2s
 
 networks:
   default:

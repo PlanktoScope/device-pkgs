@@ -4,13 +4,16 @@ services:
     command: # warning: this will be overwritten by any merged compose files specifying `command`
       - --config.file=/etc/prometheus/prometheus.yml # note: this is copy-pasted to compose-frontend.yml
     volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - server_config:/etc/prometheus
       - server_data:/prometheus
     networks:
       - metrics
     extra_hosts:
       - host.docker.internal:host-gateway
-  #docker-service-discovery:
-  #  image: sqooba/prometheus-docker-labels-discovery:
+    labels:
+      prometheus-job: prometheus
+      prometheus-scrape-interval: 30s
 
 networks:
   default:
@@ -20,4 +23,5 @@ networks:
     name: prometheus-metrics
 
 volumes:
+  server_config:
   server_data:
