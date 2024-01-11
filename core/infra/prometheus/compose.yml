@@ -13,7 +13,7 @@ services:
       - host.docker.internal:host-gateway
     labels:
       prometheus-job: prometheus
-      prometheus-scrape-interval: 30s
+      prometheus-__scrape-interval__: 30s
       prometheus-__address__: localhost:9090
   docker-socket-proxy: # needed because prometheus can only read /var/run/docker.sock as root user
     image: tecnativa/docker-socket-proxy:0.1

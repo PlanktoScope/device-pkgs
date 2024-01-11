@@ -9,7 +9,7 @@ services:
       - '/:/host:ro,rslave'
     labels:
       prometheus-job: node-exporter
-      prometheus-scrape-interval: 2s
+      prometheus-__scrape-interval__: 5s
       prometheus-__address__: host.docker.internal:9100
 
 networks:
