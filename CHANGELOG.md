@@ -13,7 +13,16 @@ All dates in this file are given in the [UTC time zone](https://en.wikipedia.org
 - Added a new `core/apps/dozzle` package for viewing Docker container logs.
 - Added a new `core/infra/prometheus` package for handling all Prometheus metrics.
 - Added a new `core/apps/node-exporter` package for generating Prometheus metrics about the state of the host system.
-- Added a new `core/apps/grafana` package for visualizing Prometheus metrics.
+- Added a new `core/apps/grafana` package for visualizing Prometheus metrics, including a dashboard summarizing the state of the host system.
+
+### Changed
+
+- Upgraded `core/apps/planktoscope/device-portal`'s container image from v0.1.12 to v0.1.14.
+- Upgraded all packages which use the `alpine` container image from 3.18.3 to 3.19.0.
+- Upgraded all packages which use the `filebrowser/filebrowser` container image from v2.24.2 to v2.27.0.
+- Upgraded `core/apps/portainer`'s container image from 2.18.4 to 2.19.4.
+- Upgraded `core/infra/caddy-ingress`'s container image from 2.8.6 to 2.8.10.
+- Upgraded `core/infra/mosquitto`'s container image from 2.0.17 to 2.0.18.
 
 ### Fixed
 
@@ -48,7 +57,7 @@ All dates in this file are given in the [UTC time zone](https://en.wikipedia.org
 
 ### Changed
 
-- Upgraded core/apps/planktoscope/device-backend's container image from v0.1.10 to v0.1.11
+- Upgraded core/apps/planktoscope/device-portal's container image from v0.1.10 to v0.1.11
 - Upgraded core/apps/planktoscope/project-docs's container image from v2023.9.0-alpha.2 to v2023.9.0-beta.1
 
 ## v2023.9.0-beta.0 - 2023-09-02
