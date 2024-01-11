@@ -9,8 +9,13 @@ package:
 
 deployment:
   compose-files: [compose.yml]
+  tags:
+    - device-portal-name=Host system metrics
+    - device-portal-description=Provides metrics about the Raspberry Pi
+    - device-portal-type=Network APIs
+    - device-portal-purpose=System administration and troubleshooting
   provides:
-    listeners: # TODO: add an entry in device-portal for this
+    listeners:
       - description: Prometheus node exporter network interface
         port: 9100
         protocol: tcp

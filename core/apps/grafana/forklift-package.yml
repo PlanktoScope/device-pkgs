@@ -14,9 +14,9 @@ features:
   frontend:
     description: Provides access to the GUI
     compose-files: [compose-frontend.yml]
-    tags: # TODO: add an entry in device-portal for this
+    tags:
       - device-portal-name=System monitoring dashboard
-      - device-portal-description=Provides a graphical dashboard for monitoring system & application metrics
+      - device-portal-description=Provides a graphical dashboard for monitoring system and application metrics
       - device-portal-type=Browser applications
       - device-portal-purpose=System administration and troubleshooting
       - device-portal-entrypoint=/admin/grafana/

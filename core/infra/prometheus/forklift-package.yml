@@ -18,7 +18,7 @@ features:
   api:
     description: Provides access to the API, metrics endpoint, and GUI
     compose-files: [compose-api.yml]
-    tags: # TODO: add a link in the device-portal for this under System Infrastructure
+    tags:
       - device-portal-name=Prometheus server
       - device-portal-description=Metrics monitoring system
       - device-portal-type=System infrastructure
