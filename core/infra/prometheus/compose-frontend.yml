@@ -1,6 +1,7 @@
 services:
   server:
-    command:
+    command: # warning: this will be overwritten by any merged compose files specifying `command`
+      - --config.file=/etc/prometheus/prometheus.yml # preserve flag from the base compose file
       - --web.external-url=/admin/prometheus/
     networks:
       - caddy-ingress

@@ -5,6 +5,8 @@ services:
       - server_data:/var/lib/grafana
       # TODO: add a volume or mount for grafana datasource+dashboard provisioning, perhaps provided
       # by another container image
+    extra_hosts:
+      - host.docker.internal:host-gateway
 
 networks:
   default:

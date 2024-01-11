@@ -1,8 +1,8 @@
 services:
   server:
     image: prom/prometheus:v2.48.1
-    command:
-      - --config.file=/etc/prometheus/prometheus.yml
+    command: # warning: this will be overwritten by any merged compose files specifying `command`
+      - --config.file=/etc/prometheus/prometheus.yml # note: this is copy-pasted to compose-frontend.yml
     volumes:
       - server_data:/prometheus
     networks:
