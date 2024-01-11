@@ -2,3 +2,10 @@ services:
   mqtt-broker:
     image: eclipse-mosquitto:2.0.17
     command: mosquitto -c /mosquitto-no-auth.conf
+    volumes:
+      - server_data:/mosquitto/data
+      - server_logs:/mosquitto/log
+
+volumes:
+  server_data:
+  server_logs:
