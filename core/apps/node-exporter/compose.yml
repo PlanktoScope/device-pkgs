@@ -10,6 +10,7 @@ services:
     labels:
       prometheus-job: node-exporter
       prometheus-__scrape-interval__: 5s
+      prometheus-__scrape-timeout__: 5s
       prometheus-__address__: host.docker.internal:9100
 
 networks:
