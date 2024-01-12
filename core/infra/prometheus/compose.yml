@@ -1,0 +1,41 @@
+services:
+  server:
+    image: prom/prometheus:v2.48.1 # note: version number must also be manually updated in core/apps/grafana's datasource provisioning config
+    command: # warning: this will be overwritten by any merged compose files specifying `command`
+      - --config.file=/etc/prometheus/prometheus.yml # note: this is copy-pasted to compose-frontend.yml
+    volumes:
+      - ./configs/prometheus.yml:/etc/prometheus/prometheus.yml
+      - server-data:/prometheus
+    networks:
+      - metrics
+      - docker-socket-access
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    labels:
+      prometheus-job: prometheus
+      prometheus-__scrape_interval__: 30s
+      prometheus-__address__: localhost:9090
+  docker-socket-proxy: # needed because prometheus can only read /var/run/docker.sock as root user
+    image: tecnativa/docker-socket-proxy:0.1
+    networks:
+      - docker-socket-access
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      NODES: 1
+      NETWORKS: 1
+      SERVICES: 1
+      CONTAINERS: 1
+    logging:
+      driver: none
+
+networks:
+  default:
+    name: none
+    external: true
+  metrics:
+    name: prometheus-metrics
+  docker-socket-access:
+
+volumes:
+  server-data:

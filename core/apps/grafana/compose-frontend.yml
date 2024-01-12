@@ -1,0 +1,17 @@
+services:
+  server:
+    networks:
+      - caddy-ingress
+    environment:
+      - GF_SERVER_ROOT_URL=/admin/grafana
+      - GF_SERVER_SERVE_FROM_SUB_PATH=true
+      - GF_SECURITY_ALLOW_EMBEDDING=true
+    labels:
+      caddy: :80
+      caddy.redir: /admin/grafana /admin/grafana/
+      caddy.handle: /admin/grafana/*
+      caddy.handle.reverse_proxy: "{{upstreams 3000}}"
+
+networks:
+  caddy-ingress:
+    external: true

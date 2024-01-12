@@ -1,0 +1,17 @@
+services:
+  server:
+    command: # warning: this will be overwritten by any merged compose files specifying `command`
+      - --config.file=/etc/prometheus/prometheus.yml # preserve flag from the base compose file
+      - --web.external-url=/admin/prometheus/
+    networks:
+      - caddy-ingress
+    labels:
+      caddy: :80
+      caddy.redir: /admin/prometheus /admin/prometheus/
+      caddy.handle: /admin/prometheus/*
+      caddy.handle.reverse_proxy: "{{upstreams 9090}}"
+      prometheus-__metrics_path__: /admin/prometheus/metrics
+
+networks:
+  caddy-ingress:
+    external: true

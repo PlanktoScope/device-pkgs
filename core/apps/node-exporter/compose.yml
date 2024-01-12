@@ -1,0 +1,19 @@
+services:
+  node-exporter:
+    image: prom/node-exporter:v1.7.0
+    command:
+      - '--path.rootfs=/host'
+    network_mode: host
+    pid: host
+    volumes:
+      - '/:/host:ro,rslave'
+    labels:
+      prometheus-job: node-exporter
+      prometheus-__scrape_interval__: 5s
+      prometheus-__scrape_timeout__: 5s
+      prometheus-__address__: host.docker.internal:9100
+
+networks:
+  default:
+    name: none
+    external: true

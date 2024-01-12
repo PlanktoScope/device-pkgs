@@ -45,6 +45,13 @@ features:
       - device-portal-type=Browser applications
       - device-portal-purpose=System recovery
     provides:
+      listeners:
+        - description: Web server for the Portainer dashboard (HTTP)
+          port: 9000
+          protocol: tcp
+        - description: Web server for the Portainer dashboard (HTTPS)
+          port: 9443
+          protocol: tcp
       services:
         - port: 9000
           application: portainer-gui

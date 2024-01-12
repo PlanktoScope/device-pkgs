@@ -1,0 +1,28 @@
+package:
+  description: Prometheus exporter for host metrics
+  maintainers:
+    - name: Ethan Li
+      email: lietk12@gmail.com
+  license: Apache-2.0
+  sources:
+    - https://github.com/prometheus/node_exporter
+
+deployment:
+  compose-files: [compose.yml]
+  tags:
+    - device-portal-name=Host system metrics
+    - device-portal-description=Provides metrics about the Raspberry Pi
+    - device-portal-type=Network APIs
+    - device-portal-purpose=System administration and troubleshooting
+  provides:
+    listeners:
+      - description: Prometheus node exporter network interface
+        port: 9100
+        protocol: tcp
+    services:
+      - description: Prometheus metrics
+        port: 9100
+        application: prometheus-metrics
+        protocol: http
+        paths:
+          - /*

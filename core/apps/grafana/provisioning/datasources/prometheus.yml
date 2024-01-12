@@ -1,0 +1,16 @@
+# Configuration file version: increment this with each update to the file
+apiVersion: 1
+
+datasources:
+  - name: Prometheus
+    type: prometheus
+    access: proxy
+    url: http://host.docker.internal/admin/prometheus
+    jsonData:
+      timeInterval: 5s
+      manageAlerts: true
+      prometheusType: Prometheus
+      prometheusVersion: 2.48.1
+      cacheLevel: 'High'
+      # Incremental querying breaks dashboards when the system time is incorrect
+      incrementalQuerying: false

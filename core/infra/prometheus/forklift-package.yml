@@ -1,0 +1,42 @@
+package:
+  description: Prometheus server for metrics monitoring
+  maintainers:
+    - name: Ethan Li
+      email: lietk12@gmail.com
+  license: Apache-2.0
+  sources:
+    - https://github.com/prometheus/prometheus
+
+deployment:
+  compose-files: [compose.yml]
+  provides:
+    networks:
+      - description: Bridge network for Prometheus to connect to upstream metrics endpoints
+        name: prometheus-metrics
+
+features:
+  api:
+    description: Provides access to the API, metrics endpoint, and GUI
+    compose-files: [compose-api.yml]
+    tags:
+      - device-portal-name=Prometheus server
+      - device-portal-description=Metrics monitoring system
+      - device-portal-type=System infrastructure
+      - device-portal-purpose=System administration and troubleshooting
+      - device-portal-entrypoint=/admin/prometheus
+    requires:
+      networks:
+        - description: Overlay network for Caddy to connect to upstream services
+          name: caddy-ingress
+      services:
+        - tags: [caddy-docker-proxy]
+          port: 80
+          protocol: http
+    provides:
+      services:
+        - description: The Prometheus administration interface
+          port: 80
+          protocol: http
+          paths:
+            - /admin/prometheus
+            - /admin/prometheus/*

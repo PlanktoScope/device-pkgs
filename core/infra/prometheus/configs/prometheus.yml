@@ -1,0 +1,14 @@
+scrape_configs:
+  - job_name: "docker-containers"
+    docker_sd_configs:
+      - host: tcp://docker-socket-proxy:2375
+        host_networking_host: host.docker.internal
+    relabel_configs:
+      # Only keep containers that have a `prometheus-job` label.
+      - source_labels: [__meta_docker_container_label_prometheus_job]
+        regex: .+
+        action: keep
+      # Use the task labels that are prefixed by `prometheus-`.
+      - regex: __meta_docker_container_label_prometheus_(.+)
+        action: labelmap
+        replacement: $1
