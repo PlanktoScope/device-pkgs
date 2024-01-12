@@ -7,6 +7,8 @@ services:
       caddy.redir_1: /ps/node-red-v2/ui /ps/node-red-v2/ui/
       caddy.handle_1: /ps/node-red-v2/ui/*
       caddy.handle_1.reverse_proxy: host.docker.internal:1880
+      caddy.handle_2: /ps/node-red-v2/api/* # FIXME: these APIs should be provided by the Python backend instead
+      caddy.handle_2.reverse_proxy: host.docker.internal:1880
 
 networks:
   caddy-ingress:

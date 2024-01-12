@@ -14,6 +14,7 @@ All dates in this file are given in the [UTC time zone](https://en.wikipedia.org
 - Added a new `core/infra/prometheus` package for handling all Prometheus metrics.
 - Added a new `core/apps/node-exporter` package for generating Prometheus metrics about the state of the host system.
 - Added a new `core/apps/grafana` package for visualizing Prometheus metrics, including a dashboard summarizing the state of the host system.
+- Exposed the `/ps/node-red-v2/api/*` path for prototyping HTTP API endpoints
 
 ### Changed
 
