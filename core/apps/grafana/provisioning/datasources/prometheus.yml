@@ -12,5 +12,5 @@ datasources:
       prometheusType: Prometheus
       prometheusVersion: 2.48.1
       cacheLevel: 'High'
-      incrementalQuerying: true
-      incrementalQueryOverlapWindow: 2m
+      # Incremental querying breaks dashboards when the system time is incorrect
+      incrementalQuerying: false
