@@ -1,0 +1,6 @@
+http://{machine-name}.pkscope
+http://{machine-name}.pkscope:9090
+http://pkscope-{machine-name}.local
+http://pkscope-{machine-name}.local:9090
+
+# Additional origins added by /etc/planktoscope/cockpit-origins:
