@@ -1,0 +1,8 @@
+package:
+  description: Automatic initialization of GPIO at boot
+  maintainers:
+    - name: Ethan Li
+      email: lietk12@gmail.com
+  license: GPL-3.0-or-later
+  sources:
+    - https://github.com/PlanktoScope/device-pkgs
