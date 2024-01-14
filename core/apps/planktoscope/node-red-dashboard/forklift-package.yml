@@ -31,6 +31,10 @@ deployment:
   compose-files: [compose.yml]
   requires:
     services:
+      - tags: [mqtt-broker]
+        port: 1883
+        protocol: mqtt
+        nonblocking: true
       - tags: [planktoscope-api-v2]
         port: 1883
         protocol: mqtt
@@ -122,6 +126,7 @@ features:
           protocol: http
           paths:
             - /admin/grafana/d/host-summary/*
+          nonblocking: true
   requires-filebrowser-datasets:
     requires:
       services:
@@ -131,3 +136,4 @@ features:
           paths:
             - /ps/data/browse
             - /ps/data/browse/*
+          nonblocking: false # absence of the filebrowser server is not yet handled

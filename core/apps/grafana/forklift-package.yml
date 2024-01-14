@@ -50,6 +50,7 @@ features:
           paths:
             - /admin/prometheus
             - /admin/prometheus/*
+          nonblocking: true
   host-summary-dashboard:
     description: Provides a dashboard to summarize node-exporter metrics; includes prometheus-datasource
     compose-files: [compose-datasource-prometheus.yml, compose-dashboard-host-summary.yml]
@@ -61,9 +62,11 @@ features:
           paths:
             - /admin/prometheus
             - /admin/prometheus/*
+          nonblocking: true
         - description: Metrics from the Prometheus node-exporter app
           tags: [node-exporter]
           protocol: prometheus-metrics
+          nonblocking: true
     provides:
       services:
         - description: Dashboard with summary of host metrics

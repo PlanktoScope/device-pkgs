@@ -25,6 +25,7 @@ All dates in this file are given in the [UTC time zone](https://en.wikipedia.org
 - Upgraded `core/apps/portainer`'s container image from 2.18.4 to 2.19.4.
 - Upgraded `core/infra/caddy-ingress`'s container image from 2.8.6 to 2.8.10.
 - Upgraded `core/infra/mosquitto`'s container image from 2.0.17 to 2.0.18.
+- Changed some package resource dependency relationships to be nonblocking for `plt apply` and `dev plt apply`.
 
 ### Fixed
 
