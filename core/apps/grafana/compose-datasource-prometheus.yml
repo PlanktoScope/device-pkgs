@@ -1,0 +1,4 @@
+services:
+  server:
+    volumes:
+      - ./provisioning/datasources/prometheus.yml:/provisioning/datasources/prometheus.yml

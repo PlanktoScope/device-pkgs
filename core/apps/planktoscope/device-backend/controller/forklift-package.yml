@@ -45,6 +45,7 @@ deployment:
       - tags: [mqtt-broker]
         port: 1883
         protocol: mqtt
+        nonblocking: false # absence of the MQTT server is not yet handled
 
 features:
   camera-preview-stream-mjpeg:

@@ -1,0 +1,5 @@
+services:
+  server:
+    volumes:
+      - ./provisioning/dashboards/host-summary.yml:/provisioning/dashboards/host-summary.yml
+      - ./dashboards/host-summary.json:/provisioned-dashboards/host-summary.json

@@ -14,7 +14,8 @@ All dates in this file are given in the [UTC time zone](https://en.wikipedia.org
 - Added a new `core/infra/prometheus` package for handling all Prometheus metrics.
 - Added a new `core/apps/node-exporter` package for generating Prometheus metrics about the state of the host system.
 - Added a new `core/apps/grafana` package for visualizing Prometheus metrics, including a dashboard summarizing the state of the host system.
-- Exposed the `/ps/node-red-v2/api/*` path for prototyping HTTP API endpoints
+- Exposed the `/ps/node-red-v2/api/*` path for prototyping HTTP API endpoints.
+- Added `requires-grafana-host-summary-dashboard` and `requires-filebrowser-datasets` feature flags to `/core/apps/planktoscope/node-red-dashboard` to express resource requirements for apps embedded in the Node-RED dashboard.
 
 ### Changed
 
@@ -24,6 +25,7 @@ All dates in this file are given in the [UTC time zone](https://en.wikipedia.org
 - Upgraded `core/apps/portainer`'s container image from 2.18.4 to 2.19.4.
 - Upgraded `core/infra/caddy-ingress`'s container image from 2.8.6 to 2.8.10.
 - Upgraded `core/infra/mosquitto`'s container image from 2.0.17 to 2.0.18.
+- Changed some package resource dependency relationships to be nonblocking for `plt apply` and `dev plt apply`.
 
 ### Fixed
 

@@ -31,6 +31,10 @@ deployment:
   compose-files: [compose.yml]
   requires:
     services:
+      - tags: [mqtt-broker]
+        port: 1883
+        protocol: mqtt
+        nonblocking: true
       - tags: [planktoscope-api-v2]
         port: 1883
         protocol: mqtt
@@ -112,3 +116,24 @@ features:
           paths:
             - /ps/node-red-v2/ui
             - /ps/node-red-v2/ui/*
+  requires-grafana-host-summary-dashboard:
+    description: Adds a resource requirement for a host summary Grafana dashboard
+    requires:
+      services:
+        - description: Dashboard with summary of host metrics
+          tags: [dashboard-host-summary]
+          port: 80
+          protocol: http
+          paths:
+            - /admin/grafana/d/host-summary/*
+          nonblocking: true
+  requires-filebrowser-datasets:
+    requires:
+      services:
+        - description: Adds a resource requirement for a dataset filebrowser
+          port: 80
+          protocol: http
+          paths:
+            - /ps/data/browse
+            - /ps/data/browse/*
+          nonblocking: false # absence of the filebrowser server is not yet handled
