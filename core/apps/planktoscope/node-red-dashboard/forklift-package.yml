@@ -112,3 +112,22 @@ features:
           paths:
             - /ps/node-red-v2/ui
             - /ps/node-red-v2/ui/*
+  requires-grafana-host-summary-dashboard:
+    description: Adds a resource requirement for a host summary Grafana dashboard
+    requires:
+      services:
+        - description: Dashboard with summary of host metrics
+          tags: [dashboard-host-summary]
+          port: 80
+          protocol: http
+          paths:
+            - /admin/grafana/d/host-summary/*
+  requires-filebrowser-datasets:
+    requires:
+      services:
+        - description: Adds a resource requirement for a dataset filebrowser
+          port: 80
+          protocol: http
+          paths:
+            - /ps/data/browse
+            - /ps/data/browse/*

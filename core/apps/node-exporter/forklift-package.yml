@@ -20,9 +20,12 @@ deployment:
         port: 9100
         protocol: tcp
     services:
-      - description: Prometheus metrics
+      - description: Prometheus metrics endpoint
         port: 9100
-        application: prometheus-metrics
         protocol: http
         paths:
-          - /*
+          - /
+          - /metrics
+      - description: node-exporter Prometheus metrics
+        tags: [node-exporter]
+        protocol: prometheus-metrics

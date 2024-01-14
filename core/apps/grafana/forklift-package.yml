@@ -39,3 +39,36 @@ features:
   no-login:
     description: Allows full access without user management or login
     compose-files: [compose-no-login.yml]
+  prometheus-datasource:
+    description: Provides integration with a Prometheus server
+    compose-files: [compose-datasource-prometheus.yml]
+    requires:
+      services:
+        - description: Prometheus server
+          port: 80
+          protocol: http
+          paths:
+            - /admin/prometheus
+            - /admin/prometheus/*
+  host-summary-dashboard:
+    description: Provides a dashboard to summarize node-exporter metrics; includes prometheus-datasource
+    compose-files: [compose-datasource-prometheus.yml, compose-dashboard-host-summary.yml]
+    requires:
+      services:
+        - description: Prometheus server
+          port: 80
+          protocol: http
+          paths:
+            - /admin/prometheus
+            - /admin/prometheus/*
+        - description: Metrics from the Prometheus node-exporter app
+          tags: [node-exporter]
+          protocol: prometheus-metrics
+    provides:
+      services:
+        - description: Dashboard with summary of host metrics
+          tags: [dashboard-host-summary]
+          port: 80
+          protocol: http
+          paths:
+            - /admin/grafana/d/host-summary/*
