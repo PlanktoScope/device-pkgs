@@ -31,10 +31,10 @@ for i in ${!joined_interfaces[@]}; do
 done
 
 # Redirect external incoming traffic bound for the device to 127.0.0.1
-redirect_inbound usb0 192.168.3.1
-redirect_inbound eth0 192.168.4.1
-redirect_inbound wlan0 192.168.5.1
-redirect_inbound wlan1 192.168.6.1
-redirect_inbound eth1 192.168.12.1
-redirect_inbound eth2 192.168.13.1
-redirect_inbound eth3 192.168.14.1
+redirect_inbound usb0 192.168.2.1
+redirect_inbound wlan1 192.168.3.1
+redirect_inbound wlan0 192.168.4.1
+redirect_inbound eth0 192.168.5.1
+redirect_inbound eth1 192.168.6.1
+redirect_inbound eth2 192.168.7.1
+redirect_inbound eth3 192.168.8.1
