@@ -16,11 +16,12 @@ redirect_inbound() {
   local interface="$1"
   local ipaddr="$2"
 
-  iptables -t nat -A PREROUTING -i "$interface" -d "$ipaddr" -j DNA --to-destination 127.0.0.1
+  iptables -t nat -A PREROUTING -i "$interface" -d "$ipaddr" -j DNAT --to-destination 127.0.0.1
 }
 
 # Route packets between network interfaces
-joined_interfaces = (wlan0 wlan1 eth0 eth1 eth2 eth3 eth4 usb0 usb1 usb2 usb3)
+# Note: system performance degrades too much if we add too many interfaces here
+joined_interfaces=(wlan0 wlan1 eth0 eth1 usb0)
 for i in ${!joined_interfaces[@]}; do
   for j in ${!joined_interfaces[@]}; do
     if [ "$j" -le "$i" ]; then
@@ -36,9 +37,3 @@ redirect_inbound wlan0 192.168.4.1
 redirect_inbound eth0 192.168.5.1
 redirect_inbound usb0 192.168.6.1
 redirect_inbound eth1 192.168.7.1
-redirect_inbound usb1 192.168.8.1
-redirect_inbound eth2 192.168.9.1
-redirect_inbound usb2 192.168.10.1
-redirect_inbound eth3 192.168.11.1
-redirect_inbound usb3 192.168.12.1
-redirect_inbound eth4 192.168.13.1
