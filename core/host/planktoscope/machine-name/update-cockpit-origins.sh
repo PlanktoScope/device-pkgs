@@ -7,8 +7,8 @@ machine_name="$(/usr/bin/machine-name name --format=hex --sn="$serial_number")"
 
 # Update /var/run/planktoscope/cockpit-origins
 mkdir -p /var/run/planktoscope
-cp "$(script_dir)/cockpit-origins-base" /var/run/cockpit-origins
-sed "s/{machine-name}/$machine_name/g" "$(script_dir)/cockpit-origins-machine-name" \
+cp "$script_dir/cockpit-origins-base" /var/run/cockpit-origins
+sed "s/{machine-name}/$machine_name/g" "$script_dir/cockpit-origins-machine-name" \
   >> /var/run/planktoscope/cockpit-origins
 if [ -f "/etc/planktoscope/cockpit-origins" ]; then
   sed "s/{machine-name}/$machine_name/g" /etc/planktoscope/cockpit-origins \
