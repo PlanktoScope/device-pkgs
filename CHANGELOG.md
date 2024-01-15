@@ -18,6 +18,7 @@ All dates in this file are given in the [UTC time zone](https://en.wikipedia.org
 - Added `requires-grafana-host-summary-dashboard` and `requires-filebrowser-datasets` feature flags to `/core/apps/planktoscope/node-red-dashboard` to express resource requirements for apps embedded in the Node-RED dashboard.
 - Added scripts for the PlanktoScope distro in `core/host/networking/autohotspot`, `core/host/interface-forwarding`, `core/host/planktoscope/gpio-init`, and `core/host/planktoscope/machine-name`.
 - Added the Node-RED settings file to `core/apps/planktoscope/node-red-dashboard`.
+- Added the dhcpcd config file to `core/apps/networking/dhcpcd`.
 
 ### Changed
 
