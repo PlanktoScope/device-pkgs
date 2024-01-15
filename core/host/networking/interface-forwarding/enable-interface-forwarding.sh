@@ -20,7 +20,7 @@ redirect_inbound() {
 }
 
 # Route packets between network interfaces
-joined_interfaces = (wlan0 wlan1 eth0 eth1 eth2 eth3 usb0 usb1 usb2 usb3)
+joined_interfaces = (wlan0 wlan1 eth0 eth1 eth2 eth3 eth4 usb0 usb1 usb2 usb3)
 for i in ${!joined_interfaces[@]}; do
   for j in ${!joined_interfaces[@]}; do
     if [ "$j" -le "$i" ]; then
@@ -41,3 +41,4 @@ redirect_inbound eth2 192.168.9.1
 redirect_inbound usb2 192.168.10.1
 redirect_inbound eth3 192.168.11.1
 redirect_inbound usb3 192.168.12.1
+redirect_inbound eth4 192.168.13.1
