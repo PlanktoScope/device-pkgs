@@ -17,7 +17,8 @@ All dates in this file are given in the [UTC time zone](https://en.wikipedia.org
 - Exposed the `/ps/node-red-v2/api/*` path for prototyping HTTP API endpoints.
 - Added `requires-grafana-host-summary-dashboard` and `requires-filebrowser-datasets` feature flags to `/core/apps/planktoscope/node-red-dashboard` to express resource requirements for apps embedded in the Node-RED dashboard.
 - Added scripts for the PlanktoScope distro in `core/host/networking/autohotspot`, `core/host/interface-forwarding`, `core/host/planktoscope/gpio-init`, and `core/host/planktoscope/machine-name`.
-- Added the Node-RED settings file to `core/apps/planktoscope/node-red-dashboard`
+- Added the Node-RED settings file to `core/apps/planktoscope/node-red-dashboard`.
+- Added the dhcpcd config file to `core/host/networking/dhcpcd`.
 
 ### Changed
 
