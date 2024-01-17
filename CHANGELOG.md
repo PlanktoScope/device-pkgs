@@ -22,6 +22,7 @@ All dates in this file are given in the [UTC time zone](https://en.wikipedia.org
 
 ### Changed
 
+- (Breaking change) Changed the `core/apps/planktoscope/device-backend/processing/segmenter` package to deploy the segmenter as a Docker container rather than expecting it to exist on the host.
 - Upgraded `core/apps/planktoscope/device-portal`'s container image from v0.1.12 to v0.1.14.
 - Upgraded all packages which use the `alpine` container image from 3.18.3 to 3.19.0.
 - Upgraded all packages which use the `filebrowser/filebrowser` container image from v2.24.2 to v2.27.0.
@@ -30,6 +31,10 @@ All dates in this file are given in the [UTC time zone](https://en.wikipedia.org
 - Upgraded `core/infra/mosquitto`'s container image from 2.0.17 to 2.0.18.
 - Changed some package resource dependency relationships to be nonblocking for `plt apply` and `dev plt apply`.
 - (Breaking change) Reorganized packages in `core/host`.
+
+### Removed
+
+- (Breaking change) Removed `core/apps/planktoscope/device-backend/processing/segmenter`'s MJPEG stream service on host port 8001, since it can now be accessed via Docker networking.
 
 ### Fixed
 

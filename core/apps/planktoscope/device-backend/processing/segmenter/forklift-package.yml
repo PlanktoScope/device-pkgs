@@ -7,25 +7,21 @@ package:
   sources:
     - https://github.com/PlanktoScope/device-backend
 
-host:
+deployment:
+  compose-files: [compose.yml]
   tags:
     - device-portal.name=PlanktoScope object segmenter
     - device-portal.description=Provides an MQTT service on /segmenter and /status/segmenter for operating the PlanktoScope object segmenter
     - device-portal.type=Network APIs
     - device-portal.purpose=PlanktoScope operation
-  provides:
-    listeners:
-      - description: MJPEG streaming web server for the PlanktoScope object segmenter
-        port: 8001
-        protocol: tcp
+  requires:
     services:
-      - description: MJPEG stream of last segmented object from the PlanktoScope object segmenter
-        tags: [mjpeg-stream]
-        port: 8001
-        protocol: http
-        paths:
-          - /
-          - /stream.mjpg
+      - tags: [mqtt-broker]
+        port: 1883
+        protocol: mqtt
+        nonblocking: false # absence of the MQTT server is not yet handled
+  provides:
+    services:
       - description: MQTT handling of segmenter commands and broadcasting of segmenter statuses
         tags: [planktoscope-api-v2]
         port: 1883
@@ -37,25 +33,16 @@ host:
           - /status/segmenter/object_id
           - /status/segmenter/metric
 
-deployment:
-  compose-files: [compose.yml]
-  requires:
-    services:
-      - tags: [mqtt-broker]
-        port: 1883
-        protocol: mqtt
-        nonblocking: false # absence of the MQTT server is not yet handled
-
 features:
   object-stream-mjpeg:
     description: Provides access to the last segmented object MJPEG stream
     compose-files: [compose-object-stream-mjpeg.yml]
     tags:
-    - device-portal.name=PlanktoScope segmented object preview
-    - device-portal.description=Provides an MJPEG stream to preview the latest segmented object
-    - device-portal.type=Network APIs
-    - device-portal.purpose=PlanktoScope operation
-    - device-portal.entrypoint=/ps/processing/segmenter/streams/object.mjpg
+      - device-portal.name=PlanktoScope segmented object preview
+      - device-portal.description=Provides an MJPEG stream to preview the latest segmented object
+      - device-portal.type=Network APIs
+      - device-portal.purpose=PlanktoScope operation
+      - device-portal.entrypoint=/ps/processing/segmenter/streams/object.mjpg
     requires:
       networks:
         - description: Overlay network for Caddy to connect to upstream services
@@ -64,11 +51,6 @@ features:
         - tags: [caddy-docker-proxy]
           port: 80
           protocol: http
-        - tags: [mjpeg-stream]
-          port: 8001
-          protocol: http
-          paths:
-            - /stream.mjpg
     provides:
       services:
         - description: Last segmented object MJPEG stream from the segmenter
@@ -77,3 +59,6 @@ features:
           protocol: http
           paths:
             - /ps/processing/segmenter/streams/object.mjpg
+  dev-src:
+    decsription: Provides access to the source code for inspection & prototyping
+    compose-files: [compose-dev-src.yml]
