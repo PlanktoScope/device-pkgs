@@ -1,5 +1,5 @@
 package:
-  description: Object segmenter ambiently provided by the PlanktoScope
+  description: PlanktoScope object segmenter for export to EcoTaxa
   maintainers:
     - name: Ethan Li
       email: lietk12@gmail.com
@@ -59,6 +59,15 @@ features:
           protocol: http
           paths:
             - /ps/processing/segmenter/streams/object.mjpg
+  deploy:
+    description: Adds bind mounts for the PlanktoScope distro's filesystem structure
+    compose-files: [compose-deploy.yml]
+  dev-machinename:
+    description: Allows a machine name to be set for development & troubleshooting
+    compose-files: [compose-dev-machinename.yml]
+  dev-logs:
+    description: Adds a bind mount for the segmenter's logs
+    compose-files: [compose-dev-logs.yml]
   dev-src:
-    decsription: Provides access to the source code for inspection & prototyping
+    description: Allows the source code to be overwritten from an existing codebase for development & troubleshooting
     compose-files: [compose-dev-src.yml]

@@ -1,9 +1,8 @@
 services:
   server:
-    image: ghcr.io/planktoscope/device-backend-processing-segmenter:sha-c15a817
-    volumes:
-      - /home/pi/data:/home/pi/data
-      - /home/pi/device-backend-logs/processing/segmenter:/home/pi/device-backend-logs/processing/segmenter
+    image: ghcr.io/planktoscope/device-backend-processing-segmenter:sha-af75f22
+    extra_hosts:
+      - host.docker.internal:host-gateway
 
 networks:
   default:
