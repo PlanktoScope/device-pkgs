@@ -63,10 +63,13 @@ features:
     description: Adds bind mounts for the PlanktoScope distro's filesystem structure
     compose-files: [compose-deploy.yml]
   dev-machinename:
-    description: Allows a machine name to be set for development & troubleshooting
+    description: Allows a machine name to be set in a file for development & troubleshooting
     compose-files: [compose-dev-machinename.yml]
+  dev-data:
+    description: Allows the segmenter to read and write datasets
+    compose-files: [compose-dev-data.yml]
   dev-logs:
-    description: Adds a bind mount for the segmenter's logs
+    description: Allows the segmenter's logs to be accessed and saved on disk
     compose-files: [compose-dev-logs.yml]
   dev-src:
     description: Allows the source code to be overwritten from an existing codebase for development & troubleshooting
