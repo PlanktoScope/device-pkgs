@@ -11,16 +11,12 @@ deployment:
   compose-files: [compose.yml]
   requires:
     services:
-      - description: Segmenter service logs
+      - description: Device backend service logs
         tags: [log-files]
         protocol: filesystem
         paths:
-          - /home/pi/device-backend-logs/processing/segmenter
-      - description: Hardware controller service logs
-        tags: [log-files]
-        protocol: filesystem
-        paths:
-          - /home/pi/device-backend-logs/controller
+          - /home/pi/device-backend-logs
+        nonblocking: true
 
 features:
   frontend:

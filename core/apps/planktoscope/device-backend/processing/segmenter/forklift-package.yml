@@ -68,6 +68,7 @@ features:
           tags: [log-files]
           protocol: filesystem # FIXME: filesystem entities should probably be a separate resource type
           paths:
+            - /home/pi/device-backend-logs/processing
             - /home/pi/device-backend-logs/processing/segmenter
   dev-machinename:
     description: Allows a machine name to be set in a file for development & troubleshooting
