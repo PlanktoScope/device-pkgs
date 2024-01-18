@@ -1,6 +1,5 @@
 services:
   server:
-    user: pi
     volumes:
       - /var/lib/planktoscope/machine-name:/var/lib/planktoscope/machine-name
       - /home/pi/data:/home/pi/data
