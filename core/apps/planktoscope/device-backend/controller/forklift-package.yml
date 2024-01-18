@@ -37,6 +37,12 @@ host:
           - /status/pump
           - /status/focus
           - /status/imager
+      - description: Controller service logs
+        tags: [log-files]
+        protocol: filesystem # FIXME: filesystem entities should probably be a separate resource type
+        paths:
+          - /home/pi/device-backend-logs
+          - /home/pi/device-backend-logs/controller
 
 deployment:
   compose-files: [compose.yml]

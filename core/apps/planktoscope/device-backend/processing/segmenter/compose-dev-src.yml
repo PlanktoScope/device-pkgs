@@ -1,0 +1,4 @@
+services:
+  server:
+    volumes:
+      - ~/.local/share/planktoscope/src/device-backend/processing/segmenter:/home/pi/device-backend/processing/segmenter

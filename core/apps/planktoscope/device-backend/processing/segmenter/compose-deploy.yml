@@ -1,0 +1,6 @@
+services:
+  server:
+    volumes:
+      - /var/lib/planktoscope/machine-name:/var/lib/planktoscope/machine-name
+      - /home/pi/data:/home/pi/data
+      - /home/pi/device-backend-logs/processing/segmenter:/home/pi/device-backend-logs/processing/segmenter

@@ -1,0 +1,4 @@
+services:
+  server:
+    volumes:
+      - ~/.local/share/planktoscope/machine-name:/var/lib/planktoscope/machine-name
