@@ -9,6 +9,18 @@ package:
 
 deployment:
   compose-files: [compose.yml]
+  requires:
+    services:
+      - description: Segmenter service logs
+        tags: [log-files]
+        protocol: filesystem
+        paths:
+          - /home/pi/device-backend-logs/processing/segmenter
+      - description: Hardware controller service logs
+        tags: [log-files]
+        protocol: filesystem
+        paths:
+          - /home/pi/device-backend-logs/controller
 
 features:
   frontend:

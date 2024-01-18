@@ -62,6 +62,13 @@ features:
   deploy:
     description: Adds bind mounts for the PlanktoScope distro's filesystem structure
     compose-files: [compose-deploy.yml]
+    provides:
+      services:
+        - description: Segmenter service logs
+          tags: [log-files]
+          protocol: filesystem # FIXME: filesystem entities should probably be a separate resource type
+          paths:
+            - /home/pi/device-backend-logs/processing/segmenter
   dev-machinename:
     description: Allows a machine name to be set in a file for development & troubleshooting
     compose-files: [compose-dev-machinename.yml]
