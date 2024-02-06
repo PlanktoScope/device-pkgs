@@ -8,6 +8,8 @@ All dates in this file are given in the [UTC time zone](https://en.wikipedia.org
 
 ## Unreleased
 
+## v2024.0.0-alpha.0 - 2024-02-06
+
 ### Added
 
 - Added a new `core/apps/dozzle` package for viewing Docker container logs.
