@@ -25,3 +25,10 @@ host:
         protocol: http
         paths:
           - /admin/cockpit/*
+    filesets:
+      - description: Cockpit configuration file
+        tags:
+          - cockpit-allow-unencrypted
+          - cockpit-forward-ws
+        paths:
+          - /etc/cockpit/cockpit.conf

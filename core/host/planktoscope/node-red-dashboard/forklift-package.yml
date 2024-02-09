@@ -1,0 +1,18 @@
+package:
+  description: Directories and files for web GUI ambiently provided by the PlanktoScope
+  maintainers:
+    - name: Ethan Li
+      email: lietk12@gmail.com
+  license: GPL-3.0-or-later
+  sources:
+    - https://github.com/PlanktoScope/PlanktoScope
+
+host:
+  provides:
+    filesets:
+      - description: Configuration files
+        paths:
+          - /home/pi/PlanktoScope/config.json
+      - description: Legacy scripts for the dashboard
+        paths:
+          - /home/pi/PlanktoScope/scripts/bash/*

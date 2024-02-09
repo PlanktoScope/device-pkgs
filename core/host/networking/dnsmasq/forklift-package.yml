@@ -19,3 +19,10 @@ host:
       - description: DHCP server
         port: 67
         protocol: udp
+    filesets:
+      - description: Static IP addresses and general DNS names
+        paths:
+          - /etc/dnsmasq.d/dhcp-and-dns.conf
+      - description: PlanktoScope-specific private DNS names
+        paths:
+          - /etc/dnsmasq.d/planktoscope.conf

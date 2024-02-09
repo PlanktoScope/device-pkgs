@@ -6,3 +6,10 @@ package:
   license: GPL-3.0-or-later
   sources:
     - https://github.com/PlanktoScope/device-pkgs
+
+host:
+  provides:
+    filesets:
+      - description: Kernel parameters for routing between network interfaces
+        paths:
+          - /etc/sysctl.d/routed-ap.conf

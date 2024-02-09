@@ -1,8 +1,24 @@
 package:
-  description: Automatic updating of various names based on the PlanktoScop emachine name
+  description: Automatic updating of various names based on the PlanktoScope machine name
   maintainers:
     - name: Ethan Li
       email: lietk12@gmail.com
   license: GPL-3.0-or-later
   sources:
     - https://github.com/PlanktoScope/device-pkgs
+
+host:
+  provides:
+    filesets:
+      - description: File indicating the PlanktoScope's machine name
+        paths:
+          - /var/lib/planktoscope/machine-name
+      - description: File indicating the Wi-Fi SSID name
+        paths:
+          - /var/lib/planktoscope/hostapd-ssid
+      - description: Temporary file indicating the allowed Cockpit origins
+        paths:
+          - /var/run/planktoscope/cockpit-origins
+      - description: PlanktoScope-specific hosts file for dnsmasq
+        paths:
+          - /var/lib/planktoscope/hosts

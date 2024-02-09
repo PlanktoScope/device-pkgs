@@ -1,0 +1,15 @@
+package:
+  description: Wi-Fi access point daemon
+  maintainers:
+    - name: Ethan Li
+      email: lietk12@gmail.com
+  license: BSD-3-Clause
+  sources:
+    - https://w1.fi/hostapd/
+
+host:
+  provides:
+    filesets:
+      - description: Configuration file for wlan0
+        paths:
+          - /etc/hostapd/hostapd.conf

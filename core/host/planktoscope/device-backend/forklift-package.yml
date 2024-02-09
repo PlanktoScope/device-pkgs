@@ -1,0 +1,30 @@
+package:
+  description: Directories and files for Python backend ambiently provided by the PlanktoScope
+  maintainers:
+    - name: Ethan Li
+      email: lietk12@gmail.com
+  license: GPL-3.0-or-later
+  sources:
+    - https://github.com/PlanktoScope/device-backend
+
+host:
+  provides:
+    filesets:
+      - description: Directories for datasets
+        paths:
+          - /home/pi/data
+          - /home/pi/data/img
+          - /home/pi/data/export
+      - description: Directories for logs
+        paths:
+          - /home/pi/device-backend-logs
+          - /home/pi/device-backend-logs/control
+          - /home/pi/device-backend-logs/processing
+          - /home/pi/device-backend-logs/processing/segmenter
+      - description: Configuration files for the hardware controller
+        paths:
+          - /home/pi/device-backend/default-configs
+          - /home/pi/PlanktoScope/hardware.json
+      - description: Legacy scripts for backend
+        paths:
+          - /home/pi/PlanktoScope/scripts/raspimjpeg/*

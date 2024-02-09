@@ -9,6 +9,12 @@ package:
 
 deployment:
   compose-files: [compose.yml]
+  requires:
+    filesets:
+      - description: Directory for datasets
+        paths:
+          - /home/pi/data
+        nonblocking: true
 
 features:
   frontend:

@@ -1,0 +1,15 @@
+package:
+  description: Static table lookup for hostnames
+  maintainers:
+    - name: Ethan Li
+      email: lietk12@gmail.com
+  license: GPL-2.0-or-later
+  sources:
+    - https://salsa.debian.org/installer-team/netcfg
+
+host:
+  provides:
+    filesets:
+      - description: Hosts file
+        paths:
+          - /etc/hosts

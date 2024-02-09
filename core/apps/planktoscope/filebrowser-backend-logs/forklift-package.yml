@@ -10,10 +10,8 @@ package:
 deployment:
   compose-files: [compose.yml]
   requires:
-    services:
-      - description: Device backend service logs
-        tags: [log-files]
-        protocol: filesystem
+    filesets:
+      - description: Directory for device backend service logs
         paths:
           - /home/pi/device-backend-logs
         nonblocking: true
