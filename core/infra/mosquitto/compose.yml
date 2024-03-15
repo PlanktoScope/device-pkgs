@@ -1,6 +1,6 @@
 services:
   mqtt-broker:
-    image: eclipse-mosquitto:2.0.18
+    image: docker.io/eclipse-mosquitto:2.0.18
     command: mosquitto -c /mosquitto-no-auth.conf
     volumes:
       - server-data:/mosquitto/data

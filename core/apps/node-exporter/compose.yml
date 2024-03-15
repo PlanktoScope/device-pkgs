@@ -1,6 +1,6 @@
 services:
   node-exporter:
-    image: prom/node-exporter:v1.7.0
+    image: docker.io/prom/node-exporter:v1.7.0
     command:
       - '--path.rootfs=/host'
     network_mode: host

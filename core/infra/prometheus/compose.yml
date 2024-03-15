@@ -1,6 +1,6 @@
 services:
   server:
-    image: prom/prometheus:v2.48.1 # note: version number must also be manually updated in core/apps/grafana's datasource provisioning config
+    image: docker.io/prom/prometheus:v2.48.1 # note: version number must also be manually updated in core/apps/grafana's datasource provisioning config
     command: # warning: this will be overwritten by any merged compose files specifying `command`
       - --config.file=/etc/prometheus/prometheus.yml # note: this is copy-pasted to compose-frontend.yml
     volumes:

@@ -1,6 +1,6 @@
 services:
   server:
-    image: filebrowser/filebrowser:v2.27.0
+    image: docker.io/filebrowser/filebrowser:v2.27.0
     volumes:
       - /home/pi/device-backend-logs:/home/pi/device-backend-logs
       - /home/pi/device-backend-logs:/srv # this prevents filebrowser from making an unnamed volume
