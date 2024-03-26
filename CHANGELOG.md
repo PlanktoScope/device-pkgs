@@ -6,12 +6,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses [Calendar Versioning](https://calver.org/) with a `YYYY.minor.patch` scheme.
 All dates in this file are given in the [UTC time zone](https://en.wikipedia.org/wiki/Coordinated_Universal_Time).
 
-## Unreleased
+## v2024.0.0-alpha.1 - 2024-03-26
 
 ### Added
 
 - Added provided/required files/directories to the resource interfaces of some packages.
 - Added some `core/host` packages to specify assumptions about provided files/directories.
+
+### Changed
+
+- Upgraded `core/apps/planktoscope/docs`'s container image from v2023.9.0 to v2024.0.0-alpha.1
+- Upgraded `core/apps/planktoscope/device-backend/processing/segmenter`'s container image from v2024.0.0-alpha.0 to v2024.0.0-alpha.1
 
 ## v2024.0.0-alpha.0 - 2024-02-06
 

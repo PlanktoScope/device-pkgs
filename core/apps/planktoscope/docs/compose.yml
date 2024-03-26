@@ -1,6 +1,6 @@
 services:
   server:
-    image: ghcr.io/planktoscope/project-docs:2023.9.0-minimal
+    image: ghcr.io/planktoscope/project-docs:2024.0.0-alpha.1-minimal
     volumes:
       - server-data:/data
       - server-config:/config
