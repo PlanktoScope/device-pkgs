@@ -11,6 +11,6 @@ deployment:
   provides:
     file-exports:
       - description: Basic config to automatically listen for DNS & DHCP queries
-        source: overlays/etc/hostapd.conf
+        source: overlays/etc/hostapd/hostapd.conf
         targets:
-          - overlays/etc/hostapd.conf
+          - overlays/etc/hostapd/hostapd.conf
