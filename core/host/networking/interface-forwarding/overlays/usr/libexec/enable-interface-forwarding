@@ -1,4 +1,4 @@
-#!/bin/bash -eux
+#!/usr/bin/bash -eux
 
 route_between() {
   local interface_a="$1"

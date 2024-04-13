@@ -10,6 +10,8 @@ package:
 host:
   provides:
     filesets:
+      # TODO: make a service which automatically assembles /etc/hosts.d files into a
+      # /run/overlays/generated/etc/hosts file
       - description: Hosts file
         paths:
           - /etc/hosts

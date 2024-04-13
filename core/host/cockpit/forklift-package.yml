@@ -1,5 +1,5 @@
 package:
-  description: Browser dashboard for system administration (installed on host)
+  description: System administration browser dashboard ambiently provided by the OS
   maintainers:
     - name: Ethan Li
       email: lietk12@gmail.com
@@ -25,10 +25,11 @@ host:
         protocol: http
         paths:
           - /admin/cockpit/*
-    filesets:
-      - description: Cockpit configuration file
-        tags:
-          - cockpit-allow-unencrypted
-          - cockpit-forward-ws
-        paths:
-          - /etc/cockpit/cockpit.conf
+
+deployment:
+  provides:
+    file-exports:
+      - description: Basic Cockpit config
+        source: overlays/etc/cockpit/cockpit.conf
+        targets:
+          - overlays/etc/cockpit/cockpit.conf

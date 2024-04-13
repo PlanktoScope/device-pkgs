@@ -1,0 +1,26 @@
+package:
+  description: Docker container runtime ambiently provided by the OS
+  maintainers:
+    - name: Ethan Li
+      email: lietk12@gmail.com
+  license: GPL-3.0-or-later
+  sources:
+    - https://github.com/PlanktoScope/device-pkgs
+
+host:
+  provides:
+    filesets:
+      - /usr/bin/dockerd
+      - /usr/lib/systemd/system/docker.socket
+      - /run/containerd/containerd.sock
+      - /run/docker.sock
+
+features:
+  start-before-network-online:
+    description: Overrides the default system-provided docker.service to remove an ordering dependency for it to start after network-online.target
+    provides:
+      file-exports:
+        - description: Override of the default system-provided docker.service
+          source: overlays/usr/lib/systemd/system/docker.service
+          targets:
+            - overlays/usr/lib/systemd/system/docker.service

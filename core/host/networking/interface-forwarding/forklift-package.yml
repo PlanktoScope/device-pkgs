@@ -7,9 +7,22 @@ package:
   sources:
     - https://github.com/PlanktoScope/device-pkgs
 
-host:
+deployment:
   provides:
-    filesets:
-      - description: Kernel parameters for routing between network interfaces
-        paths:
-          - /etc/sysctl.d/routed-ap.conf
+    file-exports:
+      - description: Kernel parameters to enable routing between network interfaces
+        source: overlays/usr/lib/sysctl.d/20-routed-ap.conf
+        targets:
+          - exports/overlays/usr/lib/sysctl.d/20-routed-ap.conf
+      - description: Shell script to set up iptables rules to forward network traffic between interfaces
+        source: overlays/usr/libexec/enable-interface-forwarding
+        targets:
+          - overlays/usr/libexec/enable-interface-forwarding
+      - description: systemd service to run the enable-interface-forwarding script during boot
+        source: overlays/usr/lib/systemd/system/enable-interface-forwarding.service
+        targets:
+          - overlays/usr/lib/systemd/system/enable-interface-forwarding.service
+      - description: systemd service enablement for enable-interface-forwarding.service
+        source: overlays/usr/lib/systemd/system/network-online.target.wants/enable-interface-forwarding.service
+        targets:
+          - overlays/usr/lib/systemd/system/network-online.target.wants/enable-interface-forwarding.service

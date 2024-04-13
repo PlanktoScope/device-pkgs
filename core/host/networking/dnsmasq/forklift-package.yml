@@ -1,5 +1,5 @@
 package:
-  description: DNS and DHCP server ambiently provided by the PlanktoScope
+  description: DNS and DHCP server ambiently provided by the OS
   maintainers:
     - name: Ethan Li
       email: lietk12@gmail.com
@@ -8,6 +8,13 @@ package:
     - https://thekelleys.org.uk/dnsmasq/doc.html
 
 host:
+  provides:
+    filesets:
+      - description: systemd service to run the dnsmasq server
+        paths:
+          - /usr/lib/systemd/system/dnsmasq.service
+
+deployment:
   provides:
     listeners:
       - description: DNS server
@@ -19,10 +26,29 @@ host:
       - description: DHCP server
         port: 67
         protocol: udp
-    filesets:
-      - description: Static IP addresses and general DNS names
-        paths:
-          - /etc/dnsmasq.d/dhcp-and-dns.conf
-      - description: PlanktoScope-specific private DNS names
-        paths:
-          - /etc/dnsmasq.d/planktoscope.conf
+    file-exports:
+      - description: Basic config to automatically listen for DNS & DHCP queries
+        source: overlays/etc/dnsmasq.d/10-listen.conf
+        targets:
+          - overlays/etc/dnsmasq.d/10-listen.conf
+      - description: Basic config to forward DNS queries to Cloudflare & Google when needed
+        source: overlays/etc/dnsmasq.d/20-upstream-dns.conf
+        targets:
+          - overlays/etc/dnsmasq.d/20-upstream-dns.conf
+
+features:
+  systemd-service-enabled:
+    description: Enables the system-provided dnsmasq.service
+    provides:
+      file-exports:
+        source: overlays/usr/lib/systemd/system/multi-user.target.wants/dnsmasq.service
+        targets:
+          - overlays/usr/lib/systemd/system/multi-user.target.wants/dnsmasq.service
+  planktoscope-dhcp-interfaces:
+    description: Enables DHCP & DNS server functionality for the PlanktoScope OS's static IP address assignments on its network interfaces
+    provides:
+      file-exports:
+        - description: Sets DHCP server settings on the wlan0, wlan1, eth0, eth1, and usb0 interfaces
+          source: overlays/etc/dnsmasq.d/50-dhcp-interfaces.conf
+          targets:
+            - overlays/etc/dnsmasq.d/50-dhcp-interfaces.conf

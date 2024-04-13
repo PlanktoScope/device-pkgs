@@ -1,0 +1,10 @@
+[Unit]
+Description=Enable forwarding of packets between network interfaces
+ConditionFileIsExecutable=/usr/libexec/enable-interface-forwarding
+
+[Service]
+Type=oneshot
+ExecStart=/usr/libexec/enable-interface-forwarding
+
+[Install]
+WantedBy=network-online.target

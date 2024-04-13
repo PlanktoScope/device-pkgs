@@ -1,5 +1,5 @@
 package:
-  description: Avahi daemon ambiently provided by the PlanktoScope
+  description: Avahi daemon ambiently provided by the OS
   maintainers:
     - name: Ethan Li
       email: lietk12@gmail.com

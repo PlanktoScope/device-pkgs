@@ -1,5 +1,5 @@
 package:
-  description: Wi-Fi access point daemon
+  description: Wi-Fi access point daemon ambiently provided by the OS
   maintainers:
     - name: Ethan Li
       email: lietk12@gmail.com
@@ -7,9 +7,10 @@ package:
   sources:
     - https://w1.fi/hostapd/
 
-host:
+deployment:
   provides:
-    filesets:
-      - description: Configuration file for wlan0
-        paths:
-          - /etc/hostapd/hostapd.conf
+    file-exports:
+      - description: Basic config to automatically listen for DNS & DHCP queries
+        source: overlays/etc/hostapd.conf
+        targets:
+          - overlays/etc/hostapd.conf
