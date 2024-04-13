@@ -23,6 +23,10 @@ All dates in this file are given in the [UTC time zone](https://en.wikipedia.org
 
 - (Breaking change) The minimum supported Forklift version for using this repository has been bumped from v0.4.0 to v0.7.0-alpha.3, because some packages provided by this repository now require functionality added by v0.7.0 (namely, file-exporting functionality) in order to work as described/expected.
 
+### Removed
+
+- `core/apps/cockpit` no longer has a resource dependency on a fileset involving `/etc/cockpit/cockpit.conf`.
+
 ## v2024.0.0-alpha.1 - 2024-03-26
 
 ### Added

@@ -9,14 +9,6 @@ package:
 
 deployment:
   compose-files: [compose.yml]
-  requires:
-    filesets:
-      - description: Cockpit configuration file
-        tags:
-          - cockpit-allow-unencrypted
-          - cockpit-forward-ws
-        paths:
-          - /etc/cockpit/cockpit.conf
 
 features:
   frontend:
