@@ -13,7 +13,7 @@ deployment:
       - description: Kernel parameters to enable routing between network interfaces
         source: overlays/usr/lib/sysctl.d/20-routed-ap.conf
         targets:
-          - exports/overlays/usr/lib/sysctl.d/20-routed-ap.conf
+          - overlays/usr/lib/sysctl.d/20-routed-ap.conf
       - description: Shell script to set up iptables rules to forward network traffic between interfaces
         source: overlays/usr/libexec/enable-interface-forwarding
         targets:
