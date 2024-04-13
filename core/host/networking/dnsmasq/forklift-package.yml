@@ -41,9 +41,10 @@ features:
     description: Enables the system-provided dnsmasq.service
     provides:
       file-exports:
-        source: overlays/usr/lib/systemd/system/multi-user.target.wants/dnsmasq.service
-        targets:
-          - overlays/usr/lib/systemd/system/multi-user.target.wants/dnsmasq.service
+        - description: systemd servic enablement for dnsmasq.service
+          source: overlays/usr/lib/systemd/system/multi-user.target.wants/dnsmasq.service
+          targets:
+            - overlays/usr/lib/systemd/system/multi-user.target.wants/dnsmasq.service
   planktoscope-dhcp-interfaces:
     description: Enables DHCP & DNS server functionality for the PlanktoScope OS's static IP address assignments on its network interfaces
     provides:
