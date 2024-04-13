@@ -20,25 +20,25 @@ host:
 features:
   ssh-server-enabled:
     description: Enables the system-provided SSH server
-      tags:
-        - device-portal-name=SSH server
-        - device-portal-description=Provides SSH access to the PlanktoScope on port 22
-        - device-portal-type=System infrastructure
-        - device-portal-purpose=Networking
-      provides:
-        listeners:
-          - description: SSH server
-            port: 22
-            protocol: tcp
-        services:
-          - description: SSH server
-            port: 22
-            protocol: ssh
-        file-exports:
-          - description: systemd service enablement for the system-provided ssh.service
-            source: overlays/usr/lib/systemd/system/multi-user.target.wants/ssh.service
-            targets:
-              - overlays/usr/lib/systemd/system/multi-user.target.wants/ssh.service
+    tags:
+      - device-portal-name=SSH server
+      - device-portal-description=Provides SSH access to the PlanktoScope on port 22
+      - device-portal-type=System infrastructure
+      - device-portal-purpose=Networking
+    provides:
+      listeners:
+        - description: SSH server
+          port: 22
+          protocol: tcp
+      services:
+        - description: SSH server
+          port: 22
+          protocol: ssh
+      file-exports:
+        - description: systemd service enablement for the system-provided ssh.service
+          source: overlays/usr/lib/systemd/system/multi-user.target.wants/ssh.service
+          targets:
+            - overlays/usr/lib/systemd/system/multi-user.target.wants/ssh.service
   ensure-ssh-host-keys:
     description: Regenerates ssh host keys at boot if they're missing
     provides:
