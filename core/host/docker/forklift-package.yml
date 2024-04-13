@@ -10,10 +10,16 @@ package:
 host:
   provides:
     filesets:
-      - /usr/bin/dockerd
-      - /usr/lib/systemd/system/docker.socket
-      - /run/containerd/containerd.sock
-      - /run/docker.sock
+      - description: Socket files for Docker and containerd
+        paths:
+          - /run/docker.sock
+          - /run/containerd/containerd.sock
+      - description: systemd socket for Docker
+        paths:
+          - /usr/lib/systemd/system/docker.socket
+      - description: Docker daemon binary
+        paths:
+          - /usr/bin/dockerd
 
 features:
   start-before-network-online:
