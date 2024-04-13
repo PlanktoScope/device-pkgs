@@ -50,6 +50,6 @@ features:
     provides:
       file-exports:
         - description: Sets DHCP server settings on the wlan0, wlan1, eth0, eth1, and usb0 interfaces
-          source: overlays/etc/dnsmasq.d/50-dhcp-interfaces.conf
+          source: overlays/etc/dnsmasq.d/30-dhcp-interfaces.conf
           targets:
-            - overlays/etc/dnsmasq.d/50-dhcp-interfaces.conf
+            - overlays/etc/dnsmasq.d/30-dhcp-interfaces.conf
