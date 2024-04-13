@@ -1,1 +1,1 @@
-/usr/lib/systemd/system/enable-interface-forwarding.service
+../enable-interface-forwarding.service
