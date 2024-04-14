@@ -19,14 +19,14 @@ deployment:
         targets:
           - overlays/usr/lib/systemd/system/autohotspot.service
       - description: systemd service enablement for autohotspot.service
-        source: overlays/usr/lib/systemd/system/network-online.target.wants/autohotspot.service
+        source: overlays/etc/systemd/system/network-online.target.wants/autohotspot.service
         targets:
-          - overlays/usr/lib/systemd/system/network-online.target.wants/autohotspot.service
+          - overlays/etc/systemd/system/network-online.target.wants/autohotspot.service
       - description: systemd timer to periodically re-run autohotspot.service to update Wi-Fi behavior
         source: overlays/usr/lib/systemd/system/autohotspot.timer
         targets:
           - overlays/usr/lib/systemd/system/autohotspot.timer
       - description: systemd timer enablement for autohotspot.timer
-        source: overlays/usr/lib/systemd/system/timers.target.wants/autohotspot.timer
+        source: overlays/etc/systemd/system/timers.target.wants/autohotspot.timer
         targets:
-          - overlays/usr/lib/systemd/system/timers.target.wants/autohotspot.timer
+          - overlays/etc/systemd/system/timers.target.wants/autohotspot.timer
