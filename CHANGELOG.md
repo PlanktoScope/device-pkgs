@@ -14,7 +14,7 @@ All dates in this file are given in the [UTC time zone](https://en.wikipedia.org
 - `core/host/cockpit` now exports a default basic config file for Cockpit.
 - `core/host/networking/autohotspot` now exports everything needed for autohotspot functionality.
 - `core/host/networking/dhcpcd` now exports an override to the default systemd `dhcpcd.service`.
-- `core/host/networking/dnsmasq` now exports various drop-in config files for dnsmasq and adds two feature flags: `systemd-service-enabled` to enable `dhcpcd.service` and `planktoscope-dhcp-interfaces` to add another drop-in config file for dnsmasq based on the PlanktoScope OS's static IP address assignments for its various network interfaces.
+- `core/host/networking/dnsmasq` now exports various drop-in config files for dnsmasq and adds a feature flag, `planktoscope-dhcp-interfaces`, to add another drop-in config file for dnsmasq based on the PlanktoScope OS's static IP address assignments for its various network interfaces.
 - `core/host/networking/hostapd` now exports a default basic config file for hostapd.
 - `core/host/networking/interface-forwarding` now exports everything needed for interface-forwarding functionality.
 - `core/host/sshd` adds two feature flags: `ssh-server-enabled` to enable the `ssh.service` and `ensure-ssh-host-keys` to add and enable a service which automatically regenerates host keys for the SSH server if no host keys exist at boot.
