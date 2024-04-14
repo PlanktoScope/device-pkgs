@@ -9,10 +9,7 @@ package:
 
 host:
   provides:
-    filesets:
-      - description: File indicating the PlanktoScope's machine name
-        paths:
-          - /var/lib/planktoscope/machine-name
+      # TODO: move these into feature flags
       - description: File indicating the Wi-Fi SSID name
         paths:
           - /var/lib/planktoscope/hostapd-ssid
@@ -22,3 +19,53 @@ host:
       - description: PlanktoScope-specific hosts file for dnsmasq
         paths:
           - /var/lib/planktoscope/hosts
+
+deployment:
+  provides:
+    file-exports:
+      - description: Shell script to generate a machine name based on the Raspberry Pi's serial number
+        source: overlays/usr/libexec/update-machine-name
+        targets:
+          - /usr/libexec/update-machine-name
+      - description: systemd service to run the update-machine-name script during boot
+        source: overlays/usr/lib/systemd/system/update-machine-name.service
+        targets:
+          - overlays/usr/lib/systemd/system/update-machine-name.service
+      - description: systemd service enablement for update-machine-name.service
+        source: overlays/etc/systemd/system/sysinit.target.wants/update-machine-name.service
+        targets:
+          - overlays/etc/systemd/system/sysinit.target.wants/update-machine-name.service
+    filesets:
+      - description: Auto-generated file indicating the machine name
+        paths:
+          - /run/machine-name
+
+features:
+  generate-hostname:
+    description: Generates the OS's hostname from the machine name
+    provides:
+      file-exports:
+        - description: systemd service to generate the hostname during boot
+          source: overlays/usr/lib/systemd/system/generate-hostname.service
+          targets:
+            - overlays/usr/lib/systemd/system/generate-hostname.service
+        - description: systemd service enablement for planktoscope-org.update-cockpit-origins-machine-name.service
+          source: overlays/etc/systemd/system/sysinit.target.wants/generate-hostname.service
+          targets:
+            - overlays/etc/systemd/system/sysinit.target.wants/generate-hostname.service
+  update-cockpit-origins:
+    description: Updates Cockpit's allowed origins based on the machine name
+    provides:
+      file-exports:
+        - description: Shell script to generate Cockpit drop-in configurations based on the machine name
+          source: overlays/usr/libexec/update-cockpit-origins
+          targets:
+            - /usr/libexec/update-cockpit-origins
+        - description: systemd service to run the update-cockpit-origins script during boot
+          source: overlays/usr/lib/systemd/system/planktoscope-org.update-cockpit-origins-machine-name.service
+          targets:
+            - overlays/usr/lib/systemd/system/planktoscope-org.update-cockpit-origins-machine-name.service
+        - description: systemd service enablement for planktoscope-org.update-cockpit-origins-machine-name.service
+          source: overlays/etc/systemd/system/multi-user.target.wants/planktoscope-org.update-cockpit-origins-machine-name.service
+          targets:
+            - overlays/etc/systemd/system/multi-user.target.wants/planktoscope-org.update-cockpit-origins-machine-name.service

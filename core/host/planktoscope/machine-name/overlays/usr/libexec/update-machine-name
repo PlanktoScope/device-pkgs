@@ -1,0 +1,10 @@
+#!/bin/bash -eux
+
+if [ -f /sys/firmware/devicetree/base/serial-number ]; then
+  serial_number="$(tr -d '\0' < /sys/firmware/devicetree/base/serial-number | cut -c 9-)"
+  machine_name="$(/usr/bin/machine-name name --format=hex --sn="$serial_number")"
+else
+  machine_name="unknown"
+fi
+
+printf "%s" "$machine_name" > /run/machine-name

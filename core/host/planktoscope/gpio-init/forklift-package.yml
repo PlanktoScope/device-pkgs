@@ -6,3 +6,19 @@ package:
   license: GPL-3.0-or-later
   sources:
     - https://github.com/PlanktoScope/device-pkgs
+
+deployment:
+  provides:
+    file-exports:
+      - description: Shell script to release power to the stepper motors
+        source: overlays/usr/libexec/release-gpio-steppers
+        targets:
+          - overlays/usr/libexec/release-gpio-steppers
+      - description: systemd service to run the release-gpio-steppers script during boot
+        source: overlays/usr/lib/systemd/system/planktoscope-org.init-gpio-steppers.service
+        targets:
+          - overlays/usr/lib/systemd/system/planktoscope-org.init-gpio-steppers.service
+      - description: systemd service enablement for autohotspot.service
+        source: overlays/etc/systemd/system/multi-user.target.wants/planktoscope-org.init-gpio-steppers.service
+        targets:
+          - overlays/etc/systemd/system/multi-user.target.wants/planktoscope-org.init-gpio-steppers.service

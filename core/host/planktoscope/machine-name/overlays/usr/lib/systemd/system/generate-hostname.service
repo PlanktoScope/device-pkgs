@@ -1,0 +1,26 @@
+[Unit]
+Description=Generate a hostname matching the machine name from /run/machine-name, to be overlaid into /etc
+DefaultDependencies=no
+ConditionFileIsExecutable=/usr/libexec/update-hostname
+ConditionPathExists=/run/machine-name
+Requires=local-fs.target
+After=local-fs.target
+Wants=update-machine-name.service
+After=update-machine-name.service
+Before=sysinit.target
+Before=systemd-hostnamed.service
+# Before=dnsmasq.service
+# Before=avahi-daemon.service
+# Wants=network-pre.target
+# Before=network-pre.service
+
+[Service]
+Type=oneshot
+ExecStartPre=mkdir -p /run/overlays/generated/etc
+ExecStart=cp /run/machine-name /run/overlays/generated/etc/hostname
+# FIXME: maybe we actually need to call hostnamectl hostname to update the hostname? Otherwise, we
+# need to figure out how to make this service run before systemd loads /etc/hostname to set
+# the hostname.
+
+[Install]
+WantedBy=sysinit.target

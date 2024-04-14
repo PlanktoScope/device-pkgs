@@ -1,0 +1,15 @@
+[Unit]
+Description=Update /run/machine-name with a human-readable name generated from the Raspberry Pi's serial number
+DefaultDependencies=no
+ConditionFileIsExecutable=/usr/libexec/update-machine-name
+ConditionFileIsExecutable=/usr/bin/machine-name
+Wants=local-fs.target
+After=local-fs.target
+Before=sysinit.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/libexec/update-machine-name
+
+[Install]
+WantedBy=sysinit.target
