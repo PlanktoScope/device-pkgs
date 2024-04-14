@@ -9,7 +9,7 @@ package:
 
 host:
   provides:
-    file-exports:
+    filesets:
       # TODO: move these into feature flags
       - description: File indicating the Wi-Fi SSID name
         paths:
