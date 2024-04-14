@@ -22,6 +22,6 @@ deployment:
         targets:
           - overlays/etc/dhcpcd.conf
       - description: systemd service override for system-provided dhcpcd.service to handle usb0 hotplugging
-        source: overlays/etc/systemd/system/dhcpcd.service.d/restart.conf
+        source: overlays/etc/systemd/system/dhcpcd.service.d/10-restart.conf
         targets:
-          - overlays/etc/systemd/system/dhcpcd.service.d/restart.conf
+          - overlays/etc/systemd/system/dhcpcd.service.d/10-restart.conf
