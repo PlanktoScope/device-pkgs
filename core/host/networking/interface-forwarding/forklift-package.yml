@@ -23,6 +23,6 @@ deployment:
         targets:
           - overlays/usr/lib/systemd/system/enable-interface-forwarding.service
       - description: systemd service enablement for enable-interface-forwarding.service
-        source: overlays/usr/lib/systemd/system/network-online.target.wants/enable-interface-forwarding.service
+        source: overlays/etc/systemd/system/network-online.target.wants/enable-interface-forwarding.service
         targets:
-          - overlays/usr/lib/systemd/system/network-online.target.wants/enable-interface-forwarding.service
+          - overlays/etc/systemd/system/network-online.target.wants/enable-interface-forwarding.service
