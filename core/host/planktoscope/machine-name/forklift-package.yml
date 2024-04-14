@@ -14,9 +14,6 @@ host:
       - description: File indicating the Wi-Fi SSID name
         paths:
           - /var/lib/planktoscope/hostapd-ssid
-      - description: Temporary file indicating the allowed Cockpit origins
-        paths:
-          - /var/run/planktoscope/cockpit-origins
       - description: PlanktoScope-specific hosts file for dnsmasq
         paths:
           - /var/lib/planktoscope/hosts
@@ -27,7 +24,7 @@ deployment:
       - description: Shell script to generate a machine name based on the Raspberry Pi's serial number
         source: overlays/usr/libexec/update-machine-name
         targets:
-          - /usr/libexec/update-machine-name
+          - overlays/usr/libexec/update-machine-name
       - description: systemd service to run the update-machine-name script during boot
         source: overlays/usr/lib/systemd/system/update-machine-name.service
         targets:
@@ -61,7 +58,7 @@ features:
         - description: Shell script to generate Cockpit drop-in configurations based on the machine name
           source: overlays/usr/libexec/update-cockpit-origins
           targets:
-            - /usr/libexec/update-cockpit-origins
+            - overlays/usr/libexec/update-cockpit-origins
         - description: systemd service to run the update-cockpit-origins script during boot
           source: overlays/usr/lib/systemd/system/planktoscope-org.update-cockpit-origins-machine-name.service
           targets:
@@ -70,3 +67,7 @@ features:
           source: overlays/etc/systemd/system/multi-user.target.wants/planktoscope-org.update-cockpit-origins-machine-name.service
           targets:
             - overlays/etc/systemd/system/multi-user.target.wants/planktoscope-org.update-cockpit-origins-machine-name.service
+      filesets:
+        - description: Temporary file indicating the allowed Cockpit origins
+          paths:
+            - /var/run/planktoscope/cockpit-origins
