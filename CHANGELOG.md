@@ -20,12 +20,16 @@ All dates in this file are given in the [UTC time zone](https://en.wikipedia.org
 - `core/host/networking/interface-forwarding` now exports everything needed for interface-forwarding functionality.
 - `core/host/planktoscope/gpio-init` now exports everything needed for GPIO-initialization functionality.
 - `core/host/planktoscope/gpsd` now exports all config files needed to support the GPS module (still no guarantee whether the files are actually correct, though!).
-- `core/host/planktoscope/machine-name` TODO/WIP
+- `core/host/planktoscope/machine-name` now exports everything needed for automatically updating machine name-related configurations (machine name, hostname, SSID, Cockpit configuration).
+- `core/host/planktoscope/machine-name`: the dynamically-generated machine name can now be overridden by making a file with a desired static name at `/etc/machine-name`
+- `core/host/planktoscope/machine-name`: the prefix for the hostname (and the SSID and the Cockpit configuration), which was previously hard-coded, can now be manually changed by creating (or editing) a file at `/etc/hostname-prefix`.
 - `core/host/sshd` adds two feature flags: `ssh-server-enabled` to enable the `ssh.service` and `ensure-ssh-host-keys` to add and enable a service which automatically regenerates host keys for the SSH server if no host keys exist at boot.
 
 ### Changed
 
 - (Breaking change) The minimum supported Forklift version for using this repository has been bumped from v0.4.0 to v0.7.0-alpha.3, because some packages provided by this repository now require functionality added by v0.7.0 (namely, file-exporting functionality) in order to work as described/expected.
+- (Breaking change) `core/host/planktoscope/machine-name`: the machine name is now generated at `/run/machine-name` rather than `/var/lib/planktoscope/machine-name`
+- (Breaking change) `core/host/planktoscope/machine-name`: inclusion of a `pkscope-` prefix for the hostname (and the SSID and the Cockpit configuration) is no longer default behavior, but rather has to be enabled with a new `hostname-prefix-pkscope` feature flag.
 
 ### Removed
 

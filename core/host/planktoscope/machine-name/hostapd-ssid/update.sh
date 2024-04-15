@@ -11,6 +11,7 @@ if [ -f /etc/planktoscope/hostapd-ssid ]; then
 else
   ssid="$(sed "s/{machine-name}/$machine_name/g" "$templates_dir/ssid" | sed 's/#.*$//g' | sed '/^$/d')"
 fi
+# FIXME: trim the SSID length to 32 characters!
 mkdir -p /var/lib/planktoscope
 printf "%s" "$ssid" > /var/lib/planktoscope/hostapd-ssid
 sed -i "s/^ssid=.*$/ssid=$ssid/g" /etc/hostapd/hostapd.conf

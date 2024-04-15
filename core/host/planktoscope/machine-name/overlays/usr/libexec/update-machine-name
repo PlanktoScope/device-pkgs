@@ -1,5 +1,12 @@
 #!/bin/bash -eux
 
+# Allow overriding automatic machine-name generation behavior with /etc/machine-name:
+if [ -f /etc/machine-name ]; then
+  sed -e 's~#.*$~~g' -e '~^$~d' /etc/machine-name > /run/machine-name
+  exit 0
+fi
+
+# Automatically generate a machine-name:
 if [ -f /sys/firmware/devicetree/base/serial-number ]; then
   serial_number="$(tr -d '\0' < /sys/firmware/devicetree/base/serial-number | cut -c 9-)"
   machine_name="$(/usr/bin/machine-name name --format=hex --sn="$serial_number")"
