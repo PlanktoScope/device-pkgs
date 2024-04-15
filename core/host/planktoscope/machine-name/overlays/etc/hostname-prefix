@@ -1,6 +1,0 @@
-# This prefix is meant to be concatenated with the machine name to generate the hostname.
-# If this prefix is longer than 8 characters and it's also used as the SSID for making a wireless
-# AP (i.e. a Wi-Fi hotspot), e.g. with hostapd, then the full hostname may be longer than the
-# 32-character length limit for SSIDs; in that case, only the first 32 characters of the hostname
-# will be used for the SSID.
-pkscope-

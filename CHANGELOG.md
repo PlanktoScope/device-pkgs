@@ -12,7 +12,7 @@ All dates in this file are given in the [UTC time zone](https://en.wikipedia.org
 
 - `core/apps/cockpit` now provides a drop-in config file for reverse-proxying (see the notes on additions to `core/host/cockpit`)
 - `core/apps/planktoscope/node-red-dashboard` now exports more config files needed for the Node-RED dashboard.
-- `core/host/cockpit` now provides system services to automatically generate the Cockpit config file from drop-in config directories, and it provides some default drop-in config files - including drop-in files provided by some new feature flags: `allow-unencrypted`, `allow-origins-planktoscope-static-ips`, `allow-origins-planktoscope-legacy-mdns`, and `allow-origins-planktoscope-names`
+- `core/host/cockpit` now provides system services to automatically generate the Cockpit config file from drop-in config directories, and it provides some default drop-in config files - including drop-in files provided by some new feature flags: `allow-unencrypted`, `allow-origins-planktoscope-static-ips`, `allow-origins-planktoscope-legacy-mdns-names`, `allow-origins-planktoscope-mdns-names`, `allow-origins-templated-custom-domain-home`, and `allow-origins-templated-mdns-hostname`
 - Added a `core/host/docker` package which exports an override to the default systemd `docker.service`.
 - `core/host/networking/autohotspot` now exports everything needed for autohotspot functionality.
 - `core/host/networking/dhcpcd` now exports an override to the default systemd `dhcpcd.service`.
@@ -21,20 +21,27 @@ All dates in this file are given in the [UTC time zone](https://en.wikipedia.org
 - `core/host/networking/interface-forwarding` now exports everything needed for interface-forwarding functionality.
 - `core/host/planktoscope/gpio-init` now exports everything needed for GPIO-initialization functionality.
 - `core/host/planktoscope/gpsd` now exports all config files needed to support the GPS module (still no guarantee whether the files are actually correct, though!).
-- `core/host/planktoscope/machine-name` now exports everything needed for automatically updating machine name-related configurations (machine name, hostname, SSID, Cockpit configuration).
-- `core/host/planktoscope/machine-name`: the dynamically-generated machine name can now be overridden by making a file with a desired static name at `/etc/machine-name`
-- `core/host/planktoscope/machine-name`: the prefix for the hostname (and the SSID and the Cockpit configuration), which was previously hard-coded, can now be manually changed by creating (or editing) a file at `/etc/hostname-prefix`.
+- `core/host/planktoscope/machine-name` now exports everything needed for automatically updating machine name-related configurations (machine name, hostname, SSID).
+- `core/host/planktoscope/machine-name`: the dynamically-generated machine name can now be overridden by making a file with a desired static name at `/etc/machine-name`.
+- `core/host/planktoscope/machine-name`: if deployed on a non-Raspberry Pi computer, generation of the machine name now uses `/etc/machine-id` as a substitute for the Raspberry Pi's serial number, instead of falling back to a placeholder like `pkscope`.
+- `core/host/planktoscope/machine-name`: the prefix for the hostname (and the SSID and the Cockpit configuration), which was previously hard-coded, can now be manually changed by creating a hostname template file at `/etc/hostname-template`. A default hostname template of `pkscope-{machine-name}` is provided the new `hostname-template-pkscope` feature flag.
 - `core/host/sshd` adds two feature flags: `ssh-server-enabled` to enable the `ssh.service` and `ensure-ssh-host-keys` to add and enable a service which automatically regenerates host keys for the SSH server if no host keys exist at boot.
 
 ### Changed
 
 - (Breaking change) The minimum supported Forklift version for using this repository has been bumped from v0.4.0 to v0.7.0-alpha.3, because some packages provided by this repository now require functionality added by v0.7.0 (namely, file-exporting functionality) in order to work as described/expected.
-- (Breaking change) `core/host/planktoscope/machine-name`: the machine name is now generated at `/run/machine-name` rather than `/var/lib/planktoscope/machine-name`
+- (Breaking change) `core/host/planktoscope/machine-name`: the machine name is now generated at `/run/machine-name` rather than `/var/lib/planktoscope/machine-name`. however, a symlink is now exported to redirect `/var/lib/planktoscope/machine-name` to `/run/machine-name`, for backwards-compatibility with programs still expecting `/var/lib/planktoscope/machine-name`.
+- (Breaking change) `core/host/planktoscope/machine-name`: automatic updating of the hostname based on the machine name is no longer default behavior, but rather has to be enabled with a new `generate-templated-hostname` feature flag. If a hostname template is unspecified, the default hostname template is now `machine-{machine-name}` instead of `pkscope-{machine-name}`.
 - (Breaking change) `core/host/planktoscope/machine-name`: inclusion of a `pkscope-` prefix for the hostname (and the SSID and the Cockpit configuration) is no longer default behavior, but rather has to be enabled with a new `hostname-prefix-pkscope` feature flag.
 
 ### Removed
 
 - `core/apps/cockpit` no longer has a resource dependency on a fileset involving `/etc/cockpit/cockpit.conf`.
+- (Breaking change) `core/host/planktoscope/machine-name` no longer provides functionality to automatically update the Cockpit config based on the machine name. Instead, `core/host/cockpit` provides templating functionality to automatically update the Cockpit config, and the machine name and hostname can be interpolated into those templates.
+
+### Deprecated
+
+- In the future, `core/host/planktoscope/machine-name` will remove support for looking up the machine name from `/var/lib/planktoscope/machine-name`; instead, only `/run/machine-name` will be supported.
 
 ## v2024.0.0-alpha.1 - 2024-03-26
 

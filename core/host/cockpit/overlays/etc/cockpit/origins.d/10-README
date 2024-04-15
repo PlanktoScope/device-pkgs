@@ -1,6 +1,6 @@
 # The Origins line of the Cockpit config at /etc/cockpit/cockpit.conf is automatically generated
-# from origins drop-in files in /etc/cockpit/origins.d.
-# Each origins drop-in file can consist of multiple lines, with one allowed origin per line.
+# from origins drop-in list files in /etc/cockpit/origins.d.
+# Each origins drop-in list file can consist of multiple lines, with one allowed origin per line.
 
 # To add a new value, you can deploy a Forklift package which exports an origins drop-in file
 # to a target in overlays/etc/cockpit/origins.d, or you can manually create a new origins drop-in
@@ -17,7 +17,3 @@
 # update-cockpit-origins.service systemd service, then restart the update-cockpit-config.service
 # systemd service, and then restart the cockpit.service systemd service. If you made any changes in
 # /var/lib/overlays/overrides/etc/cockpit/origins.d, you will have to reboot.
-
-# TODO: update the following instructions:
-# In these files, the string "{machine-name}" will be automatically replaced with the machine name
-# from /run/machine-name, which will look something like "metal-slope-23501".
