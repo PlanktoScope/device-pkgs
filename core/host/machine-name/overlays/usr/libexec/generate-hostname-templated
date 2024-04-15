@@ -1,5 +1,7 @@
 #!/bin/bash -eux
 
+machine_name=""
+
 if [ -f /run/machine-name ]; then
   machine_name="$(cat /run/machine-name)"
 fi

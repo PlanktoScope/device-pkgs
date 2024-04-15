@@ -1,5 +1,8 @@
 #!/bin/bash -eux
 
+hostname=""
+machine_name=""
+
 # Load values of interpolated variables:
 if [ -f /run/hostname ]; then
   hostname="$(sed 's~#.*$~~g' /etc/hostname | tr -d '[:space:]')"

@@ -1,5 +1,7 @@
 #!/bin/bash -eux
 
+machine_name=""
+
 # Allow preempting automatic machine-name generation behavior with /etc/machine-name:
 if [ -f /etc/machine-name ]; then
   machine_name="$(sed 's~#.*$~~g' /etc/machine-name | tr -d '[:space:]')"
