@@ -124,9 +124,9 @@ deployment:
       - description:
           Symlink redirecting /etc/cockpit/origins.d/60-generated-template-names to an
           auto-generated file
-        source: overlays/etc/cockpit/cockpit.conf.d/60-generated-template-names
+        source: overlays/etc/cockpit/origins.d/60-generated-template-names
         targets:
-          - overlays/etc/cockpit/cockpit.conf.d/60-generated-template-names
+          - overlays/etc/cockpit/origins.d/60-generated-template-names
       # Drop-in origins templates lists to assemble by default:
       - description:
           Drop-in Cockpit origins template list with comment describing Cockpit origins template
