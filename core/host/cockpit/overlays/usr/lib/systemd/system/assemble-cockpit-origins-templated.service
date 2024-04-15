@@ -8,8 +8,6 @@ Wants=generate-machine-name.service
 After=generate-machine-name.service
 Wants=generate-hostname-templated.service
 After=generate-hostname-templated.service
-Wants=update-hostname.service
-After=update-hostname.service
 Wants=network-pre.target
 Before=network-pre.service
 

@@ -5,7 +5,7 @@ machine_name=""
 custom_domain=""
 
 # Load values of interpolated variables:
-if [ -f /run/hostname ]; then
+if [ -f /etc/hostname ]; then
   hostname="$(sed 's~#.*$~~g' /etc/hostname | tr -d '[:space:]')"
   echo "Hostname: $hostname"
 fi
