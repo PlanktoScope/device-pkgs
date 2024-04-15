@@ -7,12 +7,15 @@ custom_domain=""
 # Load values of interpolated variables:
 if [ -f /run/hostname ]; then
   hostname="$(sed 's~#.*$~~g' /etc/hostname | tr -d '[:space:]')"
+  echo "Hostname: $hostname"
 fi
 if [ -f /run/machine-name ]; then
   machine_name="$(sed 's~#.*$~~g' /run/machine-name | tr -d '[:space:]')"
+  echo "Machine name: $machine_name"
 fi
 if [ -f /etc/custom-domain ]; then
   custom_domain="$(sed 's~#.*$~~g' /etc/custom-domain | tr -d '[:space:]')"
+  echo "Custom domain: $custom_domain"
 fi
 
 # Load and interpolate templates:
