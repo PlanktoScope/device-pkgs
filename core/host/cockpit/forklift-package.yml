@@ -53,6 +53,10 @@ deployment:
         source: overlays/etc/systemd/system/multi-user.target.wants/assemble-cockpit-config.service
         targets:
           - overlays/etc/systemd/system/multi-user.target.wants/assemble-cockpit-config.service
+      - description: Symlink redirecting /etc/cockpit/cockpit.conf to an auto-generated file
+        source: overlays/etc/cockpit/cockpit.conf
+        targets:
+          - overlays/etc/cockpit/cockpit.conf
       # Drop-in config fragments:
       - description: Drop-in Cockpit config fragment with comment describing Cockpit config drop-in directory
         source: overlays/etc/cockpit/cockpit.conf.d/10-header.conf
@@ -74,6 +78,10 @@ deployment:
         # Note: we don't need to enable assemble-cockpit-origins.service because
         # assemble-cockpit-config.service depends on it, and assemble-cockpit-origins.service is
         # useless without assemble-cockpit-config.service.
+      - description: Symlink redirecting /etc/cockpit/origins.d/20-webservice-50-origins.conf to an auto-generated file
+        source: overlays/etc/cockpit/origins.d/20-webservice-50-origins.conf
+        targets:
+          - overlays/etc/cockpit/origins.d/20-webservice-50-origins.conf
       # Drop-in origins fragments:
       - description: Drop-in Cockpit origins fragment with comment describing Cockpit origins drop-in directory
         source: overlays/etc/cockpit/origins.d/10-README
@@ -84,10 +92,12 @@ deployment:
         targets:
           - overlays/etc/cockpit/origins.d/20-localhost
     filesets:
-      - description: Auto-generated Cockpit config file to be overlaid into /etc/cockpit/cockpit.conf
+      # FIXME: update usage comments and scripts for these to be written directly to /etc, since
+      # we're not allowed to change intermediate layers!
+      - description: Auto-generated Cockpit config file
         paths:
           - /run/overlays/generated/etc/cockpit/cockpit.conf
-      - description: Auto-generated Cockpit drop-in config fragment file to be overlaid into /etc/cockpit/cockpit.conf.d
+      - description: Auto-generated Cockpit drop-in config fragment file
         paths:
           - /run/overlays/generated/etc/cockpit/cockpit.conf.d/20-webservice-50-origins.conf
 

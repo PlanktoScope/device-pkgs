@@ -9,13 +9,15 @@
 # /etc/cockpit/origins.d).
 # To override an existing origin, you should disable the Forklift package (or the feature of the
 # Forklift package) which add the origin via a drop-in file; if that's not possible, you can
-# directly edit the origins drop-in file in /etc/cockpit/origins.d which addds the origin - your
+# directly edit the origins drop-in file in /etc/cockpit/origins.d which adds the origin - your
 # changes will override any identically-named file provided by Forklift until you delete the
 # corresponding file with your changes from /var/lib/overlays/overrides/etc/cockpit/origins.d.
+
+# To apply your changes immediately without rebooting, restart the
+# update-cockpit-origins.service systemd service, then restart the update-cockpit-config.service
+# systemd service, and then restart the cockpit.service systemd service. If you made any changes in
+# /var/lib/overlays/overrides/etc/cockpit/origins.d, you will have to reboot.
 
 # TODO: update the following instructions:
 # In these files, the string "{machine-name}" will be automatically replaced with the machine name
 # from /run/machine-name, which will look something like "metal-slope-23501".
-# To apply your changes immediately without rebooting, restart the
-# update-cockpit-origins.service systemd service, then restart the update-cockpit-config.service
-# systemd service, and then restart the cockpit.service systemd service.
