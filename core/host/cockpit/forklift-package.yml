@@ -80,9 +80,9 @@ deployment:
         targets:
           - overlays/etc/cockpit/origins.d/10-README
       - description: Drop-in Cockpit origins fragment for access from localhost
-        source: overlays/etc/cockpit/cockpit.conf.d/20-localhost.conf
+        source: overlays/etc/cockpit/origins.d/20-localhost.conf
         targets:
-          - overlays/etc/cockpit/cockpit.conf.d/20-localhost.conf
+          - overlays/etc/cockpit/origins.d/20-localhost.conf
     filesets:
       - description: Auto-generated Cockpit config file to be overlaid into /etc/cockpit/cockpit.conf
         paths:
