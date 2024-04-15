@@ -55,7 +55,7 @@ features:
           targets:
             - overlays/usr/libexec/generate-hostname-templated
         - description:
-            systemd service to to run the generate-hostname-templated script during early boot
+            systemd service to run the generate-hostname-templated script during early boot
           source: overlays/usr/lib/systemd/system/generate-hostname-templated.service
           targets:
             - overlays/usr/lib/systemd/system/generate-hostname-templated.service
@@ -67,6 +67,15 @@ features:
           source: overlays/etc/hostname
           targets:
             - overlays/etc/hostname
+        - description:
+            systemd service to make systemd-homed.service update the live hostname to match /etc/hostname
+          source: overlays/usr/lib/systemd/system/update-hostname.service
+          targets:
+            - overlays/usr/lib/systemd/system/update-hostname.service
+        - description: systemd service enablement for update-hostname.service
+          source: overlays/etc/systemd/system/multi-user.target.wants/update-hostname.service
+          targets:
+            - overlays/etc/systemd/system/multi-user.target.wants/update-hostname.service
       filesets:
         - description: Auto-generated file with the hostname
           paths:
