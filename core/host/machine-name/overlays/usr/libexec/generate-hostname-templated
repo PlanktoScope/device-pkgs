@@ -1,4 +1,4 @@
-#!/bin/bash -eux
+#!/bin/bash -eu
 
 machine_name=""
 
@@ -20,4 +20,5 @@ fi
 hostname="$(echo "$hostname" | sed "s~{machine-name}~${machine_name}~g")"
 
 mkdir -p /run/overlays/generated/etc
+echo "Hostname: $hostname"
 printf "%s" "$hostname" > /run/overlays/generated/etc/hostname
