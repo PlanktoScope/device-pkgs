@@ -80,9 +80,9 @@ deployment:
         targets:
           - overlays/etc/cockpit/origins.d/10-README
       - description: Drop-in Cockpit origins fragment for access from localhost
-        source: overlays/etc/cockpit/origins.d/20-localhost.conf
+        source: overlays/etc/cockpit/origins.d/20-localhost
         targets:
-          - overlays/etc/cockpit/origins.d/20-localhost.conf
+          - overlays/etc/cockpit/origins.d/20-localhost
     filesets:
       - description: Auto-generated Cockpit config file to be overlaid into /etc/cockpit/cockpit.conf
         paths:
@@ -103,20 +103,20 @@ features:
     provides:
       file-exports:
         - description: Drop-in Cockpit origins fragment for access from some PlanktoScope-assigned static IP addresses
-          source: overlays/etc/cockpit/cockpit.conf.d/30-planktoscope-fallback-static-ips.conf
+          source: overlays/etc/cockpit/cockpit.conf.d/30-planktoscope-fallback-static-ips
           targets:
-            - overlays/etc/cockpit/cockpit.conf.d/30-planktoscope-fallback-static-ips.conf
+            - overlays/etc/cockpit/cockpit.conf.d/30-planktoscope-fallback-static-ips
   allow-origins-planktoscope-legacy-mdns:
     provides:
       file-exports:
         - description: Drop-in Cockpit origins fragment for access from planktoscope.local
-          source: overlays/etc/cockpit/cockpit.conf.d/40-planktoscope-legacy-mdns.conf
+          source: overlays/etc/cockpit/cockpit.conf.d/40-planktoscope-legacy-mdns
           targets:
-            - overlays/etc/cockpit/cockpit.conf.d/40-planktoscope-legacy-mdns.conf
+            - overlays/etc/cockpit/cockpit.conf.d/40-planktoscope-legacy-mdns
   allow-origins-planktoscope-names:
     provides:
       file-exports:
         - description: Drop-in Cockpit origins fragment for access from home.pkscope and pkscope.local
-          source: overlays/etc/cockpit/cockpit.conf.d/50-planktoscope-names.conf
+          source: overlays/etc/cockpit/cockpit.conf.d/50-planktoscope-names
           targets:
-            - overlays/etc/cockpit/cockpit.conf.d/50-planktoscope-names.conf
+            - overlays/etc/cockpit/cockpit.conf.d/50-planktoscope-names
