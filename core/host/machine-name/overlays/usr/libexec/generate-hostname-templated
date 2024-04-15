@@ -17,7 +17,7 @@ else
   hostname="machine-{machine-name}"
 fi
 
-hostname="$(echo "$hostname" | sed "s~{machine-name}~${hostname}~g")"
+hostname="$(echo "$hostname" | sed "s~{machine-name}~${machine_name}~g")"
 
 mkdir -p /run/overlays/generated/etc
 printf "%s" "$hostname" > /run/overlays/generated/etc/hostname
