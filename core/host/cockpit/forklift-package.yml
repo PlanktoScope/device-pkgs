@@ -122,11 +122,11 @@ deployment:
         # assemble-cockpit-origins.service depends on it, and assemble-cockpit-origins-templated.service is
         # useless without assemble-cockpit-origins.service.
       - description:
-          Symlink redirecting /etc/cockpit/origins.d/60-generated-template-names to an
+          Symlink redirecting /etc/cockpit/origins.d/60-generated-templated-names to an
           auto-generated file
-        source: overlays/etc/cockpit/origins.d/60-generated-template-names
+        source: overlays/etc/cockpit/origins.d/60-generated-templated-names
         targets:
-          - overlays/etc/cockpit/origins.d/60-generated-template-names
+          - overlays/etc/cockpit/origins.d/60-generated-templated-names
       # Drop-in origins templates lists to assemble by default:
       - description:
           Drop-in Cockpit origins template list with comment describing Cockpit origins template
