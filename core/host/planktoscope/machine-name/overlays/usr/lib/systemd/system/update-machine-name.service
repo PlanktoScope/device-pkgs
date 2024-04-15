@@ -6,6 +6,7 @@ ConditionFileIsExecutable=/usr/bin/machine-name
 Wants=local-fs.target
 After=local-fs.target
 Before=sysinit.target
+Before=systemd-hostnamed.service
 
 [Service]
 Type=oneshot

@@ -4,7 +4,7 @@ machine_name="$(cat /run/machine-name)"
 
 # Load a prefix for the hostname from /etc/hostname-prefix:
 if [ -f /etc/hostname-prefix ]; then
-  prefix="$(sed -e 's~#.*$~~g' -e '~^$~d' /etc/hostname-prefix)"
+  prefix="$(sed -e 's~#.*$~~g' -e '/^$/d' /etc/hostname-prefix)"
 else
   prefix=""
 fi
