@@ -1,0 +1,4 @@
+# These mDNS names are provided for backwards-compatibility with old versions of the PlanktoScope OS
+# which used them for accessing the PlanktoScope:
+http://planktoscope.local
+http://planktoscope.local:9090

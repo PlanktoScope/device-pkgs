@@ -58,10 +58,10 @@ features:
           source: overlays/etc/systemd/system/sysinit.target.wants/generate-hostname.service
           targets:
             - overlays/etc/systemd/system/sysinit.target.wants/generate-hostname.service
-    filesets:
-      - description: Auto-generated file with the hostaname to be overlaid into /etc/hostname
-        paths:
-          /run/overlays/generated/etc/hostname
+      filesets:
+        - description: Auto-generated file with the hostname to be overlaid into /etc/hostname
+          paths:
+            - /run/overlays/generated/etc/hostname
   hostname-prefix-pkscope:
     description: "Includes 'pkscope-' as a prefix in the hostname, if it's generated from the machine name"
     provides:
@@ -71,7 +71,7 @@ features:
           targets:
             - overlays/etc/hostname-prefix
   update-cockpit-origins:
-    description: Updates Cockpit's allowed origins based on the machine name
+    description: Updates Cockpit's allowed origins based on the hostname
     provides:
       file-exports:
         - description: Shell script to generate Cockpit drop-in configurations based on the machine name

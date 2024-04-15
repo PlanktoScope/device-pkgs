@@ -11,7 +11,7 @@ All dates in this file are given in the [UTC time zone](https://en.wikipedia.org
 ### Added
 
 - `core/apps/planktoscope/node-red-dashboard` now exports more config files needed for the Node-RED dashboard.
-- `core/host/cockpit` now exports a default basic config file for Cockpit.
+- `core/host/cockpit` now provides system services to automatically generate the Cockpit config file from drop-in config directories, and provides some default drop-in config files, including drop-in files provided by some new feature flags: `allow-unencrypted`, `allow-origins-planktoscope-static-ips`, `allow-origins-planktoscope-legacy-mdns`, and `allow-origins-planktoscope-names`
 - Added a `core/host/docker` package which exports an override to the default systemd `docker.service`.
 - `core/host/networking/autohotspot` now exports everything needed for autohotspot functionality.
 - `core/host/networking/dhcpcd` now exports an override to the default systemd `dhcpcd.service`.
