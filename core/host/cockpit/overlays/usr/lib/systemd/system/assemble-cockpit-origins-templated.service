@@ -6,8 +6,8 @@ ConditionPathExists=/etc/cockpit/origins-templates.d
 # templates), run those services first:
 Wants=generate-machine-name.service
 After=generate-machine-name.service
-Wants=generate-hostname.service
-After=generate-hostname.service
+Wants=generate-hostname-templated.service
+After=generate-hostname-templated.service
 Wants=network-pre.target
 Before=network-pre.service
 

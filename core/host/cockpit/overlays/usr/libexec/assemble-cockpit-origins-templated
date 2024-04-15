@@ -2,6 +2,7 @@
 
 hostname=""
 machine_name=""
+custom_domain=""
 
 # Load values of interpolated variables:
 if [ -f /run/hostname ]; then
