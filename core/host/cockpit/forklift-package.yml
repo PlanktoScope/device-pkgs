@@ -78,10 +78,10 @@ deployment:
         # Note: we don't need to enable assemble-cockpit-origins.service because
         # assemble-cockpit-config.service depends on it, and assemble-cockpit-origins.service is
         # useless without assemble-cockpit-config.service.
-      - description: Symlink redirecting /etc/cockpit/origins.d/20-webservice-50-origins.conf to an auto-generated file
-        source: overlays/etc/cockpit/origins.d/20-webservice-50-origins.conf
+      - description: Symlink redirecting /etc/cockpit/origins.d/20-webservice-50-origins to an auto-generated file
+        source: overlays/etc/cockpit/origins.d/20-webservice-50-origins
         targets:
-          - overlays/etc/cockpit/origins.d/20-webservice-50-origins.conf
+          - overlays/etc/cockpit/origins.d/20-webservice-50-origins
       # Drop-in origins fragments:
       - description: Drop-in Cockpit origins fragment with comment describing Cockpit origins drop-in directory
         source: overlays/etc/cockpit/origins.d/10-README
@@ -99,7 +99,7 @@ deployment:
           - /run/overlays/generated/etc/cockpit/cockpit.conf
       - description: Auto-generated Cockpit drop-in config fragment file
         paths:
-          - /run/overlays/generated/etc/cockpit/cockpit.conf.d/20-webservice-50-origins.conf
+          - /run/overlays/generated/etc/cockpit/cockpit.conf.d/20-webservice-50-origins
 
 features:
   allow-unencrypted:
