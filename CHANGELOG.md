@@ -21,7 +21,7 @@ All dates in this file are given in the [UTC time zone](https://en.wikipedia.org
 - `core/host/networking/autohotspot` now exports everything needed for autohotspot functionality.
 - `core/host/networking/dhcpcd` now exports an override to the default systemd `dhcpcd.service`.
 - `core/host/networking/dnsmasq` now exports various drop-in config files for dnsmasq and adds a few new feature flags: `planktoscope-dhcp-interfaces`, to add another drop-in config file for dnsmasq based on the PlanktoScope OS's static IP address assignments for its various network interfaces; custom-domain, to add drop-in config file template for dnsmasq which uses the custom domain (newly configurable at `/etc/custom-domain`) for dnsmasq; and `planktoscope-custom-domain`, which provides a `/etc/custom-domain` file to set the custom domain to `pkscope`.
-- `core/host/networking/hostapd` now exports a default basic config file for hostapd.
+- `core/host/networking/hostapd` now provides system services to automatically generate the hostapd config file from a drop-in config directory, and it provides some default drop-in config files - including drop-in files provided by some new feature flags: `interface-wlan0`, `localization-us`, `planktoscope-password`, `ssid-hostname`
 - `core/host/networking/hosts` now provides system services to automatically generate the hosts file from a drop-in config directory, and it provides some default drop-in config files - including hostnames previously provided by the Raspberry Pi OS, and also drop-in files provided by some new feature flags: `planktoscope-custom-domain-home` and `planktoscope-domain-machine-name`
 - `core/host/networking/interface-forwarding` now exports everything needed for interface-forwarding functionality.
 - `core/host/planktoscope/gpio-init` now exports everything needed for GPIO-initialization functionality.
@@ -36,6 +36,7 @@ All dates in this file are given in the [UTC time zone](https://en.wikipedia.org
 - (Breaking change) `core/host/machine-name`: automatic updating of the hostname based on the machine name is no longer default behavior, but rather has to be enabled with a new `generate-templated-hostname` feature flag. If a hostname template is unspecified, the default hostname template is now `machine-{machine-name}` instead of `pkscope-{machine-name}`.
 - (Breaking change) `core/host/machine-name`: inclusion of a `pkscope-` prefix for the hostname (and the SSID and the Cockpit configuration) is no longer default behavior, but rather has to be enabled with a new `hostname-prefix-pkscope` feature flag.
 - (Breaking change) `core/host/networking/dnsmasq`: use of `pkscope` as the custom domain is no longer default behavior, but rather has to be enabled with a new `planktoscope-custom-domain` feature flag.
+- (Breaking change) `core/host/networking/hostapd`: various settings are no longer provided by default, but rather have to be enabled with the new `interface-wlan0`, `localization-us`, `planktoscope-password`, and `ssid-hostname` feature flags.
 - (Breaking change) `core/host/networking/hosts`: hostnames involving the custom domain (e.g. `pkscope) are no longer added by default, but rather have to be enabled with a new `planktoscope-custom-domain-home` and `planktoscope-custom-domain-machine-name` feature flags.
 
 ### Removed
