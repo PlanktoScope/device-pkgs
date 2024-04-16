@@ -90,9 +90,9 @@ features:
     provides:
       file-exports:
         - description: Drop-in dnsmasq config template
-          source: overlays/etc/cockpit/origins-templates.d/20-custom-domain.conf
+          source: overlays/etc/cockpit/dnsmasq-templates.d/20-custom-domain.conf
           targets:
-            - overlays/etc/cockpit/origins-templates.d/20-custom-domain.conf
+            - overlays/etc/cockpit/dnsmasq-templates.d/20-custom-domain.conf
   planktoscope-custom-domain:
     description: "Sets the custom domain to 'pkscope'"
     provides:
