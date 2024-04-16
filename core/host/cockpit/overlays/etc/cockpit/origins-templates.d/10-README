@@ -24,3 +24,9 @@
 # variable is missing or if that file doesn't provide a value), any line including that template
 # variable will be disabled (by being commented out) in the output.
 
+# To apply your changes immediately without rebooting, restart the
+# assemble-cockpit-origins-templated.service systemd service, then restart the
+# assemble-cockpit-origins.service systemd service, then restart the assemble-cockpit-config.service
+# systemd service, and then restart the cockpit.service systemd service. If you made any changes in
+# /var/lib/overlays/overrides/etc/cockpit/origins-templates.d, you will have to reboot.
+

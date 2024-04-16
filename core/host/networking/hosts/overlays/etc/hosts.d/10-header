@@ -12,5 +12,5 @@
 # with your changes from /var/lib/overlays/overrides/etc/hosts.d and reboot.
 
 # To apply your changes immediately without rebooting, restart the assemble-hosts.service
-# systemd service.
-
+# systemd service. If you made any changes in /var/lib/overlays/overrides/etc/hosts.d,
+# you will have to reboot.

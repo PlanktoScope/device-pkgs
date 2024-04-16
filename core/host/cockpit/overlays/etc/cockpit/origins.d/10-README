@@ -14,6 +14,6 @@
 # corresponding file with your changes from /var/lib/overlays/overrides/etc/cockpit/origins.d.
 
 # To apply your changes immediately without rebooting, restart the
-# update-cockpit-origins.service systemd service, then restart the update-cockpit-config.service
+# assemble-cockpit-origins.service systemd service, then restart the assemble-cockpit-config.service
 # systemd service, and then restart the cockpit.service systemd service. If you made any changes in
 # /var/lib/overlays/overrides/etc/cockpit/origins.d, you will have to reboot.
