@@ -1,5 +1,7 @@
 package:
-  description: System administration browser dashboard ambiently provided by the OS
+  description:
+    System administration browser dashboard ambiently provided by the OS, and automatically-updated
+    configurations for it
   maintainers:
     - name: Ethan Li
       email: lietk12@gmail.com

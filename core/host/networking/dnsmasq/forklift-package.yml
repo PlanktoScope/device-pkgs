@@ -1,5 +1,7 @@
 package:
-  description: DNS and DHCP server ambiently provided by the OS
+  description:
+    DNS and DHCP server ambiently provided by the OS, and automatically-updated configurations for
+    it
   maintainers:
     - name: Ethan Li
       email: lietk12@gmail.com
@@ -8,13 +10,6 @@ package:
     - https://thekelleys.org.uk/dnsmasq/doc.html
 
 host:
-  provides:
-    filesets:
-      - description: systemd service to run the dnsmasq server
-        paths:
-          - /usr/lib/systemd/system/dnsmasq.service
-
-deployment:
   provides:
     listeners:
       - description: DNS server
@@ -26,7 +21,23 @@ deployment:
       - description: DHCP server
         port: 67
         protocol: udp
+    filesets:
+      - description: systemd service to run the dnsmasq server
+        paths:
+          - /usr/lib/systemd/system/dnsmasq.service
+      - description: Drop-in directory to specify templates of drop-in dnsmasq config files
+        tags:
+          - drop-in-assembly
+          - templating-machine-name
+          - templating-hostname
+          - templating-custom-domain
+        paths:
+          - /etc/dhsmasq-templates.d
+
+deployment:
+  provides:
     file-exports:
+      # Basic drop-in config files
       - description: Basic config to automatically listen for DNS & DHCP queries
         source: overlays/etc/dnsmasq.d/10-listen.conf
         targets:
@@ -35,13 +46,58 @@ deployment:
         source: overlays/etc/dnsmasq.d/20-upstream-dns.conf
         targets:
           - overlays/etc/dnsmasq.d/20-upstream-dns.conf
+      # Templated drop-in config file assembly:
+      - description:
+          Shell script to generate a drop-in dnsmasq drop-in config file from drop-in dnsmasq config
+          templates
+        source: overlays/usr/libexec/assemble-dnsmasq-config-templated
+        targets:
+          - overlays/usr/libexec/assemble-dnsmasq-config-templated
+      - description: systemd service to run the assemble-dnsmasq-config-templated script during boot
+        source: overlays/usr/lib/systemd/system/assemble-dnsmasq-config-templated.service
+        targets:
+          - overlays/usr/lib/systemd/system/assemble-dnsmasq-config-templated.service
+      - description: systemd service enablement for assemble-dnsmasq-config-templated.service
+        source: overlays/etc/systemd/system/dnsmasq.service.wants/assemble-dnsmasq-config-templated.service
+        targets:
+          - overlays/etc/systemd/system/dnsmasq.service.wants/assemble-dnsmasq-config-templated.service
+      - description:
+          Symlink redirecting /etc/dnsmasq.d/40-generated-templated-config to an auto-generated file
+        source: overlays/etc/dnsmasq.d/40-generated-templated-config
+        targets:
+          - overlays/etc/dnsmasq.d/40-generated-templated-config
+      # Drop-in drop-in config templates to assemble by default:
+      - description:
+          Drop-in dnsmasq config template with comment describing dnsmasq template drop-in directory
+        source: overlays/etc/dnsmasq-templates.d/10-README.conf
+        targets:
+          - overlays/etc/dnsmasq-templates.d/10-README.conf
 
 features:
   planktoscope-dhcp-interfaces:
-    description: Enables DHCP & DNS server functionality for the PlanktoScope OS's static IP address assignments on its network interfaces
+    description:
+      Enables DHCP & DNS server functionality for the PlanktoScope OS's static IP address
+      assignments on its network interfaces
     provides:
       file-exports:
-        - description: Sets DHCP server settings on the wlan0, wlan1, eth0, eth1, and usb0 interfaces
+        - description:
+            Sets DHCP & DNS server settings on the wlan0, wlan1, eth0, eth1, and usb0 interfaces
           source: overlays/etc/dnsmasq.d/30-dhcp-interfaces.conf
           targets:
             - overlays/etc/dnsmasq.d/30-dhcp-interfaces.conf
+  custom-domain:
+    description: Handles DNS requests for a custom domain set by /etc/custom-domain
+    provides:
+      file-exports:
+        - description: Drop-in dnsmasq config template
+          source: overlays/etc/cockpit/origins-templates.d/20-custom-domain.conf
+          targets:
+            - overlays/etc/cockpit/origins-templates.d/20-custom-domain.conf
+  planktoscope-custom-domain:
+    description: "Sets the custom domain to 'pkscope'"
+    provides:
+      file-exports:
+        - description: File to set custom domain
+          source: overlays/etc/custom-domain
+          targets:
+            - overlays/etc/custom-domain

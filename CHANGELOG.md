@@ -20,7 +20,7 @@ All dates in this file are given in the [UTC time zone](https://en.wikipedia.org
 - `core/host/machine-name`: the prefix for the hostname (and the SSID and the Cockpit configuration), which was previously hard-coded, can now be manually changed by creating a hostname template file at `/etc/hostname-template`. A default hostname template of `pkscope-{machine-name}` is provided the new `hostname-template-pkscope` feature flag.
 - `core/host/networking/autohotspot` now exports everything needed for autohotspot functionality.
 - `core/host/networking/dhcpcd` now exports an override to the default systemd `dhcpcd.service`.
-- `core/host/networking/dnsmasq` now exports various drop-in config files for dnsmasq and adds a feature flag, `planktoscope-dhcp-interfaces`, to add another drop-in config file for dnsmasq based on the PlanktoScope OS's static IP address assignments for its various network interfaces.
+- `core/host/networking/dnsmasq` now exports various drop-in config files for dnsmasq and adds a few new feature flags: `planktoscope-dhcp-interfaces`, to add another drop-in config file for dnsmasq based on the PlanktoScope OS's static IP address assignments for its various network interfaces; custom-domain, to add drop-in config file template for dnsmasq which uses the custom domain (newly configurable at `/etc/custom-domain`) for dnsmasq; and `planktoscope-custom-domain`, which provides a `/etc/custom-domain` file to set the custom domain to `pkscope`.
 - `core/host/networking/hostapd` now exports a default basic config file for hostapd.
 - `core/host/networking/interface-forwarding` now exports everything needed for interface-forwarding functionality.
 - `core/host/planktoscope/gpio-init` now exports everything needed for GPIO-initialization functionality.
@@ -30,6 +30,7 @@ All dates in this file are given in the [UTC time zone](https://en.wikipedia.org
 ### Changed
 
 - (Breaking change) The minimum supported Forklift version for using this repository has been bumped from v0.4.0 to v0.7.0-alpha.3, because some packages provided by this repository now require functionality added by v0.7.0 (namely, file-exporting functionality) in order to work as described/expected.
+- (Breaking change) `core/host/dnsmasq`: use of `pkscope` as the custom domain is no longer default behavior, but rather has to be enabled with a new `planktoscope-custom-domain` feature flag.
 - (Breaking change) `core/host/machine-name` was previously named `core/host/planktoscope/machine-name`; it's been renamed, as it can now be configured (via feature flags) without PlanktoScope-specific naming.
 - (Breaking change) `core/host/machine-name`: the machine name is now generated at `/run/machine-name` rather than `/var/lib/planktoscope/machine-name`. however, a symlink is now exported to redirect `/var/lib/planktoscope/machine-name` to `/run/machine-name`, for backwards-compatibility with programs still expecting `/var/lib/planktoscope/machine-name`.
 - (Breaking change) `core/host/machine-name`: automatic updating of the hostname based on the machine name is no longer default behavior, but rather has to be enabled with a new `generate-templated-hostname` feature flag. If a hostname template is unspecified, the default hostname template is now `machine-{machine-name}` instead of `pkscope-{machine-name}`.
