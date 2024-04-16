@@ -78,7 +78,8 @@ deployment:
           template drop-in directory
         source: overlays/etc/hostapd/hostapd.conf-templates.d/10-README.conf
         targets:
-          - overlays/etc/hostapd/hostapd.conf-templates.d/10-README.conf filesets:
+          - overlays/etc/hostapd/hostapd.conf-templates.d/10-README.conf
+    filesets:
       - description: Drop-in directory for config file fragments to generate the hostapd config file
         tags:
           - drop-in-assembly
