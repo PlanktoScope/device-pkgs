@@ -78,4 +78,4 @@ else
 fi
 
 mkdir -p /run/overlays/generated/etc/hostapd/hostapd.conf.d
-echo "$config" > /run/overlays/generated/etc/hostapd/hostapd.conf.d/50-generated-templated
+echo "$config" > /run/overlays/generated/etc/hostapd/hostapd.conf.d/60-generated-templated.conf
