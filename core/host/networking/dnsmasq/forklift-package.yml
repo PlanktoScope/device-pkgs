@@ -1,7 +1,6 @@
 package:
   description:
-    DNS and DHCP server ambiently provided by the OS, and automatically-updated configurations for
-    it
+    DNS and DHCP server ambiently provided by the OS, and auto-generated configurations for it
   maintainers:
     - name: Ethan Li
       email: lietk12@gmail.com
@@ -25,14 +24,6 @@ host:
       - description: systemd service to run the dnsmasq server
         paths:
           - /usr/lib/systemd/system/dnsmasq.service
-      - description: Drop-in directory to specify templates of drop-in dnsmasq config files
-        tags:
-          - drop-in-assembly
-          - templating-machine-name
-          - templating-hostname
-          - templating-custom-domain
-        paths:
-          - /etc/dhsmasq-templates.d
 
 deployment:
   provides:
@@ -66,17 +57,31 @@ deployment:
         source: overlays/etc/dnsmasq.d/40-generated-templated-config
         targets:
           - overlays/etc/dnsmasq.d/40-generated-templated-config
-      # Drop-in drop-in config templates to assemble by default:
+      # Drop-in config templates to assemble by default:
       - description:
           Drop-in dnsmasq config template with comment describing dnsmasq template drop-in directory
         source: overlays/etc/dnsmasq-templates.d/10-README.conf
         targets:
           - overlays/etc/dnsmasq-templates.d/10-README.conf
+    filesets:
+      - description: Drop-in directory to specify templates of drop-in dnsmasq config files
+        tags:
+          - drop-in-assembly
+          - templating-machine-name
+          - templating-hostname
+          - templating-custom-domain
+        paths:
+          - /etc/dhsmasq-templates.d
+      - description:
+          Auto-generated dnsmasq drop-in config file with configurations based on machine name,
+          hostname, and/or custom domain.
+        paths:
+          - /run/overlays/generated/etc/dnsmasq.d/40-generated-templated-config
 
 features:
   planktoscope-dhcp-interfaces:
     description:
-      Enables DHCP & DNS server functionality for the PlanktoScope OS's static IP address
+      Enable DHCP & DNS server functionality for the PlanktoScope OS's static IP address
       assignments on its network interfaces
     provides:
       file-exports:
@@ -86,7 +91,7 @@ features:
           targets:
             - overlays/etc/dnsmasq.d/30-dhcp-interfaces.conf
   custom-domain:
-    description: Handles DNS requests for a custom domain set by /etc/custom-domain
+    description: Handle DNS requests for a custom domain set by /etc/custom-domain
     provides:
       file-exports:
         - description: Drop-in dnsmasq config template
@@ -94,7 +99,7 @@ features:
           targets:
             - overlays/etc/dnsmasq-templates.d/20-custom-domain.conf
   planktoscope-custom-domain:
-    description: "Sets the custom domain to 'pkscope'"
+    description: "Set the custom domain to 'pkscope'"
     provides:
       file-exports:
         - description: File to set custom domain

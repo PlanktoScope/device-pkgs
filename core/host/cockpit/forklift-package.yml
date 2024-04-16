@@ -1,6 +1,6 @@
 package:
   description:
-    System administration browser dashboard ambiently provided by the OS, and automatically-updated
+    System administration browser dashboard ambiently provided by the OS, and auto-generated
     configurations for it
   maintainers:
     - name: Ethan Li
@@ -27,25 +27,6 @@ host:
         protocol: http
         paths:
           - /admin/cockpit/*
-    filesets:
-      - description: Drop-in directory for config file fragments to generate the Cockpit config file
-        tags:
-          - drop-in-assembly
-        paths:
-          - /etc/cockpit/cockpit.conf.d
-      - description: Drop-in directory to specify origins for Cockpit to allow
-        tags:
-          - drop-in-assembly
-        paths:
-          - /etc/cockpit/origins.d
-      - description: Drop-in directory to specify templates of origins for Cockpit to allow
-        tags:
-          - drop-in-assembly
-          - templating-machine-name
-          - templating-hostname
-          - templating-custom-domain
-        paths:
-          - /etc/cockpit/origins-templates.d
 
 deployment:
   provides:
@@ -143,6 +124,24 @@ deployment:
         targets:
           - overlays/etc/cockpit/origins-templates.d/20-custom-domain-machine-name
     filesets:
+      - description: Drop-in directory for config file fragments to generate the Cockpit config file
+        tags:
+          - drop-in-assembly
+        paths:
+          - /etc/cockpit/cockpit.conf.d
+      - description: Drop-in directory to specify origins for Cockpit to allow
+        tags:
+          - drop-in-assembly
+        paths:
+          - /etc/cockpit/origins.d
+      - description: Drop-in directory to specify templates of origins for Cockpit to allow
+        tags:
+          - drop-in-assembly
+          - templating-machine-name
+          - templating-hostname
+          - templating-custom-domain
+        paths:
+          - /etc/cockpit/origins-templates.d
       - description: Auto-generated Cockpit config file
         paths:
           - /run/overlays/generated/etc/cockpit/cockpit.conf

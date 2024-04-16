@@ -20,9 +20,6 @@ host:
       - description: File indicating the Wi-Fi SSID name
         paths:
           - /var/lib/planktoscope/hostapd-ssid
-      - description: PlanktoScope-specific hosts file for dnsmasq
-        paths:
-          - /var/lib/planktoscope/hosts
 
 deployment:
   provides:
@@ -41,7 +38,7 @@ deployment:
         targets:
           - overlays/etc/systemd/system/sysinit.target.wants/generate-machine-name.service
     filesets:
-      - description: Auto-generated file indicating the machine name
+      - description: Auto-generated file with the machine name
         paths:
           - /run/machine-name
 
