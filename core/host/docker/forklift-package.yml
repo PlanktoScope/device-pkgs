@@ -23,7 +23,9 @@ host:
 
 features:
   start-before-network-online:
-    description: Overrides the default system-provided docker.service to remove an ordering dependency for it to start after network-online.target
+    description:
+      Override the default system-provided docker.service to remove an ordering dependency for it to
+      start after network-online.target
     provides:
       file-exports:
         - description: Override of the default system-provided docker.service
