@@ -67,19 +67,18 @@ deployment:
         # assemble-hostapd-config-templated.service is useless without
         # assemble-hostapd-config.service.
       - description:
-          Symlink redirecting /etc/hostapd/hostapd.conf.d/60-generated-templated to an
+          Symlink redirecting /etc/hostapd/hostapd.conf.d/60-generated-templated.conf to an
           auto-generated file
-        source: overlays/etc/hostapd/hostapd.conf.d/60-generated-templated
+        source: overlays/etc/hostapd/hostapd.conf.d/60-generated-templated.conf
         targets:
-          - overlays/etc/hostapd/hostapd.conf.d/60-generated-templated
+          - overlays/etc/hostapd/hostapd.conf.d/60-generated-templated.conf
       # Drop-in config file fragment templates to assemble by default:
       - description:
           Drop-in hostapd config fragment template with comment describing hostapd config fragment
           template drop-in directory
         source: overlays/etc/hostapd/hostapd.conf-templates.d/10-README.conf
         targets:
-          - overlays/etc/hostapd/hostapd.conf-templates.d/10-README.conf
-    filesets:
+          - overlays/etc/hostapd/hostapd.conf-templates.d/10-README.conf filesets:
       - description: Drop-in directory for config file fragments to generate the hostapd config file
         tags:
           - drop-in-assembly
