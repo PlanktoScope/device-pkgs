@@ -6,7 +6,10 @@ package:
       email: lietk12@gmail.com
   license: GPL-2.0-only OR GPL-3.0-only
   sources:
+    # Ambiently-provided software (GPL):
     - https://thekelleys.org.uk/dnsmasq/doc.html
+    # Config templating & auto-generation scripts (Apache-2.0):
+    - https://github.com/PlanktoScope/device-pkgs
 
 host:
   provides:
@@ -20,10 +23,6 @@ host:
       - description: DHCP server
         port: 67
         protocol: udp
-    filesets:
-      - description: systemd service to run the dnsmasq server
-        paths:
-          - /usr/lib/systemd/system/dnsmasq.service
 
 deployment:
   provides:

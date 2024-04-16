@@ -3,13 +3,23 @@ package:
   maintainers:
     - name: Ethan Li
       email: lietk12@gmail.com
-  license: GPL-3.0-or-later
+  license: Apache-2.0
   sources:
+    # Ambiently-provided software (Apache-2.0):
+    - https://github.com/PlanktoScope/machine-name
+    # Auto-generation scripts (Apache-2.0):
     - https://github.com/PlanktoScope/device-pkgs
 
 host:
   provides:
     filesets:
+      # TODO: download the machine-name binary as part of the deployment, instead of assuming the OS
+      # ambiently provides it:
+      - description:
+          Executable file to generate machine names from serial numbers, ambiently provided by the
+          OS
+        paths:
+          - /usr/bin/machine-name
       - description:
           Symlink redirecting /var/lib/planktoscope/machine-name to /run/machine-name, ambiently
           provided by the OS (for temporary backwards-compatibility with programs unaware of

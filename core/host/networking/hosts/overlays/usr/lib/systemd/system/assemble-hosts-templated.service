@@ -1,5 +1,5 @@
 [Unit]
-Description=Assemble and process (with string interpolation) drop-in hosts template files into a drop-in hosts fragment file
+Description=Assemble and process (with string interpolation) drop-in hosts fragment template files into a drop-in hosts fragment file
 ConditionFileIsExecutable=/usr/libexec/assemble-hosts-templated
 ConditionPathExists=/etc/hosts-templates.d
 # If there are services to generate a machine name and hostname (which can optionally be used in
