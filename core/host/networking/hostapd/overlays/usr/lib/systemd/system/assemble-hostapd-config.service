@@ -5,8 +5,6 @@ ConditionPathExists=/etc/hostapd/hostapd.conf.d
 Wants=assemble-hostapd-config-templated.service
 After=assemble-hostapd-config-templated.service
 Before=hostapd.service
-Wants=network-pre.target
-Before=network-pre.service
 
 [Service]
 Type=oneshot
