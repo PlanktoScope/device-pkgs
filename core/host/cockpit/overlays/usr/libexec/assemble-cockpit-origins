@@ -1,4 +1,4 @@
-#!/bin/bash -eux
+#!/bin/bash -eu
 
 origins="$(cat /etc/cockpit/origins.d/* | sed 's~#.*$~~g' | sed '/^$/d' | paste -s -d ' ')"
 mkdir -p /run/overlays/generated/etc/cockpit/cockpit.conf.d
