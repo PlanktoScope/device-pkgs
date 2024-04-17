@@ -22,14 +22,14 @@ host:
         paths:
           - /usr/bin/avahi-publish
 
-deployments:
+deployment:
   provides:
     file-exports:
       - description:
           systemd template service to register the specified mDNS name as an alias for 192.168.4.1
-        source: overlays/usr/lib/systemd/system/planktoscope-mdns-alias-@.service
+        source: overlays/usr/lib/systemd/system/planktoscope-mdns-alias@.service
         targets:
-          - overlays/usr/lib/systemd/system/planktoscope-mdns-alias-@.service
+          - overlays/usr/lib/systemd/system/planktoscope-mdns-alias@.service
 
 features:
   register-planktoscope-local:
@@ -37,14 +37,14 @@ features:
     provides:
       file-exports:
         - description: systemd service enablement
-          source: overlays/etc/systemd/system/multi-user.target.wants/planktoscope-mdns-alias-@planktoscope.local.service
+          source: overlays/etc/systemd/system/multi-user.target.wants/planktoscope-mdns-alias@planktoscope.service
           targets:
-            - overlays/etc/systemd/system/multi-user.target.wants/planktoscope-mdns-alias-@planktoscope.local.service
+            - overlays/etc/systemd/system/multi-user.target.wants/planktoscope-mdns-alias@planktoscope.service
   register-pkscope-local:
     description: "Register `pkscope.local` as an alias for 192.168.4.1"
     provides:
       file-exports:
         - description: systemd service enablement
-          source: overlays/etc/systemd/system/multi-user.target.wants/planktoscope-mdns-alias-@pkscope.local.service
+          source: overlays/etc/systemd/system/multi-user.target.wants/planktoscope-mdns-alias@pkscope.service
           targets:
-            - overlays/etc/systemd/system/multi-user.target.wants/planktoscope-mdns-alias-@pkscope.local.service
+            - overlays/etc/systemd/system/multi-user.target.wants/planktoscope-mdns-alias@pkscope.service

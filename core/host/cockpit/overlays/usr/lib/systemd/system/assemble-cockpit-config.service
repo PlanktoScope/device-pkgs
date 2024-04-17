@@ -5,8 +5,6 @@ ConditionPathExists=/etc/cockpit/cockpit.conf.d
 Wants=assemble-cockpit-origins.service
 After=assemble-cockpit-origins.service
 Before=cockpit.service
-Wants=network-pre.target
-Before=network-pre.service
 
 [Service]
 Type=oneshot
