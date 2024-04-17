@@ -21,6 +21,9 @@ host:
           Avahi daemon client to register new mDNS/DNS-SD services or host names or address mappings
         paths:
           - /usr/bin/avahi-publish
+
+deployments:
+  provides:
     file-exports:
       - description:
           systemd template service to register the specified mDNS name as an alias for 192.168.4.1
