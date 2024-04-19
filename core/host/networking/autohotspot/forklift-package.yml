@@ -6,3 +6,27 @@ package:
   license: GPL-3.0-or-later
   sources:
     - https://github.com/PlanktoScope/device-pkgs
+
+deployment:
+  provides:
+    file-exports:
+      - description: Shell script to connect to a known Wi-Fi network one is found, or else bring up a wireless AP (Wi-Fi hotspot)
+        source: overlays/usr/libexec/autohotspot
+        targets:
+          - overlays/usr/libexec/autohotspot
+      - description: systemd service to run the autohotspot script during boot
+        source: overlays/usr/lib/systemd/system/autohotspot.service
+        targets:
+          - overlays/usr/lib/systemd/system/autohotspot.service
+      - description: systemd service enablement for autohotspot.service
+        source: overlays/etc/systemd/system/network-online.target.wants/autohotspot.service
+        targets:
+          - overlays/etc/systemd/system/network-online.target.wants/autohotspot.service
+      - description: systemd timer to periodically re-run autohotspot.service to update Wi-Fi behavior
+        source: overlays/usr/lib/systemd/system/autohotspot.timer
+        targets:
+          - overlays/usr/lib/systemd/system/autohotspot.timer
+      - description: systemd timer enablement for autohotspot.timer
+        source: overlays/etc/systemd/system/timers.target.wants/autohotspot.timer
+        targets:
+          - overlays/etc/systemd/system/timers.target.wants/autohotspot.timer

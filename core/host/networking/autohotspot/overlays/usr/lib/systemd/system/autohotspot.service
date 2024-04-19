@@ -1,0 +1,14 @@
+[Unit]
+Description=Connect to a known Wi-Fi network if one is found, or else bring up a wireless AP (Wi-Fi hotspot)
+ConditionFileIsExecutable=/usr/libexec/autohotspot
+After=enable-interface-forwarding.service
+Before=network-online.target
+# Delay the wifi hotspot until we're ready to launch containerized network services:
+After=docker.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/libexec/autohotspot
+
+[Install]
+WantedBy=network-online.target

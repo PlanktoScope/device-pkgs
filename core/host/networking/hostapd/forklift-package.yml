@@ -1,15 +1,137 @@
 package:
-  description: Wi-Fi access point daemon
+  description:
+    Wi-Fi access point daemon ambiently provided by the OS, and auto-generation of a configuration
+    for it
   maintainers:
     - name: Ethan Li
       email: lietk12@gmail.com
   license: BSD-3-Clause
   sources:
+    # Ambiently-provided software (BSD-3-Clause):
     - https://w1.fi/hostapd/
+    # Config templating & auto-generation scripts (Apache-2.0):
+    - https://github.com/PlanktoScope/device-pkgs
 
-host:
+deployment:
   provides:
+    file-exports:
+      # Config file assembly:
+      - description:
+          Shell script to generate a hostapd config file from drop-in config fragment files
+        source: overlays/usr/libexec/assemble-hostapd-config
+        targets:
+          - overlays/usr/libexec/assemble-hostapd-config
+      - description: systemd service to run the assemble-hostapd-config script during boot
+        source: overlays/usr/lib/systemd/system/assemble-hostapd-config.service
+        targets:
+          - overlays/usr/lib/systemd/system/assemble-hostapd-config.service
+      - description: systemd service enablement for assemble-hostapd-config.service
+        source: overlays/etc/systemd/system/multi-user.target.wants/assemble-hostapd-config.service
+        targets:
+          - overlays/etc/systemd/system/multi-user.target.wants/assemble-hostapd-config.service
+      - description: Symlink redirecting /etc/hostapd/hostapd.conf to an auto-generated file
+        source: overlays/etc/hostapd/hostapd.conf
+        targets:
+          - overlays/etc/hostapd/hostapd.conf
+      # Drop-in config fragments to assemble by default:
+      - description:
+          Drop-in hostapd config fragment with comment describing hostapd config drop-in directory
+        source: overlays/etc/hostapd/hostapd.conf.d/10-header.conf
+        targets:
+          - overlays/etc/hostapd/hostapd.conf.d/10-header.conf
+      - description: Drop-in hostapd config fragment for hardware mode configuration
+        source: overlays/etc/hostapd/hostapd.conf.d/20-modes.conf
+        targets:
+          - overlays/etc/hostapd/hostapd.conf.d/20-modes.conf
+      - description: Drop-in hostapd config fragment for basic MAC address-based authentication
+        source: overlays/etc/hostapd/hostapd.conf.d/30-auth-10-mac-acl.conf
+        targets:
+          - overlays/etc/hostapd/hostapd.conf.d/30-auth-10-mac-acl.conf
+      - description: Drop-in hostapd config fragment for WPA2-based authentication
+        source: overlays/etc/hostapd/hostapd.conf.d/30-auth-20-wpa2.conf
+        targets:
+          - overlays/etc/hostapd/hostapd.conf.d/30-auth-20-wpa2.conf
+      # Templated config file assembly:
+      - description:
+          Shell script to generate a drop-in hostapd config file fragment from drop-in hostapd
+          config file fragment templates
+        source: overlays/usr/libexec/assemble-hostapd-config-templated
+        targets:
+          - overlays/usr/libexec/assemble-hostapd-config-templated
+      - description: systemd service to run the assemble-hostapd-config-templated script during boot
+        source: overlays/usr/lib/systemd/system/assemble-hostapd-config-templated.service
+        targets:
+          - overlays/usr/lib/systemd/system/assemble-hostapd-config-templated.service
+        # Note: we don't need to enable assemble-hostapd-config-templated.service because
+        # assemble-hostapd-config.service depends on it, and
+        # assemble-hostapd-config-templated.service is useless without
+        # assemble-hostapd-config.service.
+      - description:
+          Symlink redirecting /etc/hostapd/hostapd.conf.d/60-generated-templated.conf to an
+          auto-generated file
+        source: overlays/etc/hostapd/hostapd.conf.d/60-generated-templated.conf
+        targets:
+          - overlays/etc/hostapd/hostapd.conf.d/60-generated-templated.conf
+      # Drop-in config file fragment templates to assemble by default:
+      - description:
+          Drop-in hostapd config fragment template with comment describing hostapd config fragment
+          template drop-in directory
+        source: overlays/etc/hostapd/hostapd.conf-templates.d/10-README.conf
+        targets:
+          - overlays/etc/hostapd/hostapd.conf-templates.d/10-README.conf
     filesets:
-      - description: Configuration file for wlan0
+      - description: Drop-in directory for config file fragments to generate the hostapd config file
+        tags:
+          - drop-in-assembly
         paths:
-          - /etc/hostapd/hostapd.conf
+          - /etc/hostapd/hostapd.conf.d
+      - description: Drop-in directory to specify config file fragment templates
+        tags:
+          - drop-in-assembly
+          - templating-machine-name
+          - templating-hostname
+          - templating-custom-domain
+        paths:
+          - /etc/hostapd/hostapd.conf-templates.d
+      - description: Auto-generated hostapd config file
+        paths:
+          - /run/overlays/generated/etc/hostapd/hostapd.conf
+      - description:
+          Auto-generated hostapd drop-in config file fragment specifying some settings based on
+          machine name, hostname, and/or custom domain.
+        paths:
+          - /run/overlays/generated/etc/hostapd/hostapd.conf.d/60-generated-templated.conf
+
+features:
+  interface-wlan0:
+    description: Use the Raspberry Pi's on-board Wi-Fi interface to host the wireless AP
+    provides:
+      file-exports:
+        - description: Drop-in hostapd config fragment
+          source: overlays/etc/hostapd/hostapd.conf.d/40-interface-wlan0.conf
+          targets:
+            - overlays/etc/hostapd/hostapd.conf.d/40-interface-wlan0.conf
+  localization-us:
+    description: Configure the Wi-Fi interface for United States regulations
+    provides:
+      file-exports:
+        - description: Drop-in hostapd config fragment
+          source: overlays/etc/hostapd/hostapd.conf.d/50-localization-us.conf
+          targets:
+            - overlays/etc/hostapd/hostapd.conf.d/50-localization-us.conf
+  planktoscope-password:
+    description: "Set the WPA2 passphrase to the PlanktoScope's default of 'copepode'"
+    provides:
+      file-exports:
+        - description: Drop-in hostapd config fragment
+          source: overlays/etc/hostapd/hostapd.conf.d/30-auth-30-planktoscope-passphrase.conf
+          targets:
+            - overlays/etc/hostapd/hostapd.conf.d/30-auth-30-planktoscope-passphrase.conf
+  ssid-hostname:
+    description: Use the machine's hostname to set the SSID of the wireless AP
+    provides:
+      file-exports:
+        - description: Drop-in hostapd config fragment
+          source: overlays/etc/hostapd/hostapd.conf-templates.d/20-ssid.conf
+          targets:
+            - overlays/etc/hostapd/hostapd.conf-templates.d/20-ssid.conf

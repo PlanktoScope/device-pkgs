@@ -1,0 +1,52 @@
+#!/bin/bash -eu
+
+hostname=""
+machine_name=""
+custom_domain=""
+
+# Load values of interpolated variables:
+if [ -f /etc/hostname ]; then
+  hostname="$(sed 's~#.*$~~g' /etc/hostname | tr -d '[:space:]')"
+  echo "Hostname: $hostname"
+fi
+if [ -f /run/machine-name ]; then
+  machine_name="$(sed 's~#.*$~~g' /run/machine-name | tr -d '[:space:]')"
+  echo "Machine name: $machine_name"
+fi
+if [ -f /etc/custom-domain ]; then
+  custom_domain="$(sed 's~#.*$~~g' /etc/custom-domain | tr -d '[:space:]')"
+  echo "Custom domain: $custom_domain"
+fi
+
+# Load and interpolate templates:
+origins="$(cat /etc/cockpit/origins-templates.d/*)"
+if [ -z "$hostname" ]; then
+  echo "Warning: hostname was not set!"
+  origins="$( \
+    echo "$origins" | \
+    sed '/^[^#]/ s~\(.*{hostname}.*\)~# Disabled because {hostname} is unset: \1~' \
+  )"
+else
+  origins="$(echo "$origins" | sed "/^[^#]/ s~{hostname}~${hostname}~g")"
+fi
+if [ -z "$machine_name" ]; then
+  echo "Warning: machine-name was not set!"
+  origins="$( \
+    echo "$origins" | \
+    sed '/^[^#]/ s~\(.*{machine-name}.*\)~# Disabled because {machine-name} is unset: \1~' \
+  )"
+else
+  origins="$(echo "$origins" | sed "/^[^#]/ s~{machine-name}~${machine_name}~g")"
+fi
+if [ -z "$custom_domain" ]; then
+  echo "Warning: custom-domain was not set!"
+  origins="$( \
+    echo "$origins" | \
+    sed '/^[^#]/ s~\(.*{custom-domain}.*\)~# Disabled because {custom-domain} is unset: \1~' \
+  )"
+else
+  origins="$(echo "$origins" | sed "/^[^#]/ s~{custom-domain}~${custom_domain}~g")"
+fi
+
+mkdir -p /run/overlays/generated/etc/cockpit/origins.d
+echo "$origins" > /run/overlays/generated/etc/cockpit/origins.d/60-generated-templated-names

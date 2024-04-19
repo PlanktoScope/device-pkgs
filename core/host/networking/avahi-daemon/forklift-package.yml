@@ -1,11 +1,14 @@
 package:
-  description: Avahi daemon ambiently provided by the PlanktoScope
+  description: Avahi daemon ambiently provided by the OS
   maintainers:
     - name: Ethan Li
       email: lietk12@gmail.com
   license: LGPL-2.1-only
   sources:
-    - https://github.com/lathiat/avahi
+    # Ambiently-provided software (LGPL):
+    - https://github.com/avahi/avahi
+    # Systemd units (Apache-2.0):
+    - https://github.com/PlanktoScope/device-pkgs
 
 host:
   provides:
@@ -13,3 +16,35 @@ host:
       - description: mDNS messaging
         port: 5353
         protocol: udp
+    filesets:
+      - description:
+          Avahi daemon client to register new mDNS/DNS-SD services or host names or address mappings
+        paths:
+          - /usr/bin/avahi-publish
+
+deployment:
+  provides:
+    file-exports:
+      - description:
+          systemd template service to register the specified mDNS name as an alias for 192.168.4.1
+        source: overlays/usr/lib/systemd/system/planktoscope-mdns-alias@.service
+        targets:
+          - overlays/usr/lib/systemd/system/planktoscope-mdns-alias@.service
+
+features:
+  register-planktoscope-local:
+    description: "Register `planktoscope.local` as an alias for 192.168.4.1"
+    provides:
+      file-exports:
+        - description: systemd service enablement
+          source: overlays/etc/systemd/system/multi-user.target.wants/planktoscope-mdns-alias@planktoscope.service
+          targets:
+            - overlays/etc/systemd/system/multi-user.target.wants/planktoscope-mdns-alias@planktoscope.service
+  register-pkscope-local:
+    description: "Register `pkscope.local` as an alias for 192.168.4.1"
+    provides:
+      file-exports:
+        - description: systemd service enablement
+          source: overlays/etc/systemd/system/multi-user.target.wants/planktoscope-mdns-alias@pkscope.service
+          targets:
+            - overlays/etc/systemd/system/multi-user.target.wants/planktoscope-mdns-alias@pkscope.service

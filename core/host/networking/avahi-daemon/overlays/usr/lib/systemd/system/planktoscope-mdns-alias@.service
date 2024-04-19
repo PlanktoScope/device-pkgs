@@ -1,0 +1,12 @@
+[Unit]
+Description=Publish %i.local as alias for 192.168.4.1 via mDNS
+Wants=avahi-daemon.service
+After=avahi-daemon.service
+Wants=avahi-daemon.socket
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/bash -c "/usr/bin/avahi-publish -a -R %i.local 192.168.4.1"
+
+[Install]
+WantedBy=multi-user.target

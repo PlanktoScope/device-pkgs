@@ -1,5 +1,5 @@
 package:
-  description: Directories and files for web GUI ambiently provided by the PlanktoScope
+  description: Directories and files for web GUI ambiently provided by the OS
   maintainers:
     - name: Ethan Li
       email: lietk12@gmail.com

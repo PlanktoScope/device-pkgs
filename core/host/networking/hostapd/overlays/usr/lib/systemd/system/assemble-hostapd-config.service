@@ -1,0 +1,14 @@
+[Unit]
+Description=Assemble drop-in hostapd config fragment files into a hostapd config file
+ConditionFileIsExecutable=/usr/libexec/assemble-hostapd-config
+ConditionPathExists=/etc/hostapd/hostapd.conf.d
+Wants=assemble-hostapd-config-templated.service
+After=assemble-hostapd-config-templated.service
+Before=hostapd.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/libexec/assemble-hostapd-config
+
+[Install]
+WantedBy=multi-user.target

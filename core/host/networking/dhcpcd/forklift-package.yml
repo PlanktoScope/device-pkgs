@@ -1,5 +1,5 @@
 package:
-  description: DHCP client ambiently provided by the PlanktoScope
+  description: DHCP client ambiently provided by the OS
   maintainers:
     - name: Ethan Li
       email: lietk12@gmail.com
@@ -13,3 +13,15 @@ host:
       - description: DHCP client
         port: 68
         protocol: udp
+
+deployment:
+  provides:
+    file-exports:
+      - description: Basic DHCP client config with fallback to static IP addresses on eth0, eth1, and usb0
+        source: overlays/etc/dhcpcd.conf
+        targets:
+          - overlays/etc/dhcpcd.conf
+      - description: systemd service override for system-provided dhcpcd.service to handle usb0 hotplugging
+        source: overlays/etc/systemd/system/dhcpcd.service.d/10-restart.conf
+        targets:
+          - overlays/etc/systemd/system/dhcpcd.service.d/10-restart.conf

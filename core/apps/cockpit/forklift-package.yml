@@ -9,14 +9,6 @@ package:
 
 deployment:
   compose-files: [compose.yml]
-  requires:
-    filesets:
-      - description: Cockpit configuration file
-        tags:
-          - cockpit-allow-unencrypted
-          - cockpit-forward-ws
-        paths:
-          - /etc/cockpit/cockpit.conf
 
 features:
   frontend:
@@ -40,6 +32,12 @@ features:
           protocol: http
           paths:
             - /admin/cockpit/*
+      filesets:
+        - description: Drop-in directory for config file fragments to generate the Cockpit config file
+          tags:
+            - drop-in-assembly
+          paths:
+            - /etc/cockpit/cockpit.conf.d
     provides:
       services:
         - description: The Cockpit system administration dashboard
@@ -48,3 +46,8 @@ features:
           paths:
             - /admin/cockpit
             - /admin/cockpit/*
+      file-exports:
+        - description: Drop-in config fragment to enable connection through a reverse-proxy
+          source: overlays/etc/cockpit/cockpit.conf.d/20-webservice-20-reverse-proxy.conf
+          targets:
+            - overlays/etc/cockpit/cockpit.conf.d/20-webservice-20-reverse-proxy.conf

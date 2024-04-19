@@ -1,0 +1,34 @@
+package:
+  description: Docker container runtime ambiently provided by the OS
+  maintainers:
+    - name: Ethan Li
+      email: lietk12@gmail.com
+  license: Apache-2.0
+  sources:
+    - https://github.com/moby/moby
+
+host:
+  provides:
+    filesets:
+      - description: Socket files for Docker and containerd
+        paths:
+          - /run/docker.sock
+          - /run/containerd/containerd.sock
+      - description: systemd socket for Docker
+        paths:
+          - /usr/lib/systemd/system/docker.socket
+      - description: Docker daemon binary
+        paths:
+          - /usr/bin/dockerd
+
+features:
+  start-before-network-online:
+    description:
+      Override the default system-provided docker.service to remove an ordering dependency for it to
+      start after network-online.target
+    provides:
+      file-exports:
+        - description: Override of the default system-provided docker.service
+          source: overlays/usr/lib/systemd/system/docker.service
+          targets:
+            - overlays/usr/lib/systemd/system/docker.service

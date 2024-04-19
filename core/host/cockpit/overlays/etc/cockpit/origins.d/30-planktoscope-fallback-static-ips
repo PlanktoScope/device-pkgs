@@ -1,0 +1,6 @@
+# These static IP addresses are used as fallbacks for access over the PlanktoScope's wlan0 and eth0
+# network interfaces:
+http://192.168.4.1
+http://192.168.4.1:9090
+http://192.168.5.1
+http://192.168.5.1:9090

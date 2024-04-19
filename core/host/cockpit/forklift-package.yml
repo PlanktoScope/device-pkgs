@@ -1,11 +1,14 @@
 package:
-  description: Browser dashboard for system administration (installed on host)
+  description:
+    System administration browser dashboard ambiently provided by the OS, and auto-generated
+    configurations for it
   maintainers:
     - name: Ethan Li
       email: lietk12@gmail.com
   license: LGPL-2.1
   sources:
     - https://github.com/cockpit-project/cockpit
+    - https://github.com/PlanktoScope/device-pkgs
 
 host:
   tags:
@@ -25,10 +28,182 @@ host:
         protocol: http
         paths:
           - /admin/cockpit/*
+
+deployment:
+  provides:
+    file-exports:
+      # Config file assembly:
+      - description:
+          Shell script to generate a Cockpit config file from drop-in config fragment files
+        source: overlays/usr/libexec/assemble-cockpit-config
+        targets:
+          - overlays/usr/libexec/assemble-cockpit-config
+      - description: systemd service to run the assemble-cockpit-config script during boot
+        source: overlays/usr/lib/systemd/system/assemble-cockpit-config.service
+        targets:
+          - overlays/usr/lib/systemd/system/assemble-cockpit-config.service
+      - description: systemd service enablement for assemble-cockpit-config.service
+        source: overlays/etc/systemd/system/multi-user.target.wants/assemble-cockpit-config.service
+        targets:
+          - overlays/etc/systemd/system/multi-user.target.wants/assemble-cockpit-config.service
+      - description: Symlink redirecting /etc/cockpit/cockpit.conf to an auto-generated file
+        source: overlays/etc/cockpit/cockpit.conf
+        targets:
+          - overlays/etc/cockpit/cockpit.conf
+      # Drop-in config fragments to assemble by default:
+      - description:
+          Drop-in Cockpit config fragment with comment describing Cockpit config drop-in directory
+        source: overlays/etc/cockpit/cockpit.conf.d/10-header.conf
+        targets:
+          - overlays/etc/cockpit/cockpit.conf.d/10-header.conf
+      - description:
+          Drop-in Cockpit config fragment for the WebService section of the Cockpit config
+        source: overlays/etc/cockpit/cockpit.conf.d/20-webservice-0-start.conf
+        targets:
+          - overlays/etc/cockpit/cockpit.conf.d/20-webservice-0-start.conf
+      # Origins config assembly:
+      - description:
+          Shell script to generate a drop-in Cockpit config file fragment from drop-in Cockpit
+          origins list files
+        source: overlays/usr/libexec/assemble-cockpit-origins
+        targets:
+          - overlays/usr/libexec/assemble-cockpit-origins
+      - description: systemd service to run the assemble-cockpit-origins script during boot
+        source: overlays/usr/lib/systemd/system/assemble-cockpit-origins.service
+        targets:
+          - overlays/usr/lib/systemd/system/assemble-cockpit-origins.service
+        # Note: we don't need to enable assemble-cockpit-origins.service because
+        # assemble-cockpit-config.service depends on it, and assemble-cockpit-origins.service is
+        # useless without assemble-cockpit-config.service.
+      - description:
+          Symlink redirecting /etc/cockpit/origins.d/20-webservice-50-origins.conf to an
+          auto-generated file
+        source: overlays/etc/cockpit/cockpit.conf.d/20-webservice-50-origins.conf
+        targets:
+          - overlays/etc/cockpit/cockpit.conf.d/20-webservice-50-origins.conf
+      # Drop-in origins lists to assemble by default:
+      - description:
+          Drop-in Cockpit origins list with comment describing Cockpit origins drop-in directory
+        source: overlays/etc/cockpit/origins.d/10-README
+        targets:
+          - overlays/etc/cockpit/origins.d/10-README
+      - description: Drop-in Cockpit origins list for access from localhost
+        source: overlays/etc/cockpit/origins.d/20-localhost
+        targets:
+          - overlays/etc/cockpit/origins.d/20-localhost
+      # Templated origins list assembly:
+      - description:
+          Shell script to generate a drop-in Cockpit origins list from drop-in Cockpit origins list
+          templates
+        source: overlays/usr/libexec/assemble-cockpit-origins-templated
+        targets:
+          - overlays/usr/libexec/assemble-cockpit-origins-templated
+      - description: systemd service to run the assemble-cockpit-origins-templated script during boot
+        source: overlays/usr/lib/systemd/system/assemble-cockpit-origins-templated.service
+        targets:
+          - overlays/usr/lib/systemd/system/assemble-cockpit-origins-templated.service
+        # Note: we don't need to enable assemble-cockpit-origins-templated.service because
+        # assemble-cockpit-origins.service depends on it, and assemble-cockpit-origins-templated.service is
+        # useless without assemble-cockpit-origins.service.
+      - description:
+          Symlink redirecting /etc/cockpit/origins.d/60-generated-templated-names to an
+          auto-generated file
+        source: overlays/etc/cockpit/origins.d/60-generated-templated-names
+        targets:
+          - overlays/etc/cockpit/origins.d/60-generated-templated-names
+      # Drop-in origins templates lists to assemble by default:
+      - description:
+          Drop-in Cockpit origins template list with comment describing Cockpit origins template
+          drop-in directory
+        source: overlays/etc/cockpit/origins-templates.d/10-README
+        targets:
+          - overlays/etc/cockpit/origins-templates.d/10-README
+      - description:
+          "Drop-in Cockpit origins template list for access via the machine name with a custom
+          domain, e.g. 'metal-slope-23501.pkscope'"
+        source: overlays/etc/cockpit/origins-templates.d/20-custom-domain-machine-name
+        targets:
+          - overlays/etc/cockpit/origins-templates.d/20-custom-domain-machine-name
     filesets:
-      - description: Cockpit configuration file
+      - description: Drop-in directory for config file fragments to generate the Cockpit config file
         tags:
-          - cockpit-allow-unencrypted
-          - cockpit-forward-ws
+          - drop-in-assembly
         paths:
-          - /etc/cockpit/cockpit.conf
+          - /etc/cockpit/cockpit.conf.d
+      - description: Drop-in directory to specify origins for Cockpit to allow
+        tags:
+          - drop-in-assembly
+        paths:
+          - /etc/cockpit/origins.d
+      - description: Drop-in directory to specify templates of origins for Cockpit to allow
+        tags:
+          - drop-in-assembly
+          - templating-machine-name
+          - templating-hostname
+          - templating-custom-domain
+        paths:
+          - /etc/cockpit/origins-templates.d
+      - description: Auto-generated Cockpit config file
+        paths:
+          - /run/overlays/generated/etc/cockpit/cockpit.conf
+      - description: Auto-generated Cockpit drop-in config fragment file specifying allowed origins
+        paths:
+          - /run/overlays/generated/etc/cockpit/cockpit.conf.d/20-webservice-50-origins.conf
+      - description:
+          Auto-generated Cockpit drop-in origins list file specifying some allowed origins based on
+          machine name, hostname, and/or custom domain.
+        paths:
+          - /run/overlays/generated/etc/cockpit/origins.d/60-generated-templated-names
+
+features:
+  allow-unencrypted:
+    description: Allow accessing Cockpit over HTTP rather than HTTPS
+    provides:
+      file-exports:
+        - description: Drop-in Cockpit config fragment
+          source: overlays/etc/cockpit/cockpit.conf.d/20-webservice-10-allow-unencrypted.conf
+          targets:
+            - overlays/etc/cockpit/cockpit.conf.d/20-webservice-10-allow-unencrypted.conf
+  allow-origins-planktoscope-static-ips:
+    description:
+      Allow accessing Cockpit via some PlanktoScope-assigned static IP addresses, namely
+      192.168.4.1 and 192.168.5.1
+    provides:
+      file-exports:
+        - description: Drop-in Cockpit origins list
+          source: overlays/etc/cockpit/origins.d/30-planktoscope-fallback-static-ips
+          targets:
+            - overlays/etc/cockpit/origins.d/30-planktoscope-fallback-static-ips
+  allow-origins-planktoscope-legacy-mdns-names:
+    description: "Allow accessing Cockpit via 'planktoscope.local'"
+    provides:
+      file-exports:
+        - description: Drop-in Cockpit origins list
+          source: overlays/etc/cockpit/origins.d/40-planktoscope-legacy-mdns-names
+          targets:
+            - overlays/etc/cockpit/origins.d/40-planktoscope-legacy-mdns-names
+  allow-origins-planktoscope-mdns-names:
+    description: "Allow accessing Cockpit via 'pkscope.local'"
+    provides:
+      file-exports:
+        - description: Drop-in Cockpit origins list
+          source: overlays/etc/cockpit/origins.d/50-planktoscope-mdns-names
+          targets:
+            - overlays/etc/cockpit/origins.d/50-planktoscope-mdns-names
+  allow-origins-templated-custom-domain-home:
+    description: "Allow accessing Cockpit via 'home' with a custom domain, e.g. home.pkscope"
+    provides:
+      file-exports:
+        - description: Drop-in Cockpit origins list
+          source: overlays/etc/cockpit/origins-templates.d/30-custom-domain-home
+          targets:
+            - overlays/etc/cockpit/origins-templates.d/30-custom-domain-home
+  allow-origins-templated-mdns-hostname:
+    provides:
+      description:
+        "Allow accessing Cockpit via the hostname with mDNS, e.g. 'pkscope-metal-slope-23501.local'"
+      file-exports:
+        - description: Drop-in Cockpit origins list
+          source: overlays/etc/cockpit/origins-templates.d/40-mdns-hostname
+          targets:
+            - overlays/etc/cockpit/origins-templates.d/40-mdns-hostname

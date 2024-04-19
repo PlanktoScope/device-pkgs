@@ -1,0 +1,3 @@
+#!/bin/bash -eu
+
+cat /etc/hostapd/hostapd.conf.d/* > /run/overlays/generated/etc/hostapd/hostapd.conf

@@ -1,0 +1,12 @@
+[Unit]
+Description=Release GPIO stepper motors on startup
+Before=planktoscope-org.device-backend.controller-adafruithat.service
+Before=planktoscope-org.device-backend.controller-planktoscopehat.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/libexec/release-gpio-steppers
+Restart=no
+
+[Install]
+WantedBy=multi-user.target

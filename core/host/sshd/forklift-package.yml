@@ -1,5 +1,5 @@
 package:
-  description: SSH server ambiently provided by the PlanktoScope
+  description: Enablement of the SSH server ambiently provided by the OS
   maintainers:
     - name: Ethan Li
       email: lietk12@gmail.com
@@ -8,17 +8,46 @@ package:
     - https://github.com/openssh/openssh-portable
 
 host:
-  tags:
-    - device-portal-name=SSH server
-    - device-portal-description=Provides SSH access to the PlanktoScope on port 22
-    - device-portal-type=System infrastructure
-    - device-portal-purpose=Networking
   provides:
-    listeners:
-      - description: SSH server
-        port: 22
-        protocol: tcp
-    services:
-      - description: SSH server
-        port: 22
-        protocol: ssh
+    filesets:
+      - description: systemd service to run the SSH server
+        paths:
+          - /usr/lib/systemd/system/ssh.service
+      - description: Binary to generate SSH keys
+        paths:
+          - /usr/bin/ssh-keygen
+
+features:
+  ssh-server-enabled:
+    description: Enables the system-provided SSH server
+    tags:
+      - device-portal-name=SSH server
+      - device-portal-description=Provides SSH access to the PlanktoScope on port 22
+      - device-portal-type=System infrastructure
+      - device-portal-purpose=Networking
+    provides:
+      listeners:
+        - description: SSH server
+          port: 22
+          protocol: tcp
+      services:
+        - description: SSH server
+          port: 22
+          protocol: ssh
+      file-exports:
+        - description: systemd service enablement for the system-provided ssh.service
+          source: overlays/etc/systemd/system/multi-user.target.wants/ssh.service
+          targets:
+            - overlays/etc/systemd/system/multi-user.target.wants/ssh.service
+  ensure-ssh-host-keys:
+    description: Regenerates ssh host keys at boot if they're missing
+    provides:
+      file-exports:
+        - description: systemd service to regenerate SSH host keys during boot if they're missing
+          source: overlays/usr/lib/systemd/system/ensure-ssh-host-keys.service
+          targets:
+            - overlays/usr/lib/systemd/system/ensure-ssh-host-keys.service
+        - description: systemd service enablement for ensure-ssh-host-keys.service
+          source: overlays/etc/systemd/system/multi-user.target.wants/ensure-ssh-host-keys.service
+          targets:
+            - overlays/etc/systemd/system/multi-user.target.wants/ensure-ssh-host-keys.service
