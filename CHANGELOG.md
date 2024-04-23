@@ -41,7 +41,6 @@ All dates in this file are given in the [UTC time zone](https://en.wikipedia.org
 - (Breaking change) `core/host/networking/hostapd`: various settings are no longer provided by default, but rather have to be enabled with the new `interface-wlan0`, `localization-us`, `planktoscope-password`, and `ssid-hostname` feature flags.
 - (Breaking change) `core/host/networking/hosts`: hostnames involving the custom domain (e.g. `pkscope) are no longer added by default, but rather have to be enabled with a new `planktoscope-custom-domain-home` and `planktoscope-custom-domain-machine-name` feature flags.
 - All packages in `core/apps` which use the `alpine` container image have upgraded it from v3.19.0 to v3.19.1.
-- All packages in `core/apps` which use the `filebrowser/filebrowser` container image have upgraded it from v2.27.0 to v2.28.0.
 - `core/apps/dozzle`: the `amir20/dozzle` container image is upgraded from v6.0.6 to v6.5.1.
 - `core/apps/grafana`: the `grafana/grafana-oss` container image is upgraded from v10.1.6 to v10.4.2.
 - `core/apps/planktoscope/device-portal`: the `device-portal` container image is upgraded from v0.1.15 to v0.2.1.
