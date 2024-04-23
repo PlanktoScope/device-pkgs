@@ -10,7 +10,7 @@ datasources:
       timeInterval: 5s
       manageAlerts: true
       prometheusType: Prometheus
-      prometheusVersion: 2.48.1
+      prometheusVersion: 2.51.2
       cacheLevel: 'High'
       # Incremental querying breaks dashboards when the system time is incorrect
       incrementalQuerying: false
