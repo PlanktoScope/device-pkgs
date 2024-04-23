@@ -1,6 +1,6 @@
 services:
   server:
-    image: ghcr.io/planktoscope/device-portal:0.1.15
+    image: ghcr.io/planktoscope/device-portal:0.2.0
 
 networks:
   default:

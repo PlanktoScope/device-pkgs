@@ -39,6 +39,7 @@ All dates in this file are given in the [UTC time zone](https://en.wikipedia.org
 - (Breaking change) `core/host/networking/dnsmasq`: use of `pkscope` as the custom domain is no longer default behavior, but rather has to be enabled with a new `planktoscope-custom-domain` feature flag.
 - (Breaking change) `core/host/networking/hostapd`: various settings are no longer provided by default, but rather have to be enabled with the new `interface-wlan0`, `localization-us`, `planktoscope-password`, and `ssid-hostname` feature flags.
 - (Breaking change) `core/host/networking/hosts`: hostnames involving the custom domain (e.g. `pkscope) are no longer added by default, but rather have to be enabled with a new `planktoscope-custom-domain-home` and `planktoscope-custom-domain-machine-name` feature flags.
+- `core/apps/planktoscope/device-portal`: the `device-portal` container image is upgraded from v0.1.15 to v0.2.0.
 
 ### Removed
 
