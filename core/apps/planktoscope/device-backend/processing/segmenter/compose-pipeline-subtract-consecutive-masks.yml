@@ -1,4 +1,4 @@
 services:
   server:
     environment:
-      - PIPELINE_SUBTRACT_CONSECUTIVE_MASKS=true
+      - SEGMENTER_PIPELINE_SUBTRACT_CONSECUTIVE_MASKS=true
