@@ -91,3 +91,6 @@ features:
   dev-src:
     description: Allows the source code to be overwritten from an existing codebase for development & troubleshooting
     compose-files: [compose-dev-src.yml]
+  pipeline-subtract-consecutive-masks:
+    description:
+    compose-files: [compose-pipeline-subtract-consecutive-masks.yml]
