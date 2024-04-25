@@ -47,6 +47,7 @@ All dates in this file are given in the [UTC time zone](https://en.wikipedia.org
 - `core/apps/planktoscope/device-portal`: the `device-portal` container image is upgraded from v0.1.15 to v0.2.1.
 - `core/infra/caddy-ingress`: the `lucaslorentz/caddy-docker-proxy` container image is upgraded from v2.8.10 to v2.8.11.
 - `core/infra/prometheus`: the `prom/prometheus` container image is upgraded from v2.48.1 to v2.51.2.
+- `core/host/networking/interface-forwarding` has a slightly simpler network configuration, and now all packets for the PlanktoScope's static IP addresses (e.g. 192.168.4.1, 192.168.5.1, 192.168.6.1, etc.) are routed to 127.0.0.1 regardless of whether the packet for that IP address came from the interface corresponding to it.
 
 ### Removed
 
