@@ -13,66 +13,42 @@ deployment:
       # Hosts file assembly:
       - description:
           Shell script to generate a hosts file from drop-in hosts fragment files
-        source: overlays/usr/libexec/assemble-hosts
-        targets:
-          - overlays/usr/libexec/assemble-hosts
+        target: overlays/usr/libexec/assemble-hosts
       - description: systemd service to run the assemble-hosts script during boot
-        source: overlays/usr/lib/systemd/system/assemble-hosts.service
-        targets:
-          - overlays/usr/lib/systemd/system/assemble-hosts.service
+        target: overlays/usr/lib/systemd/system/assemble-hosts.service
       - description: systemd service enablement for assemble-hosts.service
-        source: overlays/etc/systemd/system/multi-user.target.wants/assemble-hosts.service
-        targets:
-          - overlays/etc/systemd/system/multi-user.target.wants/assemble-hosts.service
+        target: overlays/etc/systemd/system/multi-user.target.wants/assemble-hosts.service
       - description: Symlink redirecting /etc/hosts to an auto-generated file
-        source: overlays/etc/hosts
-        targets:
-          - overlays/etc/hosts
+        target: overlays/etc/hosts
       # Drop-in hosts fragments to assemble by default:
       - description:
           Drop-in hosts fragment with comment describing hosts fragments drop-in directory
-        source: overlays/etc/hosts.d/10-header
-        targets:
-          - overlays/etc/hosts.d/10-header
+        target: overlays/etc/hosts.d/10-header
       - description: Drop-in hosts fragment with localhost hostnames
-        source: overlays/etc/hosts.d/20-localhost
-        targets:
-          - overlays/etc/hosts.d/20-localhost
+        target: overlays/etc/hosts.d/20-localhost
       - description: Drop-in hosts fragment with IPv6 multicast hostnames
-        source: overlays/etc/hosts.d/30-ipv6-multicast
-        targets:
-          - overlays/etc/hosts.d/30-ipv6-multicast
+        target: overlays/etc/hosts.d/30-ipv6-multicast
       # Templated origins list assembly:
       - description:
           Shell script to generate a drop-in hosts fragment file from drop-in hosts fragment
           templates
-        source: overlays/usr/libexec/assemble-hosts-templated
-        targets:
-          - overlays/usr/libexec/assemble-hosts-templated
+        target: overlays/usr/libexec/assemble-hosts-templated
       - description: systemd service to run the assemble-hosts-templated script during boot
-        source: overlays/usr/lib/systemd/system/assemble-hosts-templated.service
-        targets:
-          - overlays/usr/lib/systemd/system/assemble-hosts-templated.service
+        target: overlays/usr/lib/systemd/system/assemble-hosts-templated.service
         # Note: we don't need to enable assemble-hosts-templated.service because
         # assemble-hosts.service depends on it, and assemble-hosts-templated.service is
         # useless without assemble-hosts.service.
       - description:
           Symlink redirecting /etc/hosts.d/50-generated-templated to an auto-generated file
-        source: overlays/etc/hosts.d/50-generated-templated
-        targets:
-          - overlays/etc/hosts.d/50-generated-templated
+        target: overlays/etc/hosts.d/50-generated-templated
       # Drop-in hosts fragment templates to assemble by default:
       - description:
           Drop-in hosts fragment template with comment describing the hosts fragment template
           drop-in directory
-        source: overlays/etc/hosts-templates.d/10-README
-        targets:
-          - overlays/etc/hosts-templates.d/10-README
+        target: overlays/etc/hosts-templates.d/10-README
       - description:
           "Drop-in hosts fragment template for the hostname, e.g. 'metal-slope-23501'"
-        source: overlays/etc/hosts-templates.d/20-hostname
-        targets:
-          - overlays/etc/hosts-templates.d/20-hostname
+        target: overlays/etc/hosts-templates.d/20-hostname
     filesets:
       - description: Drop-in directory for hosts fragment files to generate the hosts file
         tags:
@@ -104,9 +80,7 @@ features:
     provides:
       file-exports:
         - description: Drop-in hosts fragment template
-          source: overlays/etc/hosts-templates.d/30-planktoscope-custom-domain-home
-          targets:
-            - overlays/etc/hosts-templates.d/30-planktoscope-custom-domain-home
+          target: overlays/etc/hosts-templates.d/30-planktoscope-custom-domain-home
   planktoscope-custom-domain-machine-name:
     description:
       "Use PlanktoScope-assigned static IP addresses for the machine name with a custom domain,
@@ -114,6 +88,4 @@ features:
     provides:
       file-exports:
         - description: Drop-in hosts fragment template
-          source: overlays/etc/hosts-templates.d/40-planktoscope-custom-domain-machine-name
-          targets:
-            - overlays/etc/hosts-templates.d/40-planktoscope-custom-domain-machine-name
+          target: overlays/etc/hosts-templates.d/40-planktoscope-custom-domain-machine-name

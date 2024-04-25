@@ -31,7 +31,7 @@ All dates in this file are given in the [UTC time zone](https://en.wikipedia.org
 
 ### Changed
 
-- (Breaking change) The minimum supported Forklift version for using this repository has been bumped from v0.4.0 to v0.7.0-alpha.3, because some packages provided by this repository now require functionality added by v0.7.0 (namely, file-exporting functionality) in order to work as described/expected.
+- (Breaking change) The minimum supported Forklift version for using this repository has been bumped from v0.4.0 to v0.7.0, because some packages provided by this repository now require functionality added by v0.7.0 (namely, file-exporting functionality) in order to work as described/expected.
 - (Breaking change) `community/apps/portainer` was previously named `core/apps/portainer`; it's been moved out of `core`, as its default inclusion in the PlanktoScope OS is deprecated in v2024.0.0 of the PlanktoScope OS; in the future, the user will have to manually add this package to their custom pallet if they want to add Portainer.
 - (Breaking change) `core/host/machine-name` was previously named `core/host/planktoscope/machine-name`; it's been renamed, as it can now be configured (via feature flags) without PlanktoScope-specific naming.
 - (Breaking change) `core/host/machine-name`: the machine name is now generated at `/run/machine-name` rather than `/var/lib/planktoscope/machine-name`. however, a symlink is now exported to redirect `/var/lib/planktoscope/machine-name` to `/run/machine-name`, for backwards-compatibility with programs still expecting `/var/lib/planktoscope/machine-name`.

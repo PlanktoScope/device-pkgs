@@ -48,6 +48,4 @@ features:
             - /admin/cockpit/*
       file-exports:
         - description: Drop-in config fragment to enable connection through a reverse-proxy
-          source: overlays/etc/cockpit/cockpit.conf.d/20-webservice-20-reverse-proxy.conf
-          targets:
-            - overlays/etc/cockpit/cockpit.conf.d/20-webservice-20-reverse-proxy.conf
+          target: overlays/etc/cockpit/cockpit.conf.d/20-webservice-20-reverse-proxy.conf

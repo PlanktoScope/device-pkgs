@@ -58,17 +58,11 @@ deployment:
   provides:
     file-exports:
       - description: Node-RED settings file
-        source: overlays/etc/nodered/settings.js
-        targets:
-          - overlays/etc/nodered/settings.js
+        target: overlays/etc/nodered/settings.js
       - description: systemd service override for the system-provided nodered.service's start order & settings
-        source: overlays/etc/systemd/system/nodered.service.d/20-override.conf
-        targets:
-          - overlays/etc/systemd/system/nodered.service.d/20-override.conf
+        target: overlays/etc/systemd/system/nodered.service.d/20-override.conf
       - description: systemd service enablement for the system-provided nodered.service
-        source: overlays/etc/systemd/system/multi-user.target.wants/nodered.service
-        targets:
-          - overlays/etc/systemd/system/multi-user.target.wants/nodered.service
+        target: overlays/etc/systemd/system/multi-user.target.wants/nodered.service
 
 features:
   editor:

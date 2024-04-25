@@ -22,10 +22,6 @@ deployment:
   provides:
     file-exports:
       - description: Basic GPSd config
-        source: overlays/etc/default/gpsd
-        targets:
-          - overlays/etc/default/gpsd
+        target: overlays/etc/default/gpsd
       - description: PPS GPIO config for the Chrony time server
-        source: overlays/etc/chrony/conf.d/20-pps-gpio.conf
-        targets:
-          - overlays/etc/chrony/conf.d/20-pps-gpio.conf
+        target: overlays/etc/chrony/conf.d/20-pps-gpio.conf

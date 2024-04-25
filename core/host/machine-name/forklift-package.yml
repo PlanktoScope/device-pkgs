@@ -36,17 +36,11 @@ deployment:
     file-exports:
       - description:
           Shell script to generate a machine name based on the Raspberry Pi's serial number
-        source: overlays/usr/libexec/generate-machine-name
-        targets:
-          - overlays/usr/libexec/generate-machine-name
+        target: overlays/usr/libexec/generate-machine-name
       - description: systemd service to run the generate-machine-name script during boot
-        source: overlays/usr/lib/systemd/system/generate-machine-name.service
-        targets:
-          - overlays/usr/lib/systemd/system/generate-machine-name.service
+        target: overlays/usr/lib/systemd/system/generate-machine-name.service
       - description: systemd service enablement for generate-machine-name.service
-        source: overlays/etc/systemd/system/sysinit.target.wants/generate-machine-name.service
-        targets:
-          - overlays/etc/systemd/system/sysinit.target.wants/generate-machine-name.service
+        target: overlays/etc/systemd/system/sysinit.target.wants/generate-machine-name.service
     filesets:
       - description: Auto-generated file with the machine name
         paths:
@@ -58,31 +52,20 @@ features:
     provides:
       file-exports:
         - description: Shell script to generate a hostname file to be overlaid into /etc/hostname
-          source: overlays/usr/libexec/generate-hostname-templated
-          targets:
-            - overlays/usr/libexec/generate-hostname-templated
+          target: overlays/usr/libexec/generate-hostname-templated
         - description:
             systemd service to run the generate-hostname-templated script during early boot
-          source: overlays/usr/lib/systemd/system/generate-hostname-templated.service
-          targets:
-            - overlays/usr/lib/systemd/system/generate-hostname-templated.service
+          target: overlays/usr/lib/systemd/system/generate-hostname-templated.service
         - description: systemd service enablement for generate-hostname-templated.service
-          source: overlays/etc/systemd/system/sysinit.target.wants/generate-hostname-templated.service
-          targets:
-            - overlays/etc/systemd/system/sysinit.target.wants/generate-hostname-templated.service
+          target: overlays/etc/systemd/system/sysinit.target.wants/generate-hostname-templated.service
         - description: Symlink redirecting /etc/hostname to the auto-generated hostname file
           source: overlays/etc/hostname
-          targets:
-            - overlays/etc/hostname
+          target: overlays/etc/hostname
         - description:
             systemd service to make systemd-homed.service update the live hostname to match /etc/hostname
-          source: overlays/usr/lib/systemd/system/update-hostname.service
-          targets:
-            - overlays/usr/lib/systemd/system/update-hostname.service
+          target: overlays/usr/lib/systemd/system/update-hostname.service
         - description: systemd service enablement for update-hostname.service
-          source: overlays/etc/systemd/system/multi-user.target.wants/update-hostname.service
-          targets:
-            - overlays/etc/systemd/system/multi-user.target.wants/update-hostname.service
+          target: overlays/etc/systemd/system/multi-user.target.wants/update-hostname.service
       filesets:
         - description: Auto-generated file with the hostname
           paths:
@@ -93,6 +76,4 @@ features:
     provides:
       file-exports:
         - description: "Hostname template which includes 'pkscope-' as a prefix in the hostname"
-          source: overlays/etc/hostname-template
-          targets:
-            - overlays/etc/hostname-template
+          target: overlays/etc/hostname-template

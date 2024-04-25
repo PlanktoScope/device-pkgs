@@ -29,6 +29,4 @@ features:
     provides:
       file-exports:
         - description: Override of the default system-provided docker.service
-          source: overlays/usr/lib/systemd/system/docker.service
-          targets:
-            - overlays/usr/lib/systemd/system/docker.service
+          target: overlays/usr/lib/systemd/system/docker.service

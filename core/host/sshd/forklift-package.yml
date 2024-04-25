@@ -36,18 +36,12 @@ features:
           protocol: ssh
       file-exports:
         - description: systemd service enablement for the system-provided ssh.service
-          source: overlays/etc/systemd/system/multi-user.target.wants/ssh.service
-          targets:
-            - overlays/etc/systemd/system/multi-user.target.wants/ssh.service
+          target: overlays/etc/systemd/system/multi-user.target.wants/ssh.service
   ensure-ssh-host-keys:
     description: Regenerates ssh host keys at boot if they're missing
     provides:
       file-exports:
         - description: systemd service to regenerate SSH host keys during boot if they're missing
-          source: overlays/usr/lib/systemd/system/ensure-ssh-host-keys.service
-          targets:
-            - overlays/usr/lib/systemd/system/ensure-ssh-host-keys.service
+          target: overlays/usr/lib/systemd/system/ensure-ssh-host-keys.service
         - description: systemd service enablement for ensure-ssh-host-keys.service
-          source: overlays/etc/systemd/system/multi-user.target.wants/ensure-ssh-host-keys.service
-          targets:
-            - overlays/etc/systemd/system/multi-user.target.wants/ensure-ssh-host-keys.service
+          target: overlays/etc/systemd/system/multi-user.target.wants/ensure-ssh-host-keys.service

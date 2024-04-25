@@ -29,39 +29,25 @@ deployment:
     file-exports:
       # Basic drop-in config files
       - description: Basic config to automatically listen for DNS & DHCP queries
-        source: overlays/etc/dnsmasq.d/10-listen.conf
-        targets:
-          - overlays/etc/dnsmasq.d/10-listen.conf
+        target: overlays/etc/dnsmasq.d/10-listen.conf
       - description: Basic config to forward DNS queries to Cloudflare & Google when needed
-        source: overlays/etc/dnsmasq.d/20-upstream-dns.conf
-        targets:
-          - overlays/etc/dnsmasq.d/20-upstream-dns.conf
+        target: overlays/etc/dnsmasq.d/20-upstream-dns.conf
       # Templated drop-in config file assembly:
       - description:
           Shell script to generate a drop-in dnsmasq drop-in config file from drop-in dnsmasq config
           templates
-        source: overlays/usr/libexec/assemble-dnsmasq-config-templated
-        targets:
-          - overlays/usr/libexec/assemble-dnsmasq-config-templated
+        target: overlays/usr/libexec/assemble-dnsmasq-config-templated
       - description: systemd service to run the assemble-dnsmasq-config-templated script during boot
-        source: overlays/usr/lib/systemd/system/assemble-dnsmasq-config-templated.service
-        targets:
-          - overlays/usr/lib/systemd/system/assemble-dnsmasq-config-templated.service
+        target: overlays/usr/lib/systemd/system/assemble-dnsmasq-config-templated.service
       - description: systemd service enablement for assemble-dnsmasq-config-templated.service
-        source: overlays/etc/systemd/system/dnsmasq.service.wants/assemble-dnsmasq-config-templated.service
-        targets:
-          - overlays/etc/systemd/system/dnsmasq.service.wants/assemble-dnsmasq-config-templated.service
+        target: overlays/etc/systemd/system/dnsmasq.service.wants/assemble-dnsmasq-config-templated.service
       - description:
           Symlink redirecting /etc/dnsmasq.d/40-generated-templated-config to an auto-generated file
-        source: overlays/etc/dnsmasq.d/40-generated-templated-config
-        targets:
-          - overlays/etc/dnsmasq.d/40-generated-templated-config
+        target: overlays/etc/dnsmasq.d/40-generated-templated-config
       # Drop-in config templates to assemble by default:
       - description:
           Drop-in dnsmasq config template with comment describing dnsmasq template drop-in directory
-        source: overlays/etc/dnsmasq-templates.d/10-README.conf
-        targets:
-          - overlays/etc/dnsmasq-templates.d/10-README.conf
+        target: overlays/etc/dnsmasq-templates.d/10-README.conf
     filesets:
       - description: Drop-in directory to specify templates of drop-in dnsmasq config files
         tags:
@@ -86,22 +72,16 @@ features:
       file-exports:
         - description:
             Sets DHCP & DNS server settings on the wlan0, wlan1, eth0, eth1, and usb0 interfaces
-          source: overlays/etc/dnsmasq.d/30-dhcp-interfaces.conf
-          targets:
-            - overlays/etc/dnsmasq.d/30-dhcp-interfaces.conf
+          target: overlays/etc/dnsmasq.d/30-dhcp-interfaces.conf
   custom-domain:
     description: Handle DNS requests for a custom domain set by /etc/custom-domain
     provides:
       file-exports:
         - description: Drop-in dnsmasq config template
-          source: overlays/etc/dnsmasq-templates.d/20-custom-domain.conf
-          targets:
-            - overlays/etc/dnsmasq-templates.d/20-custom-domain.conf
+          target: overlays/etc/dnsmasq-templates.d/20-custom-domain.conf
   planktoscope-custom-domain:
     description: "Set the custom domain to 'pkscope'"
     provides:
       file-exports:
         - description: File to set custom domain
-          source: overlays/etc/custom-domain
-          targets:
-            - overlays/etc/custom-domain
+          target: overlays/etc/custom-domain
