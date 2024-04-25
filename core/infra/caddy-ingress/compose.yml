@@ -1,6 +1,6 @@
 services:
   reverse-proxy:
-    image: docker.io/lucaslorentz/caddy-docker-proxy:2.8.10
+    image: docker.io/lucaslorentz/caddy-docker-proxy:2.8.11
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - server-data:/data

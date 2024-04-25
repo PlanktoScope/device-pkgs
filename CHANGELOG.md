@@ -32,6 +32,7 @@ All dates in this file are given in the [UTC time zone](https://en.wikipedia.org
 ### Changed
 
 - (Breaking change) The minimum supported Forklift version for using this repository has been bumped from v0.4.0 to v0.7.0-alpha.3, because some packages provided by this repository now require functionality added by v0.7.0 (namely, file-exporting functionality) in order to work as described/expected.
+- (Breaking change) `community/apps/portainer` was previously named `core/apps/portainer`; it's been moved out of `core`, as its default inclusion in the PlanktoScope OS is deprecated in v2024.0.0 of the PlanktoScope OS; in the future, the user will have to manually add this package to their custom pallet if they want to add Portainer.
 - (Breaking change) `core/host/machine-name` was previously named `core/host/planktoscope/machine-name`; it's been renamed, as it can now be configured (via feature flags) without PlanktoScope-specific naming.
 - (Breaking change) `core/host/machine-name`: the machine name is now generated at `/run/machine-name` rather than `/var/lib/planktoscope/machine-name`. however, a symlink is now exported to redirect `/var/lib/planktoscope/machine-name` to `/run/machine-name`, for backwards-compatibility with programs still expecting `/var/lib/planktoscope/machine-name`.
 - (Breaking change) `core/host/machine-name`: automatic updating of the hostname based on the machine name is no longer default behavior, but rather has to be enabled with a new `generate-templated-hostname` feature flag. If a hostname template is unspecified, the default hostname template is now `machine-{machine-name}` instead of `pkscope-{machine-name}`.
@@ -39,11 +40,20 @@ All dates in this file are given in the [UTC time zone](https://en.wikipedia.org
 - (Breaking change) `core/host/networking/dnsmasq`: use of `pkscope` as the custom domain is no longer default behavior, but rather has to be enabled with a new `planktoscope-custom-domain` feature flag.
 - (Breaking change) `core/host/networking/hostapd`: various settings are no longer provided by default, but rather have to be enabled with the new `interface-wlan0`, `localization-us`, `planktoscope-password`, and `ssid-hostname` feature flags.
 - (Breaking change) `core/host/networking/hosts`: hostnames involving the custom domain (e.g. `pkscope) are no longer added by default, but rather have to be enabled with a new `planktoscope-custom-domain-home` and `planktoscope-custom-domain-machine-name` feature flags.
+- (Breaking change) Previously, the default behavior of the segmenter provided by `core/apps/planktoscope/device-backend/processing/segmenter` was to subtract consecutive masks to try to mitigate image-processing issues with objects which get stuck to the flowcell during imaging. However, when different objects occupied the same space in consecutive frames, the subtraction behavior would subtract one object's mask from the mask of the other object in the following frame, which would produce clearly incorrect masks. This behavior is no longer enabled by default; in order to re-enable it, you should enable the `pipeline-subtract-consecutive-masks` feature flag.
+- All packages in `core/apps` which use the `alpine` container image have upgraded it from v3.19.0 to v3.19.1.
+- `core/apps/dozzle`: the `amir20/dozzle` container image is upgraded from v6.0.6 to v6.5.1.
+- `core/apps/grafana`: the `grafana/grafana-oss` container image is upgraded from v10.1.6 to v10.4.2.
+- `core/apps/planktoscope/device-portal`: the `device-portal` container image is upgraded from v0.1.15 to v0.2.1.
+- `core/infra/caddy-ingress`: the `lucaslorentz/caddy-docker-proxy` container image is upgraded from v2.8.10 to v2.8.11.
+- `core/infra/prometheus`: the `prom/prometheus` container image is upgraded from v2.48.1 to v2.51.2.
+- `core/host/networking/interface-forwarding` has a slightly simpler network configuration, and now all packets for the PlanktoScope's static IP addresses (e.g. 192.168.4.1, 192.168.5.1, 192.168.6.1, etc.) are routed to 127.0.0.1 regardless of whether the packet for that IP address came from the interface corresponding to it.
 
 ### Removed
 
 - `core/apps/cockpit` no longer has a resource dependency on a fileset involving `/etc/cockpit/cockpit.conf`.
 - (Breaking change) `core/host/planktoscope/machine-name` no longer provides functionality to automatically update the Cockpit config based on the machine name. Instead, `core/host/cockpit` provides templating functionality to automatically update the Cockpit config, and the machine name and hostname can be interpolated into those templates.
+- (Breaking change) `core/host/exim` is no longer provided, as exim was only provided by a Cockpit extension (`cockpit-storaged`) which is no longer installed by default on the PlanktoScope OS.
 
 ### Deprecated
 

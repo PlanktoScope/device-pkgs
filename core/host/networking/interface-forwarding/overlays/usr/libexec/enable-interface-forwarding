@@ -13,10 +13,9 @@ route_between() {
 }
 
 redirect_inbound() {
-  local interface="$1"
-  local ipaddr="$2"
+  local ipaddr="$1"
 
-  iptables -t nat -A PREROUTING -i "$interface" -d "$ipaddr" -j DNAT --to-destination 127.0.0.1
+  iptables -t nat -A PREROUTING -d "$ipaddr" -j DNAT --to-destination 127.0.0.1
 }
 
 # Route packets between network interfaces
@@ -31,9 +30,9 @@ for i in ${!joined_interfaces[@]}; do
   done
 done
 
-# Redirect external incoming traffic bound for the device to 127.0.0.1
-redirect_inbound wlan1 192.168.3.1
-redirect_inbound wlan0 192.168.4.1
-redirect_inbound eth0 192.168.5.1
-redirect_inbound usb0 192.168.6.1
-redirect_inbound eth1 192.168.7.1
+# Redirect external incoming traffic bound for the device's static IP addresses to 127.0.0.1
+redirect_inbound 192.168.3.1
+redirect_inbound 192.168.4.1
+redirect_inbound 192.168.5.1
+redirect_inbound 192.168.6.1
+redirect_inbound 192.168.7.1

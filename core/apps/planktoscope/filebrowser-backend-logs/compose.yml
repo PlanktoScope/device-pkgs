@@ -1,6 +1,6 @@
 services:
   server:
-    image: docker.io/filebrowser/filebrowser:v2.27.0
+    image: docker.io/filebrowser/filebrowser:v2.27.0 # Note: we are skipping v2.28.0 due to https://github.com/filebrowser/filebrowser/issues/3085
     volumes:
       - /home/pi/device-backend-logs:/home/pi/device-backend-logs
       - /home/pi/device-backend-logs:/srv # this prevents filebrowser from making an unnamed volume

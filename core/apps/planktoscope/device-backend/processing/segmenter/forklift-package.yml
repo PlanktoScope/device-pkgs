@@ -74,6 +74,11 @@ features:
   deploy:
     description: Adds bind mounts for the PlanktoScope distro's filesystem structure
     compose-files: [compose-deploy.yml]
+    requires:
+      filesets:
+        - description: Machine name
+          paths:
+            - /run/machine-name
   dev-machinename:
     description: Allows a machine name to be set in a file for development & troubleshooting
     compose-files: [compose-dev-machinename.yml]
@@ -86,3 +91,6 @@ features:
   dev-src:
     description: Allows the source code to be overwritten from an existing codebase for development & troubleshooting
     compose-files: [compose-dev-src.yml]
+  pipeline-subtract-consecutive-masks:
+    description:
+    compose-files: [compose-pipeline-subtract-consecutive-masks.yml]
