@@ -49,15 +49,15 @@ All dates in this file are given in the [UTC time zone](https://en.wikipedia.org
 - `core/infra/prometheus`: the `prom/prometheus` container image is upgraded from v2.48.1 to v2.51.2.
 - `core/host/networking/interface-forwarding` has a slightly simpler network configuration, and now all packets for the PlanktoScope's static IP addresses (e.g. 192.168.4.1, 192.168.5.1, 192.168.6.1, etc.) are routed to 127.0.0.1 regardless of whether the packet for that IP address came from the interface corresponding to it.
 
+### Deprecated
+
+- In the future, `core/host/planktoscope/machine-name` will remove support for looking up the machine name from `/var/lib/planktoscope/machine-name`; instead, only `/run/machine-name` will be supported.
+
 ### Removed
 
 - `core/apps/cockpit` no longer has a resource dependency on a fileset involving `/etc/cockpit/cockpit.conf`.
 - (Breaking change) `core/host/planktoscope/machine-name` no longer provides functionality to automatically update the Cockpit config based on the machine name. Instead, `core/host/cockpit` provides templating functionality to automatically update the Cockpit config, and the machine name and hostname can be interpolated into those templates.
 - (Breaking change) `core/host/exim` is no longer provided, as exim was only provided by a Cockpit extension (`cockpit-storaged`) which is no longer installed by default on the PlanktoScope OS.
-
-### Deprecated
-
-- In the future, `core/host/planktoscope/machine-name` will remove support for looking up the machine name from `/var/lib/planktoscope/machine-name`; instead, only `/run/machine-name` will be supported.
 
 ## v2024.0.0-alpha.1 - 2024-03-26
 

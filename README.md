@@ -1,5 +1,5 @@
 # device-pkgs
-Forklift packages for PlanktoScopes
+Forklift packages for the PlanktoScope OS
 
 ## Introduction
 
