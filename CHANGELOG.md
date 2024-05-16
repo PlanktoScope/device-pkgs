@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses [Calendar Versioning](https://calver.org/) with a `YYYY.minor.patch` scheme.
 All dates in this file are given in the [UTC time zone](https://en.wikipedia.org/wiki/Coordinated_Universal_Time).
 
+## Unreleased
+
+### Added
+
+- `core/host/machine-name` now exports the `machine-name` binary into the PlanktoScope OS's overlay for `/usr`. The machine-name binary with the correct CPU architecture target for the host is selected when Forklift's downloads cache is populated.
+
 ## v2024.0.0-alpha.2 - 2024-04-25
 
 ### Added
