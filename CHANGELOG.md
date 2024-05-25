@@ -17,6 +17,7 @@ All dates in this file are given in the [UTC time zone](https://en.wikipedia.org
 - `core/apps/filebrowser-root`: the `filebrowser/filebrowser` container image is upgraded from v2.27.0 to v2.30.0.
 - `core/apps/planktoscope/filebrowser-backend-logs`: the `filebrowser/filebrowser` container image is upgraded from v2.27.0 to v2.30.0.
 - `core/apps/planktoscope/filebrowser-datasets`: the `filebrowser/filebrowser` container image is upgraded from v2.27.0 to v2.30.0.
+- `core/apps/planktoscope/device-portal`: the `ghcr.io/planktoscope/device-portal` container is upgraded from v0.2.1 to v0.2.2.
 
 ## v2024.0.0-alpha.2 - 2024-04-25
 
