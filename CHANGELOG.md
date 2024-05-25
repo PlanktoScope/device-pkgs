@@ -12,6 +12,13 @@ All dates in this file are given in the [UTC time zone](https://en.wikipedia.org
 
 - `core/host/machine-name` now exports the `machine-name` binary into the PlanktoScope OS's overlay for `/usr`. The machine-name binary with the correct CPU architecture target for the host is selected when Forklift's downloads cache is populated.
 
+### Changed
+
+- `core/apps/filebrowser-root`: the `filebrowser/filebrowser` container image is upgraded from v2.27.0 to v2.30.0.
+- `core/apps/planktoscope/filebrowser-backend-logs`: the `filebrowser/filebrowser` container image is upgraded from v2.27.0 to v2.30.0.
+- `core/apps/planktoscope/filebrowser-datasets`: the `filebrowser/filebrowser` container image is upgraded from v2.27.0 to v2.30.0.
+- `core/apps/planktoscope/device-portal`: the `ghcr.io/planktoscope/device-portal` container is upgraded from v0.2.1 to v0.2.2.
+
 ## v2024.0.0-alpha.2 - 2024-04-25
 
 ### Added
