@@ -53,7 +53,7 @@ deployment:
     # TODO: add fileset dependencies for /home/pi/PlanktoScope/config.json,
     # /home/pi/PlanktoScope/hardware.json, /home/pi/data/img,
     # /home/pi/PlanktoScope/scripts/bash/usb_backup.sh,
-    # /home/pi/.local/etc/pkscope-distro/installer-versioning.yml,
+    # /usr/share/planktoscope/installer-versioning.yml,
     # /etc/wpa_supplicant/wpa_supplicant.conf, /home/pi/device-backend/default-configs
   provides:
     file-exports:
