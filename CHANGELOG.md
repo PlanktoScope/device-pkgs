@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses [Calendar Versioning](https://calver.org/) with a `YYYY.minor.patch` scheme.
 All dates in this file are given in the [UTC time zone](https://en.wikipedia.org/wiki/Coordinated_Universal_Time).
 
+## Unreleased
+
+### Fixed
+
+- `core/host/machine-name` no longer declares provided fileset resources which (as of v2024.0.0-beta.0) are no longer provided.
+
 ## v2024.0.0-beta.0 - 2024-06-07
 
 ### Added

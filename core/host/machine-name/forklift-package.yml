@@ -13,23 +13,12 @@ package:
 host:
   provides:
     filesets:
-      # TODO: download the machine-name binary as part of the deployment, instead of assuming the OS
-      # ambiently provides it:
-      - description:
-          Executable file to generate machine names from serial numbers, ambiently provided by the
-          OS
-        paths:
-          - /usr/bin/machine-name
       - description:
           Symlink redirecting /var/lib/planktoscope/machine-name to /run/machine-name, ambiently
           provided by the OS (for temporary backwards-compatibility with programs unaware of
           /run/machine-name)
         paths:
           - /var/lib/planktoscope/machine-name
-      # TODO: move these into feature flags
-      - description: File indicating the Wi-Fi SSID name
-        paths:
-          - /var/lib/planktoscope/hostapd-ssid
 
 deployment:
   provides:
