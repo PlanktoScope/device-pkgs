@@ -8,6 +8,10 @@ All dates in this file are given in the [UTC time zone](https://en.wikipedia.org
 
 ## Unreleased
 
+### Changed
+
+- `core/apps/planktoscope/device-portal`: the `ghcr.io/planktoscope/device-portal` container is upgraded from v0.2.2 to v0.2.3.
+
 ### Fixed
 
 - `core/host/machine-name` no longer declares provided fileset resources which (as of v2024.0.0-beta.0) are no longer provided.
