@@ -1,0 +1,17 @@
+package:
+  description:
+    Script to reset the filesystem in preparation for cloning it into a new SD card image.
+  maintainers:
+    - name: Ethan Li
+      email: lietk12@gmail.com
+  license: Apache-2.0
+  sources:
+    - https://github.com/PlanktoScope/device-pkgs
+
+deployment:
+  provides:
+    file-exports:
+      - description:
+          Shell script to reset machine-specific files & secrets in the filesystem and prepare it to
+          be cloned as an SD card image.
+        target: overlays/usr/libexec/prepare-custom-image
