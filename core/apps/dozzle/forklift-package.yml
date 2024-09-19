@@ -9,6 +9,7 @@ package:
 
 deployment:
   compose-files: [compose.yml]
+  # TODO: add a requirement for /run/docker.sock, and update the compose file's path accordingly
 
 features:
   frontend:

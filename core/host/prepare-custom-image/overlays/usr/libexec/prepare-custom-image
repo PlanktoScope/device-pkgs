@@ -1,0 +1,33 @@
+#!/bin/bash -eu
+
+# Unmount overlays:
+systemctl stop overlay-etc.service
+systemctl stop overlay-usr.service
+
+# Clean up any unnecessary apt files:
+apt-get autoremove -y
+apt-get clean -y
+
+# Clear machine-id so that it will be regenerated on the next boot
+# (refer to https://www.freedesktop.org/software/systemd/man/latest/machine-id.html):
+printf "" > /var/lib/dbus/machine-id
+printf "uninitialized\n" > /etc/machine-id
+
+# Clear other secrets (refer to https://systemd.io/BUILDING_IMAGES/):
+rm -f /var/lib/systemd/random-seed
+rm -f /var/lib/systemd/credential.secret
+
+# Remove SSH keys:
+rm -f /etc/ssh/ssh_host_*_key*
+rm -f /var/lib/overlays/overrides/etc/ssh/ssh_host_*_key
+rm -f /var/lib/overlays/overrides/etc/ssh/ssh_host_*_key.pub
+rm -f /var/lib/overlays/overrides/etc/systemd/system/multi-user.target.wants/regenerate_ssh_host_keys.service
+
+# Make the OS resize the partitions to fill the SD card on the next boot:
+rm -f /var/lib/overlays/overrides/etc/init.d/resize2fs_once
+rm -f /var/lib/overlays/overrides/etc/rc3.d/S01resize2fs_once
+if ! grep 'init=/usr/lib/raspberrypi-sys-mods/firstboot' /boot/cmdline.txt > /dev/null; then
+  sed 's~$~ init=/usr/lib/raspberrypi-sys-mods/firstboot~' -i /boot/cmdline.txt
+fi
+
+shutdown now
