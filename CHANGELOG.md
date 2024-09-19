@@ -10,6 +10,7 @@ All dates in this file are given in the [UTC time zone](https://en.wikipedia.org
 
 ### Added
 
+- `core/apps/grafana`: added a `cpu-limit` feature flag to limit the CPU usage of the Grafana dashboard, to prevent CPU starvation for other processes.
 - `core/host/prepare-custom-image`: added a script overlaid into `/usr/libexec/prepare-custom-image` which can be run to reset the filesystem in preparation for cloning the filesystem as an SD card image.
 
 ## v2024.0.0-beta.1 - 2024-06-24

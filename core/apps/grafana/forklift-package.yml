@@ -75,3 +75,6 @@ features:
           protocol: http
           paths:
             - /admin/grafana/d/host-summary/*
+  cpu-limit:
+    description: Limits the dashboard's CPU usage to at most one virtual core.
+    compose-files: [compose-cpu-limit.yml]
