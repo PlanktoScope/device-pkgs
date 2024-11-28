@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses [Calendar Versioning](https://calver.org/) with a `YYYY.minor.patch` scheme.
 All dates in this file are given in the [UTC time zone](https://en.wikipedia.org/wiki/Coordinated_Universal_Time).
 
+## Unreleased
+
+### Changed
+
+- `core/apps/planktoscope/device-portal`: the `ghcr.io/planktoscope/device-portal` container is upgraded from v0.2.3 to v0.2.4.
+- `core/apps/planktoscope/docs`: the `ghcr.io/planktoscope/project-docs` container is upgraded.
+
 ## v2024.0.0-beta.2 - 2024-09-19
 
 ### Added
