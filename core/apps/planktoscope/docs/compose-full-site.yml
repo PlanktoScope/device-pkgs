@@ -1,3 +1,3 @@
 services:
   server:
-    image: ghcr.io/planktoscope/project-docs:sha-e568244
+    image: ghcr.io/planktoscope/project-docs:sha-087e173
