@@ -13,6 +13,9 @@ All dates in this file are given in the [UTC time zone](https://en.wikipedia.org
 - `core/apps/planktoscope/device-portal`: the `ghcr.io/planktoscope/device-portal` container is upgraded from v0.2.3 to v0.2.4.
 - `core/apps/planktoscope/docs`: the `ghcr.io/planktoscope/project-docs` container is upgraded.
 
+### Fixed
+- `core/host/machine-name`: the `update-hostname` systemd service provided by this package now explicitly starts before the `avahi-daemon` systemd service, so that Avahi correctly registers the device as `pkscope-{machine-name}.local` instead of registering it as `raspberrypi.local` (based on the default hostname).
+
 ## v2024.0.0-beta.2 - 2024-09-19
 
 ### Added
