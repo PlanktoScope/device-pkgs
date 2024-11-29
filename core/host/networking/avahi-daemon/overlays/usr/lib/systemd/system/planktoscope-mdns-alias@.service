@@ -7,6 +7,8 @@ Wants=avahi-daemon.socket
 [Service]
 Type=simple
 ExecStart=/usr/bin/bash -c "/usr/bin/avahi-publish -a -R %i.local 192.168.4.1"
+# FIXME: replace this with a package to generate a /etc/avahi/hosts file from
+# a /etc/avahi/hosts.d directory, just like how we generate /etc/hosts!
 
 [Install]
 WantedBy=multi-user.target

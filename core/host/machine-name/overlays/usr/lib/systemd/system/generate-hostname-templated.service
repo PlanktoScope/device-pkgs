@@ -8,7 +8,6 @@ After=local-fs.target
 Wants=generate-machine-name.service
 After=generate-machine-name.service
 Before=systemd-hostnamed.service
-Before=avahi-daemon.service
 Before=sysinit.target
 
 [Service]
