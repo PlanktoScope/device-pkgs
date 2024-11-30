@@ -1,6 +1,6 @@
 services:
   server:
-    image: ghcr.io/planktoscope/device-backend-processing-segmenter:pr-50
+    image: ghcr.io/planktoscope/device-backend-processing-segmenter:sha-e4e69e3
     extra_hosts:
       - host.docker.internal:host-gateway
 
