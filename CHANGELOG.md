@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses [Calendar Versioning](https://calver.org/) with a `YYYY.minor.patch` scheme.
 All dates in this file are given in the [UTC time zone](https://en.wikipedia.org/wiki/Coordinated_Universal_Time).
 
+## Unreleased
+
+### Fixed
+
+- `apps/planktoscope/device-backend/processing/segmenter`: the `ghcr.io/planktoscope/device-backend-processing-segmenter` container is upgraded to correctly set the `img_rank` metadata field of the EcoTaxa export to `1`, instead of setting it to an incrementing index which makes exports un-importable by EcoTaxa for datasets with more than ~32,000 objects.
+
 ## v2024.0.0-beta.3 - 2024-11-30
 
 ### Changed
@@ -146,7 +152,7 @@ All dates in this file are given in the [UTC time zone](https://en.wikipedia.org
 
 ### Fixed
 
-- Removed unnamed volumes created by the packages for filebrowser instances and for mosquitto.
+- Removed unnamed volumes created by the packages for filebrowser instances and for mosquito.
 - Changed underscores to hyphens in Docker volume names, for consistency with Docker network names.
 
 ## v2023.9.0 - 2023-12-30
