@@ -19,7 +19,7 @@ deployment:
       - description: systemd service enablement for enable-interface-forwarding.service
         target: overlays/etc/systemd/system/network-online.target.wants/enable-interface-forwarding.service
       - description:
-          DnsMasq configuration to advertise the PlanktoScope as a route to all IP addresses
+          dnsmasq configuration to advertise the PlanktoScope as a route to all IP addresses
           assigned by the PlanktoScope to devices connected on all interfaces.
         target: overlays/etc/dnsmasq.d/35-dhcp-subnet-routes.conf
 
