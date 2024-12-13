@@ -6,6 +6,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses [Calendar Versioning](https://calver.org/) with a `YYYY.minor.patch` scheme.
 All dates in this file are given in the [UTC time zone](https://en.wikipedia.org/wiki/Coordinated_Universal_Time).
 
+## Unreleased
+
+### Added
+
+- `core/host/networking/interface-forwarding`: added a `planktoscope-dhcp-default-route` feature flag to configure the DHCP server to advertise the PlanktoScope as a default route to the internet.
+- `core/host/networking/interface-forwarding`: the default deployment now configures dnsmasq to advertise the PlanktoScope as a route to all IP addresses in 192.168.3.\*, 192.168.4.\*, 192.168.5.\*, 192.168.6.\*, and 192.168.7.\*, so that connected devices will now try to reach the PlanktoScope at 192.168.3.1, 192.168.4.1, ..., 192.168.7.1 even if the PlanktoScope doesn't advertise itself as a default route to the internet.
+
+### Removed
+
+- (Breaking change) `core/host/networking/dnsmasq`: the DHCP server no longer advertises the PlanktoScope as a default route to the internet, since this breaks internet access on certain (macOS/Windows) client devices connected simultaneously to a Wi-Fi network for internet access and to a PlanktoScope via Ethernet. To restore this functionality, enable the new `planktoscope-dhcp-default-route` feature flag which has now been added to the `core/host/networking/interface-forwarding` package.
+
 ## v2024.0.0-beta.3 - 2024-11-30
 
 ### Changed
@@ -146,7 +157,7 @@ All dates in this file are given in the [UTC time zone](https://en.wikipedia.org
 
 ### Fixed
 
-- Removed unnamed volumes created by the packages for filebrowser instances and for mosquitto.
+- Removed unnamed volumes created by the packages for filebrowser instances and for mosquito.
 - Changed underscores to hyphens in Docker volume names, for consistency with Docker network names.
 
 ## v2023.9.0 - 2023-12-30
