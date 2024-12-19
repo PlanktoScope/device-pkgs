@@ -17,6 +17,10 @@ All dates in this file are given in the [UTC time zone](https://en.wikipedia.org
 
 - (Breaking change) `core/host/networking/dnsmasq`: the DHCP server no longer advertises the PlanktoScope as a default route to the internet, since this breaks internet access on certain (macOS/Windows) client devices connected simultaneously to a Wi-Fi network for internet access and to a PlanktoScope via Ethernet. To restore this functionality, enable the new `planktoscope-dhcp-default-route` feature flag which has now been added to the `core/host/networking/interface-forwarding` package.
 
+### Fixed
+
+- `apps/planktoscope/device-backend/processing/segmenter`: the `ghcr.io/planktoscope/device-backend-processing-segmenter` container is upgraded to correctly set the `img_rank` metadata field of the EcoTaxa export to `1`, instead of setting it to an incrementing index which makes exports un-importable by EcoTaxa for datasets with more than ~32,000 objects.
+
 ## v2024.0.0-beta.3 - 2024-11-30
 
 ### Changed
