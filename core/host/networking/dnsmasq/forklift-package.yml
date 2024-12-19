@@ -66,12 +66,14 @@ deployment:
 features:
   planktoscope-dhcp-interfaces:
     description:
-      Enable DHCP & DNS server functionality for the PlanktoScope OS's static IP address
-      assignments on its network interfaces
+      Enable DHCP server functionality for the PlanktoScope OS's static IP address assignments on
+      its network interfaces
     provides:
       file-exports:
         - description:
-            Sets DHCP & DNS server settings on the wlan0, wlan1, eth0, eth1, and usb0 interfaces
+            Set DHCP server settings to assign IP addresses on the wlan0, wlan1, eth0, eth1, and
+            usb0 interfaces and to *not* advertise the PlanktoScope as a default route to the
+            internet
           target: overlays/etc/dnsmasq.d/30-dhcp-interfaces.conf
   custom-domain:
     description: Handle DNS requests for a custom domain set by /etc/custom-domain
