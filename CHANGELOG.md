@@ -13,6 +13,10 @@ All dates in this file are given in the [UTC time zone](https://en.wikipedia.org
 - `core/host/networking/interface-forwarding`: added a `planktoscope-dhcp-default-route` feature flag to configure the DHCP server to advertise the PlanktoScope as a default route to the internet.
 - `core/host/networking/interface-forwarding`: the default deployment now configures dnsmasq to advertise the PlanktoScope as a route to all IP addresses in 192.168.3.\*, 192.168.4.\*, 192.168.5.\*, 192.168.6.\*, and 192.168.7.\*, so that connected devices will now try to reach the PlanktoScope at 192.168.3.1, 192.168.4.1, ..., 192.168.7.1 even if the PlanktoScope doesn't advertise itself as a default route to the internet.
 
+### Changed
+
+- `core/apps/planktoscope/device-portal`: the `ghcr.io/planktoscope/device-portal` container is upgraded from v0.2.4 to v0.2.5.
+
 ### Removed
 
 - (Breaking change) `core/host/networking/dnsmasq`: the DHCP server no longer advertises the PlanktoScope as a default route to the internet, since this breaks internet access on certain (macOS/Windows) client devices connected simultaneously to a Wi-Fi network for internet access and to a PlanktoScope via Ethernet. To restore this functionality, enable the new `planktoscope-dhcp-default-route` feature flag which has now been added to the `core/host/networking/interface-forwarding` package.
