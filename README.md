@@ -1,3 +1,8 @@
+Note: this repository is now archived because its packages have been merged into
+[github.com/PlanktoScope/pallet-standard](https://github.com/PlanktoScope/pallet-standard).
+Note that some packages have undergone significant breaking changes since the merger - refer to
+the pallet-standard repo's `CHANGELOG.md` file's entries after v2024.0.0.
+
 # device-pkgs
 Forklift packages for the PlanktoScope OS
 
